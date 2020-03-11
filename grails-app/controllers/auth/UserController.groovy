@@ -25,13 +25,18 @@ class UserController {
     }
 
     def save(User user) {
+        println user
         if (user == null) {
             notFound()
             return
         }
 
         try {
+            def userRole = Role.findOrSaveWhere(authority: 'ROLE_USER')
             userService.save(user)
+            if (!user.authorities.contains(userRole)) {
+                UserRole.create(user, userRole, true)
+            }
         } catch (ValidationException e) {
             respond user.errors, view:'create'
             return
@@ -47,7 +52,9 @@ class UserController {
     }
 
     def edit(Long id) {
-        respond userService.get(id)
+        User user = userService.get(id)
+        println user
+        render(view: '/user/edit', model: [user: user])
     }
 
     def update(User user) {

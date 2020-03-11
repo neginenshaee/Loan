@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Request Loan</title>
+    <asset:stylesheet src="bootstrap.css" rel="stylesheet"/>
 </head>
 
 <body>

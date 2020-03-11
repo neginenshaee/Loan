@@ -13,17 +13,18 @@ class LoanRequestController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond loanRequestService.list(params), model:[loanRequestCount: loanRequestService.count()]
+    def index(){
+        List<LoanRequest> loans = LoanRequest.findAllByUser(springSecurityService.currentUser)
+        render(view: '/loan/index', model: [loans: loans])
     }
 
     def show(Long id) {
-        respond loanRequestService.get(id)
+        render(view: '/loan/show', model: [loanRequest: loanRequestService.get(id)])
+
     }
 
     def create() {
-        respond new LoanRequest(params)
+        render(view: '/loan/request')
     }
 
 
@@ -33,12 +34,14 @@ class LoanRequestController {
             notFound()
             return
         }
-        Long amount = params?.amount
-        Date deadline = params?.deadline
+        String amount = params?.amount
+        String deadlineDate = params?.deadline
+        println deadlineDate
+        Date deadline = new Date()
         String description = params?.desc
         def user = springSecurityService.currentUser
 
-        loanRequest.setAmount(amount)
+        loanRequest.setAmount(Long.valueOf(amount))
         loanRequest.setDeadline(deadline)
         loanRequest.setStatus(Status.REQUESTED)
         loanRequest.setUser(user)
