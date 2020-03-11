@@ -3,6 +3,7 @@ package loan
 import auth.Role
 import auth.User
 import auth.UserRole
+import enums.Status
 import grails.gorm.transactions.Transactional
 
 class BootStrap {
@@ -24,7 +25,9 @@ class BootStrap {
         if (!user.authorities.contains(adminRole)) {
             UserRole.create(user, userRole, true)
         }
-
+        def loanReq = new LoanRequest(user: user, description: 'desc', deadline: new Date(), status: Status.REQUESTED, amount: 100L,actionDate: new Date())
+        loanReq.save(flush: true, failOnError: true);
+        println loanReq
 
     }
     def destroy = {

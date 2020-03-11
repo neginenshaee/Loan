@@ -23,13 +23,16 @@
     </button>
 
     <div class="collapse navbar-collapse" aria-expanded="false" style="height: 0.8px;" id="navbarContent">
-        <ul class="nav navbar-nav ml-auto">
-            <g:pageProperty name="page.nav"/>
-        </ul>
         <ul class="nav navbar-nav navbar-right">
             <sec:ifLoggedIn>
-                Hello <sec:username />
-                <g:link controller='logout'>Logout</g:link>
+                <h1 style="color:red">Hello <sec:username /></h1>
+                <li class="nav-item">
+                    <a class="nav-link" href="/loan/request.gsp">Loan</a>
+                </li>
+
+                <li>
+                    <g:link controller='logout'>Logout</g:link>
+                </li>
 
             </sec:ifLoggedIn>
             <sec:ifNotLoggedIn>
@@ -49,16 +52,16 @@
         <a href="http://guides.grails.org" target="_blank">
             <asset:image src="advancedgrails.svg" alt="Grails Guides" class="float-left"/>
         </a>
-        <strong class="centered"><a href="http://guides.grails.org" target="_blank">Grails Guides</a></strong>
-        <p>Building your first Grails app? Looking to add security, or create a Single-Page-App? Check out the <a href="http://guides.grails.org" target="_blank">Grails Guides</a> for step-by-step tutorials.</p>
+        <strong class="centered"><a href="http://guides.grails.org" target="_blank">TEXT 1</a></strong>
+        <p>HERE YOU CAN ADD TEXT</p>
 
     </div>
     <div class="col">
         <a href="http://docs.grails.org" target="_blank">
             <asset:image src="documentation.svg" alt="Grails Documentation" class="float-left"/>
         </a>
-        <strong class="centered"><a href="http://docs.grails.org" target="_blank">Documentation</a></strong>
-        <p>Ready to dig in? You can find in-depth documentation for all the features of Grails in the <a href="http://docs.grails.org" target="_blank">User Guide</a>.</p>
+        <strong class="centered"><a href="http://docs.grails.org" target="_blank">TEXT 2</a></strong>
+        <p>HERE YOU CAN ADD TEXT</p>
 
     </div>
 
@@ -66,8 +69,8 @@
         <a href="https://grails-slack.cfapps.io" target="_blank">
             <asset:image src="slack.svg" alt="Grails Slack" class="float-left"/>
         </a>
-        <strong class="centered"><a href="https://grails-slack.cfapps.io" target="_blank">Join the Community</a></strong>
-        <p>Get feedback and share your experience with other Grails developers in the community <a href="https://grails-slack.cfapps.io" target="_blank">Slack channel</a>.</p>
+        <strong class="centered"><a href="https://grails-slack.cfapps.io" target="_blank">TEXT 3</a></strong>
+        <p>HERE YOU CAN ADD TEXT</p>
     </div>
 </div>
 
