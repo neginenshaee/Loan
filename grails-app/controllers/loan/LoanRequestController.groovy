@@ -1,11 +1,12 @@
 package loan
 
 import enums.Status
+import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
-@Secured('ROLE_USER')
+@Secured(['ROLE_USER','ROLE_ADMIN'])
 class LoanRequestController {
 
     LoanRequestService loanRequestService
@@ -89,6 +90,8 @@ class LoanRequestController {
             '*'{ respond loanRequest, [status: OK] }
         }
     }
+
+
 
     def delete(Long id) {
         if (id == null) {

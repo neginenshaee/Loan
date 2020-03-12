@@ -11,7 +11,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/loan/index">Loan</a>
                 </li>
-
+                <sec:ifAnyGranted roles="ROLE_ADMIN">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user/index">User</a>
+                    </li>
+                </sec:ifAnyGranted>
                 <li style="float: right">
                     <g:link controller='logout'>Logout</g:link>
                 </li>

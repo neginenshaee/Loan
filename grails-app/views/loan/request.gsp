@@ -7,6 +7,10 @@
 
 <body>
 
+<header>
+    <g:render template="/sharedTemplates/header"/>
+</header>
+
 <g:form controller="loanRequest" action="save" method="post">
     <div class="container">
 
@@ -27,6 +31,8 @@
         <button type="submit" class="btn btn-primary">Request</button>
     </div>
 </g:form>
-
+<footer>
+    <g:render template="/sharedTemplates/footer"/>
+</footer>
 </body>
 </html>

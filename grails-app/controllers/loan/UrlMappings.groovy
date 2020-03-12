@@ -14,6 +14,6 @@ class UrlMappings {
         "404"(view:'/notFound')
         "/loan/index"(controller: 'loanRequest', action: 'index')
         "/loan/show/$id"(controller: 'loanRequest', action: 'show')
-
+        "/loan/approve/$id"(controller: 'adminLoan', action: 'approve')
     }
 }

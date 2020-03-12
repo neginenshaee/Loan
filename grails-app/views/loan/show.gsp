@@ -26,6 +26,9 @@
             <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
         </fieldset>
     </g:form>
+    <g:form params="${[loanRequest: this.loanRequest.id]}" controller="adminLoan" action="approve" method="PUT">
+        <button type="submit" class="btn btn-primary">Approve</button>
+    </g:form>
 </div>
 </body>
 </html>
