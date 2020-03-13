@@ -1,13 +1,15 @@
 package auth
 
+import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
-@Secured('ROLE_USER')
+@Secured(['ROLE_ADMIN','ROLE_USER'])
 class UserController {
 
     UserService userService
+    def springSecurityService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -55,6 +57,29 @@ class UserController {
         User user = userService.get(id)
         println user
         render(view: '/user/edit', model: [user: user])
+    }
+
+    def password(Long id) {
+        User user = userService.get(id)
+        render(view: '/user/password', model: [user: user])
+    }
+
+    @Transactional
+    def changePassword() {
+        String old = params?.old
+        String newP = params?.new
+        String reP = params?.re
+        User user = springSecurityService.currentUser
+//        println springSecurityService.encodePassword(old)
+//        if (springSecurityService.passwordEncoder.isPasswordValid(user.getPassword(),old,null)){
+            if(newP==reP){
+                println 'the same!'
+                user.setPassword(newP)
+//            }
+        }
+        println user.getPassword()
+        user.save(flush: true, failOnError: true)
+        redirect(view: '/index')
     }
 
     def update(User user) {

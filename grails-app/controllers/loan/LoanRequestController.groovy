@@ -28,7 +28,6 @@ class LoanRequestController {
 
     def show(Long id) {
         render(view: '/loan/show', model: [loanRequest: loanRequestService.get(id)])
-
     }
 
     def create() {

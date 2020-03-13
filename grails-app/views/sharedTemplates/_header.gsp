@@ -16,7 +16,11 @@
                         <a class="nav-link" href="/user/index">User</a>
                     </li>
                 </sec:ifAnyGranted>
-                <li style="float: right">
+                <li>
+                    <a class="nav-link" href="/user/password">Change Password</a>
+                </li>
+                <li>
+
                     <g:link controller='logout'>Logout</g:link>
                 </li>
 

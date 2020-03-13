@@ -7,7 +7,6 @@ import grails.plugin.springsecurity.annotation.Secured
 class MainController {
 
     def index() {
-        def username = "hamidfarmani"
-        [user:username]
+
     }
 }

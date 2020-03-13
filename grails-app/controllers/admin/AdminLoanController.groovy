@@ -14,7 +14,6 @@ class AdminLoanController {
 
     @Transactional
     def approve(){
-        println 'here***'
         Long id = Long.valueOf(params.loanRequest)
         LoanRequest loanRequest = LoanRequest.findById(id)
         loanRequest.setStatus(Status.APPROVED)
