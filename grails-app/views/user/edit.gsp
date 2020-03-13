@@ -15,22 +15,22 @@
         <div class="form-row">
             <div class="col">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="firstName" placeholder="First Name">
+                    <input type="text" class="form-control" name="firstName" placeholder="First Name" value="${this.user.firstName}">
                 </div>
             </div>
             <div class="col">
                 <div class="form-group">
-                    <input type="text" class="form-control" name="lastName" placeholder="Last Name">
+                    <input type="text" class="form-control" name="lastName" placeholder="Last Name"  value="${this.user.lastName}">
                 </div>
             </div>
         </div>
 
         <div class="form-group">
-            <input type="text" class="form-control" name="country" placeholder="Country">
+            <input type="text" class="form-control" name="country" placeholder="Country" value="${this.user.country}">
         </div>
 
         <div class="form-group">
-            <textarea  type="text" class="form-control" name="address" placeholder="Address" rows="3"></textarea>
+            <textarea  type="text" class="form-control" name="address" placeholder="Address" rows="3" >${this.user.address}</textarea>
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>
