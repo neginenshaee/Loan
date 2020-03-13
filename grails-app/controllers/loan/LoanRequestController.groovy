@@ -1,5 +1,6 @@
 package loan
 
+import auth.Role
 import enums.Status
 import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.annotation.Secured
@@ -15,7 +16,13 @@ class LoanRequestController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(){
-        List<LoanRequest> loans = LoanRequest.findAllByUser(springSecurityService.currentUser)
+        List<LoanRequest> loans
+        def authorities = springSecurityService.currentUser.authorities
+        if(authorities.contains(Role.findByAuthority("ROLE_USER"))) {
+            loans = LoanRequest.findAllByUser(springSecurityService.currentUser)
+        }else{
+            loans = LoanRequest.findAll()
+        }
         render(view: '/loan/index', model: [loans: loans])
     }
 
@@ -93,21 +100,13 @@ class LoanRequestController {
 
 
 
-    def delete(Long id) {
-        if (id == null) {
-            notFound()
-            return
-        }
-
-        loanRequestService.delete(id)
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'loanRequest.label', default: 'LoanRequest'), id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
+    @Transactional
+    def cancel() {
+        Long id = Long.valueOf(params.loanRequest)
+        LoanRequest loanRequest = LoanRequest.findById(id)
+        loanRequest.setStatus(Status.CANCELLED)
+        loanRequest.save()
+        redirect(view: '/loan/index')
     }
 
     protected void notFound() {
