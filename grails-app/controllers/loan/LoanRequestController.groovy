@@ -88,13 +88,6 @@ class LoanRequestController {
             return
         }
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'loanRequest.label', default: 'LoanRequest'), loanRequest.id])
-                redirect loanRequest
-            }
-            '*'{ respond loanRequest, [status: OK] }
-        }
     }
 
 
