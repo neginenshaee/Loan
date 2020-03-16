@@ -1,18 +1,52 @@
 package loan
 
-import grails.gorm.services.Service
+import auth.Role
+import enums.Status
+import grails.gorm.transactions.Transactional
 
-@Service(LoanRequest)
-interface LoanRequestService {
+import static org.springframework.http.HttpStatus.CREATED
 
-    LoanRequest get(Serializable id)
+@Transactional
+class LoanRequestService {
 
-    List<LoanRequest> list(Map args)
+    def springSecurityService
 
-    Long count()
+    def get(id){
+        LoanRequest.get(id)
+    }
 
-    void delete(Serializable id)
+    def list(){
+        List<LoanRequest> loans
+        def authorities = springSecurityService.currentUser.authorities
+        if(authorities.contains(Role.findByAuthority("ROLE_USER"))) {
+            loans = LoanRequest.findAllByUser(springSecurityService.currentUser)
+        }else{
+            loans = LoanRequest.findAll()
+        }
+        loans
+    }
 
-    LoanRequest save(LoanRequest loanRequest)
+    def count(){
+        LoanRequest.count()
+    }
 
+    def delete(id){
+        LoanRequest.get(id).delete()
+    }
+
+    def save(LoanRequest loanRequest){
+        loanRequest.setUser(springSecurityService.currentUser)
+        loanRequest.setStatus(Status.REQUESTED)
+        loanRequest.setActionDate(new Date())
+        loanRequest.setDeadline(new Date())
+        loanRequest.save()
+    }
+
+    def cancel(Long id){
+        println('***')
+        LoanRequest loanRequest = LoanRequest.findById(id)
+        loanRequest.setStatus(Status.CANCELLED)
+        loanRequest.save()
+        println loanRequest
+    }
 }

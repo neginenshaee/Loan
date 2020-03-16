@@ -20,12 +20,13 @@
         <div class="message" role="status">${flash.message}</div>
     </g:if>
     <f:display bean="loanRequest" />
-    <g:form resource="${this.loanRequest}" method="PUT">
         <fieldset class="buttons">
             <div class="row">
                 <sec:ifAnyGranted roles="ROLE_USER">
-                        <g:form params="${[loanRequest: this.loanRequest.id]}" controller="loanRequest" action="cancel" method="PUT">
-                            <button class="btn btn-danger" type="submit" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Cancel</button>
+                        <g:form params="${[loanRequest: this.loanRequest.id]}" controller="loanRequest" action="cancel">
+                            <g:if test="${this.loanRequest.status.name() == 'CANCELED'}">
+                                <button class="btn btn-danger" type="submit" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Cancel</button>
+                            </g:if>
                             <g:if test="${this.loanRequest.status.name() == 'APPROVED'}">
                                 <button class="btn btn-primary" type="submit" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Confirm</button>
                             </g:if>
@@ -38,7 +39,6 @@
                 </sec:ifAnyGranted>
             </div>
         </fieldset>
-    </g:form>
 
 </div>
 </body>

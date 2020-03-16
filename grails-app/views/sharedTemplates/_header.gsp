@@ -1,4 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <link rel="shortcut icon" href="${(resource(dir: 'images',file: 'neovisionico.gif'))}" type="image/x-icon"/>
+    <div role="banner"><a href="http://neovision.com"><img src="${(resource(dir: 'images',file: 'neovision.png'))}" alt="Grails"/></a></div>
+
     <a class="navbar-brand" href="#">Loan Application</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

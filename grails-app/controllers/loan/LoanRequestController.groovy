@@ -1,28 +1,18 @@
 package loan
 
-import auth.Role
-import enums.Status
-import grails.gorm.transactions.Transactional
+
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
-import static org.springframework.http.HttpStatus.*
+
+import static org.springframework.http.HttpStatus.NOT_FOUND
 
 @Secured(['ROLE_USER','ROLE_ADMIN'])
 class LoanRequestController {
 
-    LoanRequestService loanRequestService
-    def springSecurityService
-
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    def loanRequestService
 
     def index(){
-        List<LoanRequest> loans
-        def authorities = springSecurityService.currentUser.authorities
-        if(authorities.contains(Role.findByAuthority("ROLE_USER"))) {
-            loans = LoanRequest.findAllByUser(springSecurityService.currentUser)
-        }else{
-            loans = LoanRequest.findAll()
-        }
+        List<LoanRequest> loans = loanRequestService.list()
         render(view: '/loan/index', model: [loans: loans])
     }
 
@@ -41,34 +31,16 @@ class LoanRequestController {
             notFound()
             return
         }
-        String amount = params?.amount
-        String deadlineDate = params?.deadline
-        println deadlineDate
-        Date deadline = new Date()
-        String description = params?.desc
-        def user = springSecurityService.currentUser
-
-        loanRequest.setAmount(Long.valueOf(amount))
-        loanRequest.setDeadline(deadline)
-        loanRequest.setStatus(Status.REQUESTED)
-        loanRequest.setUser(user)
-        loanRequest.setDescription(description)
-        loanRequest.setActionDate(new Date())
 
         try {
             loanRequestService.save(loanRequest)
+            redirect(view: '/loan/index')
         } catch (ValidationException e) {
             respond loanRequest.errors, view:'create'
             return
         }
 
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'loanRequest.label', default: 'LoanRequest'), loanRequest.id])
-                redirect loanRequest
-            }
-            '*' { respond loanRequest, [status: CREATED] }
-        }
+
     }
 
     def edit(Long id) {
@@ -91,13 +63,8 @@ class LoanRequestController {
     }
 
 
-
-    @Transactional
     def cancel() {
-        Long id = Long.valueOf(params.loanRequest)
-        LoanRequest loanRequest = LoanRequest.findById(id)
-        loanRequest.setStatus(Status.CANCELLED)
-        loanRequest.save()
+        loanRequestService.cancel(Long.valueOf(params.loanRequest))
         redirect(view: '/loan/index')
     }
 

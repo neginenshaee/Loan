@@ -18,5 +18,14 @@ class LoanRequest {
         status enumType: 'identity'
     }
 
+    static constraints = {
+        amount()
+        status()
+        description nullable: true
+        deadline nullable: true
+        user()
+        actionDate()
+    }
+
 
 }
