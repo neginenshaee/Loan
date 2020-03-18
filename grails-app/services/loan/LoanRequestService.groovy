@@ -43,7 +43,6 @@ class LoanRequestService {
     }
 
     def cancel(Long id){
-        println('***')
         LoanRequest loanRequest = LoanRequest.findById(id)
         loanRequest.setStatus(Status.CANCELLED)
         loanRequest.save()
