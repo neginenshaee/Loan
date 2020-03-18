@@ -4,6 +4,7 @@ import auth.Role
 import auth.User
 import auth.UserRole
 import enums.Status
+import enums.UserStatus
 import grails.gorm.transactions.Transactional
 
 class BootStrap {
@@ -14,8 +15,8 @@ class BootStrap {
         println adminRole
         def userRole = Role.findOrSaveWhere(authority: 'ROLE_USER')
 
-        def admin = User.findOrSaveWhere(username: 'admin', firstName: 'admin', lastName: 'admin', accountLocked: false, passwordExpired: false, accountExpired: false, password: 'admin',email: 'a@a.com',country: 'Armenia',address: 'cascade')
-        def user = User.findOrSaveWhere(username: 'user', firstName: 'user', lastName: 'user', accountLocked: false, passwordExpired: false, accountExpired: false, password: 'user',email: 'u@u.com',country: 'Armenia',address: 'northern avenue')
+        def admin = User.findOrSaveWhere(username: 'admin', firstName: 'admin', lastName: 'admin', accountLocked: false, passwordExpired: false, accountExpired: false, password: 'admin',email: 'a@a.com',country: 'Armenia',address: 'cascade', status: UserStatus.CREATED)
+        def user = User.findOrSaveWhere(username: 'user', firstName: 'user', lastName: 'user', accountLocked: false, passwordExpired: false, accountExpired: false, password: 'user',email: 'u@u.com',country: 'Armenia',address: 'northern avenue', status: UserStatus.CREATED)
         println user
 
         if (!admin.authorities.contains(adminRole)) {

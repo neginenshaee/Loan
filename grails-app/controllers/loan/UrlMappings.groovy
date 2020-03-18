@@ -17,6 +17,7 @@ class UrlMappings {
         "/loan/approve/$id"(controller: 'adminLoan', action: 'approve')
         "/user/password"(controller: 'user', action: 'password')
         "/loan/cancel/$id"(controller: 'loanRequest', action: 'cancel')
+        "/user/confirm/$token"(controller: 'user', action: 'confirm')
 //        "/user/create"(controller: 'user', action: 'save')
     }
 }

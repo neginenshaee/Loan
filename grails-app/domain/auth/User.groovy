@@ -1,5 +1,6 @@
 package auth
 
+import enums.UserStatus
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import grails.compiler.GrailsCompileStatic
@@ -18,6 +19,7 @@ class User implements Serializable {
     String email
     String country
     String address
+    UserStatus status
     boolean enabled = true
     boolean accountExpired
     boolean accountLocked
@@ -27,6 +29,10 @@ class User implements Serializable {
 
     Set<Role> getAuthorities() {
         (UserRole.findAllByUser(this) as List<UserRole>)*.role as Set<Role>
+    }
+
+    static mapping = {
+        status enumType: 'identity'
     }
 
     static constraints = {
@@ -39,6 +45,4 @@ class User implements Serializable {
         address nullable: true
     }
 
-    static mapping = {
-    }
 }

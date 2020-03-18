@@ -1,8 +1,11 @@
 package auth
 
+import enums.UserStatus
 import grails.gorm.transactions.Transactional
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
+import loan.VerificationToken
+
 import static org.springframework.http.HttpStatus.*
 
 @Secured(['ROLE_ADMIN','ROLE_USER'])
@@ -11,6 +14,7 @@ class UserController {
     def mailService
     UserService userService
     def springSecurityService
+    def tokenService
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
@@ -36,12 +40,16 @@ class UserController {
 
         try {
             def userRole = Role.findOrSaveWhere(authority: 'ROLE_USER')
+            user.setStatus(UserStatus.CREATED)
             userService.save(user)
-
+            String token = UUID.randomUUID().toString()
+            tokenService.createVerificationToken(user,token)
+            String url =  "/confirm/" + token
+            String t ="http://localhost:1580/user" + url
             mailService.sendMail {
                 to user.getEmail()
                 subject "Registration Confirmation"
-                text "Created!"
+                text ("Created!\n"+ t)
             }
 
 
@@ -75,6 +83,16 @@ class UserController {
             }
             '*' { respond user, [status: CREATED] }
         }
+    }
+
+    @Transactional
+    def confirm(String token){
+        println ('here: '+ token)
+        VerificationToken retrieved = tokenService.retrieveVerificationToken(token)
+        User user = retrieved.getUser()
+        user.setStatus(UserStatus.CONFIRMED)
+        user.save()
+        redirect(view: '/user/index')
     }
 
     def edit(Long id) {
