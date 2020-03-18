@@ -24,6 +24,9 @@
                     <a class="nav-link" href="/user/password">Change Password</a>
                 </li>
                 <li>
+                    <a class="nav-link" href="/user/edit">Edit info</a>
+                </li>
+                <li>
 
                     <g:link controller='logout'>Logout</g:link>
                 </li>

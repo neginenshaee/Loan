@@ -12,12 +12,14 @@ class UrlMappings {
         "/"(view:"/index")
         "500"(view:'/error')
         "404"(view:'/notFound')
+        "/user/password"(controller: 'user', action: 'password')
+        "/user/edi"(controller: 'user', action: 'edit')
+        "/user/confirm/$token"(controller: 'user', action: 'confirm')
+        "/user/save"(controller: 'user', action: 'save')
         "/loan/index"(controller: 'loanRequest', action: 'index')
         "/loan/show/$id"(controller: 'loanRequest', action: 'show')
         "/loan/approve/$id"(controller: 'adminLoan', action: 'approve')
-        "/user/password"(controller: 'user', action: 'password')
         "/loan/cancel/$id"(controller: 'loanRequest', action: 'cancel')
-        "/user/confirm/$token"(controller: 'user', action: 'confirm')
 //        "/user/create"(controller: 'user', action: 'save')
     }
 }

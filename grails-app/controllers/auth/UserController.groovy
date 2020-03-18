@@ -51,10 +51,8 @@ class UserController {
         redirect(view: '/user/index')
     }
 
-    def edit(Long id) {
-        User user = userService.get(id)
-        println user
-        render(view: '/user/edit', model: [user: user])
+    def edit() {
+        render(view: '/user/edit', model: [user: userService.getCurrentUser()])
     }
 
     def password(Long id) {

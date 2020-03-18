@@ -67,4 +67,8 @@ class UserService {
         user.save()
     }
 
+    def getCurrentUser(){
+        springSecurityService.currentUser
+    }
+
 }

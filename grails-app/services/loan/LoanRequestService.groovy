@@ -48,4 +48,10 @@ class LoanRequestService {
         loanRequest.save()
         println loanRequest
     }
+
+    def approve(Long id){
+        LoanRequest loanRequest = LoanRequest.findById(id)
+        loanRequest.setStatus(Status.APPROVED)
+        loanRequest.save()
+    }
 }
