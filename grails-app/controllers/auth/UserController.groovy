@@ -1,6 +1,6 @@
 package auth
 
-
+import commands.UserCommand
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 
@@ -13,7 +13,7 @@ class UserController {
 
     def index() {
         List<User> users = userService.list()
-        render(view: '/user/index', model: [loans: users])
+        render(view: '/user/index', model: [users: users])
     }
 
     def show(Long id) {
@@ -24,7 +24,15 @@ class UserController {
         respond new User(params)
     }
 
-    def save(User user) {
+    def save(UserCommand command, User user) {
+        println command
+        println command.firstName
+        command.validate()
+        if(command.hasErrors()){
+            println(errors)
+            redirect(view: '/user/create')
+            return
+        }
         if (user == null) {
             notFound()
             return
@@ -51,8 +59,12 @@ class UserController {
         redirect(view: '/user/index')
     }
 
-    def edit() {
-        render(view: '/user/edit', model: [user: userService.getCurrentUser()])
+    def edit(Long id) {
+        if(id == null) {
+            render(view: '/user/edit', model: [user: userService.getCurrentUser()])
+        }else{
+            render(view: '/user/edit', model: [user: userService.get(id)])
+        }
     }
 
     def password(Long id) {

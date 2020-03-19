@@ -12,8 +12,8 @@ class UserService {
     def springSecurityService
     def tokenService
 
-    def get(id){
-        User.get(id)
+    def get(Long id){
+        User.findById(id)
     }
 
     def list(){

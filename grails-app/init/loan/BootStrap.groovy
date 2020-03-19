@@ -9,7 +9,7 @@ import grails.gorm.transactions.Transactional
 
 class BootStrap {
 
-    def init = { servletContext ->
+  /*  def init = { servletContext ->
 
         def adminRole = Role.findOrSaveWhere(authority: 'ROLE_ADMIN')
         println adminRole
@@ -31,6 +31,9 @@ class BootStrap {
         println loanReq
 
     }
+    */
+
+    def init = {}
     def destroy = {
     }
 }
