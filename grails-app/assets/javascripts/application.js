@@ -9,3 +9,71 @@
 //= require bootstrap
 //= require popper.min
 //= require_self
+
+/*
+* Preloader
+* */
+$(window).on('load',function () {
+    $('#status').fadeOut();
+    $('#preloader').delay(350).fadeOut('slow');
+})
+
+
+/*===========================
+        LOGIN
+=============================*/
+document.addEventListener("DOMContentLoaded", function(event) {
+    document.forms['loginForm'].elements['username'].focus();
+});
+function passwordDisplayToggle() {
+    var toggleEl = document.getElementById("passwordToggler");
+    var eyeIcon = '\u{1F441}';
+    var xIcon = '\u{2715}';
+    var passEl = document.getElementById("password");
+    if (passEl.type === "password") {
+        toggleEl.innerHTML = xIcon;
+        passEl.type = "text";
+    } else {
+        toggleEl.innerHTML = eyeIcon;
+        passEl.type = "password";
+    }
+}
+
+/*===========================
+        NAVIGATION
+=============================*/
+$(function () {
+    showHideNav();
+    $(window).scroll(function () {
+        showHideNav();
+    });
+
+    function showHideNav() {
+        if($(window).scrollTop()>50){
+            $("nav").addClass("black-nav-top");
+
+            // $("#back-to-top").fadeIn();
+        }else{
+            // $("nav").removeClass("black-nav-top");
+
+            // $("#back-to-top").fadeOut();
+        }
+    }
+
+});
+
+/*===========================
+        SMOOTH SCROLLING
+=============================*/
+$(function () {
+    $("a.smooth-scroll").click(function (event) {
+
+        event.preventDefault();
+
+        var section_id = $(this).attr("href");
+        $("html, body").animate({
+            scrollTop: $(section_id).offset().top -64
+        }, 1250);
+
+    });
+})

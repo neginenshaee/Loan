@@ -7,7 +7,7 @@ class UserCommand implements Validateable {
     String lastName
 
     static constraints = {
-        firstName size: 3..5
+        firstName nullable: false, blank: false
         lastName inList: ['a','b']
 
     }

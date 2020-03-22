@@ -3,6 +3,7 @@ package loan
 import auth.Role
 import auth.User
 import auth.UserRole
+import commands.UserCommand
 import enums.Status
 import enums.UserStatus
 import grails.gorm.transactions.Transactional
@@ -12,8 +13,8 @@ class UserService {
     def springSecurityService
     def tokenService
 
-    def get(Long id){
-        User.findById(id)
+    static User get(Long id){
+        User.get(id)
     }
 
     def list(){
@@ -31,11 +32,12 @@ class UserService {
         User.count()
     }
 
-    def delete(id){
+    def static delete(id){
         User.get(id).delete()
     }
 
-    def save(User user){
+    User save(UserCommand command){
+
         user.setStatus(UserStatus.CREATED)
         def userRole = Role.findOrSaveWhere(authority: 'ROLE_USER')
 
@@ -44,6 +46,7 @@ class UserService {
             UserRole.create(savedUser, userRole, true)
         }
         tokenService.sendVerificationEmail(savedUser)
+        user
     }
 
     def confirmUser(String token){

@@ -24,9 +24,7 @@ class UserController {
         respond new User(params)
     }
 
-    def save(UserCommand command, User user) {
-        println command
-        println command.firstName
+    def save(UserCommand command) {
         command.validate()
         if(command.hasErrors()){
             println(errors)
@@ -39,7 +37,7 @@ class UserController {
         }
 
         try {
-            userService.save(user)
+            userService.save(command)
         } catch (ValidationException e) {
             respond user.errors, view:'create'
             return
