@@ -23,20 +23,20 @@ class UserController {
         respond new User(params)
     }
 
-    def save(UserCommand command) {
-        command.validate()
-        if(command.hasErrors()){
-            println(errors)
-            redirect(view: '/user/create')
-            return
-        }
+    def save(User user) {
+//        command.validate()
+//        if(command.hasErrors()){
+//            println(errors)
+//            redirect(view: '/user/create')
+//            return
+//        }
         if (user == null) {
             notFound()
             return
         }
 
         try {
-            userService.save(command)
+            userService.save(user)
         } catch (ValidationException e) {
             respond user.errors, view:'create'
             return
@@ -52,8 +52,11 @@ class UserController {
     }
 
     def confirm(String token){
-        userService.confirmUser(token)
-        redirect(view: '/user/index')
+        User u = userService.confirmUser(token)
+        if(u==null){
+            flash.message = "Not Recognized"
+        }
+        redirect(view: '/')
     }
 
     def edit(Long id) {

@@ -8,6 +8,7 @@ class TokenService {
 
     def mailService
     def generalService
+    def grailsApplication
 
     def createVerificationToken(User user, String token) {
         VerificationToken newUserToken = new VerificationToken()
@@ -17,14 +18,14 @@ class TokenService {
     }
 
     def retrieveVerificationToken(String token){
-        VerificationToken.findByToken(token);
+        VerificationToken.findByToken(token)
     }
 
     def sendVerificationEmail(User user){
         String token = UUID.randomUUID().toString()
         createVerificationToken(user,token)
         String url =  "/confirm/" + token
-        String t ="http://localhost:1580/user" + url
+        String t ="http://localhost:" + grailsApplication.config."server.port" +"/user" + url
         mailService.sendMail {
             to user.getEmail()
             subject "Registration Confirmation"

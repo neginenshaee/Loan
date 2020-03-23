@@ -31,7 +31,7 @@ class UserService {
         User.get(id).delete()
     }
 
-    User save(UserCommand command){
+    User save(User user){
 
         user.setStatus(UserStatus.CREATED)
         def userRole = Role.findOrSaveWhere(authority: 'ROLE_USER')
@@ -46,9 +46,14 @@ class UserService {
 
     def confirmUser(String token){
         VerificationToken retrieved = tokenService.retrieveVerificationToken(token)
-        User user = retrieved.getUser()
-        user.setStatus(UserStatus.CONFIRMED)
-        user.save()
+        User user
+        if(retrieved!=null) {
+            user = retrieved.getUser()
+            user.setStatus(UserStatus.CONFIRMED)
+            user.save()
+            springSecurityService.reauthenticate(user.username,user.password)
+        }
+        user
     }
 
     def updatePassword(String old, String newpass, String confirm){
