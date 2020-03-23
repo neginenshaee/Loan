@@ -12,8 +12,7 @@ class UserController {
     def userService
 
     def index() {
-        List<User> users = userService.list()
-        render(view: '/user/index', model: [users: users])
+
     }
 
     def show(Long id) {

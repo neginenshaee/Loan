@@ -6,10 +6,11 @@
 </head>
 
 <body>
+<header>
+    <g:render template="/sharedTemplates/header"/>
+</header>
 <g:form controller="user" action="save" method="post">
-    <header>
-        <g:render template="/sharedTemplates/header"/>
-    </header>
+
     <div class="container">
 
         <div class="form-row">

@@ -11,7 +11,7 @@ class LoanRequestService {
 
     def springSecurityService
 
-    def get(id){
+    def static get(id){
         LoanRequest.get(id)
     }
 
@@ -26,11 +26,11 @@ class LoanRequestService {
         loans
     }
 
-    def count(){
+    def static count(){
         LoanRequest.count()
     }
 
-    def delete(id){
+    def static delete(id){
         LoanRequest.get(id).delete()
     }
 

@@ -13,22 +13,17 @@ class UserService {
     def springSecurityService
     def tokenService
 
+
     static User get(Long id){
         User.get(id)
     }
 
     def list(){
-        List<User> users
-        def authorities = springSecurityService.currentUser.authorities
-        if(authorities.contains(Role.findByAuthority("ROLE_USER"))) {
-            users = User.findAll()
-        }else{
-            users = User.findAll()
-        }
+        List<User> users = User.findAll()
         users
     }
 
-    def count(){
+    def static count(){
         User.count()
     }
 

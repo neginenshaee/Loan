@@ -6,10 +6,11 @@
     <asset:stylesheet src="bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
+<header>
+    <g:render template="/sharedTemplates/header"/>
+</header>
 <g:form resource="${this.user}" controller="user" action="update" method="put">
-    <header>
-        <g:render template="/sharedTemplates/header"/>
-    </header>
+
     <div class="container">
 
         <div class="form-row">

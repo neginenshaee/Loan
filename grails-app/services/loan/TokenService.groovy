@@ -7,6 +7,7 @@ import grails.gorm.transactions.Transactional
 class TokenService {
 
     def mailService
+    def generalService
 
     def createVerificationToken(User user, String token) {
         VerificationToken newUserToken = new VerificationToken()
@@ -27,7 +28,7 @@ class TokenService {
         mailService.sendMail {
             to user.getEmail()
             subject "Registration Confirmation"
-            text ("User created!"+"\n"+ t)
+            text (generalService.getMessage("user.registration.message")+"\n"+ t)
         }
     }
 }
