@@ -38,7 +38,6 @@ class LoanRequestService {
         loanRequest.setUser(springSecurityService.currentUser)
         loanRequest.setStatus(Status.REQUESTED)
         loanRequest.setActionDate(new Date())
-        loanRequest.setDeadline(new Date())
         loanRequest.save()
     }
 

@@ -2,37 +2,53 @@
 <html>
 <head>
     <title>Request Loan</title>
+    <meta name="layout" content="main"/>
     <asset:stylesheet src="bootstrap.css" rel="stylesheet"/>
 </head>
 
 <body>
-
-<header>
-    <g:render template="/sharedTemplates/header"/>
-</header>
-
 <g:form controller="loanRequest" action="save" method="post">
     <div class="container">
+        <div class="custom-wrapper">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <input type="number" class="form-control custom-input" name="amount" placeholder="Amount">
+                    </div>
+                </div>
+            </div>
 
-        <div class="form-group">
-            <input type="number" class="form-control" name="amount" placeholder="Amount">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <input type="date" class="form-control custom-input" name="deadline" placeholder="Deadline">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <textarea  type="text" class="form-control custom-input" name="description" placeholder="Description" rows="3"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">Request</button>
+                </div>
+            </div>
         </div>
 
 
-        <div class="form-group">
-            <input type="date" class="form-control" name="deadline" placeholder="Deadline">
-        </div>
-
-        <div class="form-group">
-            <textarea  type="text" class="form-control" name="desc" placeholder="Description" rows="3"></textarea>
-        </div>
 
 
-        <button type="submit" class="btn btn-primary">Request</button>
+
+
+
+
     </div>
 </g:form>
-<footer>
-    <g:render template="/sharedTemplates/footer"/>
-</footer>
 </body>
 </html>

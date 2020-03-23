@@ -356,7 +356,7 @@ ul.navbar-nav > li > a:focus{
 
 .black-nav-top{
     background: #212226;
-    padding: 10px 0;
+    padding: 5px 0;
     -webkit-box-shadow: 0 8px 6px -9px #999;
     box-shadow: 0 8px 6px -9px #999;
     z-index: 2;
@@ -402,8 +402,8 @@ footer p span{
 
 
 .login100-form {
+    transform: translate(30%, -30%);
     position: relative;
-    width: 290px;
 }
 
 .login100-form-title {
@@ -566,11 +566,11 @@ footer p span{
     justify-content: center;
     align-items: center;
     padding: 15px;
-    background: #9053c7;
-    background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
-    background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
-    background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
-    background: linear-gradient(-135deg, #c850c0, #4158d0);
+    background: #042F58;
+    background: -webkit-linear-gradient(-135deg, #042F58, #68B6FF);
+    background: -o-linear-gradient(-135deg, #042F58, #68B6FF);
+    background: -moz-linear-gradient(-135deg, #042F58, #68B6FF);
+    background: linear-gradient(-135deg, #042F58, #68B6FF);
 }
 
 .wrap-login100 {
@@ -642,9 +642,7 @@ footer p span{
 #remember_me_holder {
     padding-left: 120px;
 }
-#submit {
-    margin-left: 15px;
-}
+
 #remember_me_holder label {
     float: none;
     margin-left: 0;
@@ -670,4 +668,38 @@ footer p span{
 #passwordToggler {
     padding: 3px 4px;
     cursor: pointer;
+}
+
+/*===========================
+        SIGNUP
+=============================*/
+.custom-wrapper{
+    background: #68B6FF;
+    margin: 20px;
+    padding: 50px;
+    border-radius: 50px;
+    box-shadow: 5px 5px 10px 1px;
+}
+
+
+.custom-input{
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 10px;
+
+}
+
+.custom-input:hover,
+.custom-input:focus{
+    /*border-color: red;*/
+
+    box-shadow: 2px 6px 5px 1px;
+}
+
+/*===========================
+        BACKGROUND
+=============================*/
+.custom-background{
+
+    background-image: url('../assets/images/simple-background.jpg');
 }
