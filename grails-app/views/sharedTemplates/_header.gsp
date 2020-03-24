@@ -14,6 +14,9 @@
                             <sec:ifLoggedIn>
                                 <h1 class="nav-item" style="color:red">Hello <sec:username /></h1>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="/loan/index">Loan</a>
                                 </li>
                                 <sec:ifAnyGranted roles="ROLE_ADMIN">

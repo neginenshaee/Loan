@@ -8,6 +8,15 @@
 
 <body>
 
+
+    <g:if test="${flash.message}">
+        <div class="message" role="status">
+            <g:hasErrors bean="${flash.message}">
+                <g:renderErrors bean="${flash.message}" />
+                ${params}
+            </g:hasErrors>
+        </div>
+    </g:if>
     <div class="custom-background">
         <g:form controller="user" action="save" method="post">
             <div class="container">
