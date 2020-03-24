@@ -8,7 +8,6 @@ class UserCommand implements Validateable {
 
     static constraints = {
         firstName nullable: false, blank: false
-        lastName inList: ['a','b']
 
     }
 }
