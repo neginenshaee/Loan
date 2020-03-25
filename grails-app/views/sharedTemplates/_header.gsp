@@ -23,6 +23,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="/user/index">User</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/repayment/index">Repayment</a>
+                                    </li>
                                 </sec:ifAnyGranted>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/user/password">Change Password</a>

@@ -13,7 +13,6 @@
         <div class="message" role="status">
             <g:hasErrors bean="${flash.message}">
                 <g:renderErrors bean="${flash.message}" />
-                ${params}
             </g:hasErrors>
         </div>
     </g:if>
