@@ -25,4 +25,5 @@ class RepaymentController {
         Repayment saved = repaymentService.save(repayment)
         redirect saved
     }
+
 }

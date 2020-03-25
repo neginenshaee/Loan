@@ -18,7 +18,7 @@
         <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
         </g:if>
-        <f:display bean="repayment" except="password"/>
+        <f:display bean="repayment"/>
 
         <g:form resource="${this.repayment}" method="DELETE">
             <fieldset class="buttons">

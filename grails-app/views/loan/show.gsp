@@ -29,6 +29,7 @@
                             <g:if test="${this.loanRequest.status.name() == 'APPROVED'}">
                                 <button class="btn btn-primary" type="submit" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Confirm</button>
                             </g:if>
+                            <g:link class="edit" action="repayments" resource="${this.loanRequest}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                         </g:form>
                 </sec:ifAnyGranted>
                 <sec:ifAnyGranted roles="ROLE_ADMIN">

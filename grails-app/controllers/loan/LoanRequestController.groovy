@@ -63,6 +63,14 @@ class LoanRequestController {
         redirect(view: '/loan/index')
     }
 
+
+    def repaymentService
+
+    def repayments(Long id){
+        def request = repaymentService.getRepaymentsByLoanRequest(loanRequestService.get(id))
+        render(view: '/loan/repayments', model: [request: request])
+    }
+
     protected void notFound() {
         request.withFormat {
             form multipartForm {
