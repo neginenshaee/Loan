@@ -8,6 +8,8 @@ import java.text.DecimalFormat
 @Transactional
 class RepaymentService {
 
+    private static DecimalFormat df = new DecimalFormat("0.00");
+
     static Repayment get(Long id){
         Repayment.get(id)
     }
@@ -25,15 +27,9 @@ class RepaymentService {
         repayment.save()
     }
 
-    private static DecimalFormat df = new DecimalFormat("0.00");
-
-
     def getRepaymentsByLoanRequest(LoanRequest loanRequest){
         List<Repayment> repayments = list()
-
-
         List<Map<String, String>> res = new ArrayList<HashMap<String, String>>()
-
         for (Repayment r : repayments){
             Map result = new HashMap()
             result.put("dailyPenalty",r.getDailyPenalty())
@@ -44,6 +40,8 @@ class RepaymentService {
             def monthly = all / r.getPeriod()
             result.put("monthlyShare", df.format(monthly))
             result.put("all", all)
+            result.put("id",r.getId())
+            result.put("loan",loanRequest.id)
             res.add(result)
         }
         res

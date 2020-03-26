@@ -71,6 +71,13 @@ class LoanRequestController {
         render(view: '/loan/repayments', model: [request: request])
     }
 
+    def select(){
+        def id = params.id
+        println 'repayment: ' + id
+        println 'loan: ' + params.loan
+        redirect view: '/loan/index'
+    }
+
     protected void notFound() {
         request.withFormat {
             form multipartForm {

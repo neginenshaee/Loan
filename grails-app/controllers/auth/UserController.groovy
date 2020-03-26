@@ -104,6 +104,14 @@ class UserController {
             '*'{ render status: NO_CONTENT }
         }
     }
+
+    def onChange(Long id){
+        boolean status = Boolean.parseBoolean(params.status);
+        User user = userService.get(Long.valueOf(params.id))
+        user.setEnabled(status)
+        userService.update(user)
+        render user
+    }
     protected void notFound() {
         request.withFormat {
             form multipartForm {
