@@ -31,16 +31,19 @@ class UserService {
         User.get(id).delete()
     }
 
-    User save(User user){
-
-        user.setStatus(UserStatus.CREATED)
-        def userRole = Role.findOrSaveWhere(authority: 'ROLE_USER')
-
+    User save(UserCommand command){
+        User user = bindValues(command)
         User savedUser = user.save()
+        def userRole = Role.findOrSaveWhere(authority: 'ROLE_USER')
         if (!savedUser.authorities.contains(userRole)) {
             UserRole.create(savedUser, userRole, true)
         }
         tokenService.sendVerificationEmail(savedUser)
+        savedUser
+    }
+
+    User update(User user){
+        user.save()
         user
     }
 
@@ -72,6 +75,25 @@ class UserService {
 
     def getCurrentUser(){
         springSecurityService.currentUser
+    }
+
+    User bindValues(UserCommand u){
+        User user = new User()
+        user.setFirstName(u.firstName)
+        user.setLastName(u.lastName)
+        user.setUsername(u.username)
+        user.setPassword(u.password)
+        user.setEmail(u.email)
+        user.setCountry(u.country)
+        user.setAddress(u.address)
+        user.setStatus(u.status)
+        user.setEnabled(u.enabled)
+        user.setAccountExpired(u.accountExpired)
+        user.setAccountLocked(u.accountLocked)
+        user.setPasswordExpired(u.passwordExpired)
+        user.setDateCreated(u.dateCreated)
+        user.setLastUpdated(u.lastUpdated)
+        user
     }
 
 }

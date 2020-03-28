@@ -355,6 +355,7 @@ fieldset.embedded legend {
 
 .message {
     background: transparent url(../images/skin/information.png) 0.5em 50% no-repeat;
+    padding-left: 15px;
     text-indent: 2.2em;
 }
 

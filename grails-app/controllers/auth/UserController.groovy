@@ -23,31 +23,26 @@ class UserController {
         respond new User(params)
     }
 
-    def save(User user) {
-//        command.validate()
-//        if(command.hasErrors()){
-//            println(errors)
-//            redirect(view: '/user/create')
-//            return
-//        }
-        if (user == null) {
-            notFound()
-            return
-        }
-
-        try {
-            userService.save(user)
-        } catch (ValidationException e) {
-            respond user.errors, view:'create'
-            return
-        }
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
-                redirect user
+    def save(UserCommand command) {
+        User user
+        if(command.validate()) {
+            try {
+                user = userService.save(command)
+            } catch (ValidationException e) {
+                respond command.errors, view: 'create'
+                return
             }
-            '*' { respond user, [status: CREATED] }
+
+            request.withFormat {
+                form multipartForm {
+                    flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
+                    redirect user
+                }
+                '*' { respond user, [status: CREATED] }
+            }
+        }else{
+            flash.message = command.errors
+            respond command.errors, view: 'create'
         }
     }
 
@@ -78,21 +73,15 @@ class UserController {
     }
 
     def update(User user) {
-        if (user == null) {
-            notFound()
-            return
-        }
-
         try {
-            userService.save(user)
+            userService.update(user)
         } catch (ValidationException e) {
             respond user.errors, view:'edit'
             return
         }
-
         request.withFormat {
             form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user.id])
+                flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user])
                 redirect user
             }
             '*'{ respond user, [status: OK] }
@@ -114,6 +103,14 @@ class UserController {
             }
             '*'{ render status: NO_CONTENT }
         }
+    }
+
+    def onChange(Long id){
+        boolean status = Boolean.parseBoolean(params.status);
+        User user = userService.get(Long.valueOf(params.id))
+        user.setEnabled(status)
+        userService.update(user)
+        render user
     }
     protected void notFound() {
         request.withFormat {

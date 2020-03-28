@@ -1,6 +1,7 @@
 package loan
 
 import auth.Role
+import commands.LoanRequestCommand
 import enums.Status
 import grails.gorm.transactions.Transactional
 
@@ -34,11 +35,13 @@ class LoanRequestService {
         LoanRequest.get(id).delete()
     }
 
-    def save(LoanRequest loanRequest){
-        loanRequest.setUser(springSecurityService.currentUser)
-        loanRequest.setStatus(Status.REQUESTED)
-        loanRequest.setActionDate(new Date())
-        loanRequest.save()
+    def save(LoanRequestCommand command){
+        try {
+            LoanRequest loanRequest = bindValues(command)
+            loanRequest.save()
+        }catch(Exception e){
+            println e
+        }
     }
 
     def cancel(Long id){
@@ -52,5 +55,18 @@ class LoanRequestService {
         LoanRequest loanRequest = LoanRequest.findById(id)
         loanRequest.setStatus(Status.APPROVED)
         loanRequest.save()
+    }
+
+    LoanRequest bindValues(LoanRequestCommand c){
+        LoanRequest loanRequest = new LoanRequest()
+        loanRequest.setUser(springSecurityService.currentUser)
+        loanRequest.setStatus(c.status)
+        loanRequest.setDeadline(c.deadline)
+        loanRequest.setAmount(c.amount)
+        loanRequest.setDateCreated(c.dateCreated)
+        loanRequest.setActionDate(c.actionDate)
+        loanRequest.setLastUpdated(c.lastUpdated)
+        loanRequest.setDescription(c.description)
+        loanRequest
     }
 }

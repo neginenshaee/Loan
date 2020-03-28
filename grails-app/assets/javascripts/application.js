@@ -77,3 +77,25 @@ $(function () {
 
     });
 })
+
+
+/*===========================
+        AJAX
+=============================*/
+function changeStatus() {
+    var URL="/user/onChange";
+    $.ajax({
+        url: URL,
+        type: 'POST',
+        data:{ status: $('input[name="radioGroup"]:checked').val(), id: $('input[name="hidid"]').val()},
+        success: function(data, textStatus, jqXHR) {
+            alert('Done!')
+        },
+        error: function(data,  textStatus,  errorThrown) {
+            alert ("Error occurred : " + textStatus);
+        }
+
+    });
+
+}
+

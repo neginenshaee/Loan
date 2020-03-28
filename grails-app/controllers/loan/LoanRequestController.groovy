@@ -1,6 +1,6 @@
 package loan
 
-
+import commands.LoanRequestCommand
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 
@@ -24,23 +24,18 @@ class LoanRequestController {
         render(view: '/loan/request')
     }
 
-
-
-    def save(LoanRequest loanRequest) {
-        if (loanRequest == null) {
-            notFound()
-            return
+    def save(LoanRequestCommand command) {
+        if(command.validate()) {
+            try {
+                loanRequestService.save(command)
+                redirect(view: '/loan/index')
+            } catch (ValidationException e) {
+                respond command.errors, view: 'create'
+            }
+        }else{
+            flash.message = (command.errors)
+            render (view: '/loan/request')
         }
-
-        try {
-            loanRequestService.save(loanRequest)
-            redirect(view: '/loan/index')
-        } catch (ValidationException e) {
-            respond loanRequest.errors, view:'create'
-            return
-        }
-
-
     }
 
     def edit(Long id) {
@@ -66,6 +61,21 @@ class LoanRequestController {
     def cancel() {
         loanRequestService.cancel(Long.valueOf(params.loanRequest))
         redirect(view: '/loan/index')
+    }
+
+
+    def repaymentService
+
+    def repayments(Long id){
+        def request = repaymentService.getRepaymentsByLoanRequest(loanRequestService.get(id))
+        render(view: '/loan/repayments', model: [request: request])
+    }
+
+    def select(){
+        def id = params.id
+        println 'repayment: ' + id
+        println 'loan: ' + params.loan
+        redirect view: '/loan/index'
     }
 
     protected void notFound() {
