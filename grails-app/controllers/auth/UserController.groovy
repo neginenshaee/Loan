@@ -51,7 +51,7 @@ class UserController {
         if(u==null){
             flash.message = "Not Recognized"
         }
-        redirect(view: '/')
+        redirect(action: 'show', id: u.id)
     }
 
     def edit(Long id) {
