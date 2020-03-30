@@ -702,3 +702,296 @@ footer p span{
 
     background-image: url('../assets/images/simple-background.jpg');
 }
+
+
+
+/*===========================
+        amortization
+=============================*/
+.amortizationGrid{
+    width: 100%;
+    background: white;
+    border: 1px solid #cfcfd4;
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+
+}
+
+.lefGrid{
+    padding: 10px;
+    background: #e6e6e6;
+    width: 50%;
+    flex-basis: auto;
+    display: inline-block;
+}
+
+.rightGrid{
+    background: white;
+    width: 50%;
+    flex-basis: auto;
+    display: inline-block;
+    text-align: center;
+}
+
+.amortizationInput{
+    margin-bottom: 10px;
+    display: block;
+    width: 100%;
+}
+
+.amortizationInput:focus{
+    border-bottom: 2px solid blue;
+}
+
+.amortizationButton{
+    margin-top: 15px;
+    width: 100%;
+    background-color: #3139f2;
+    color: white;
+    padding-left: 0;
+    padding-right: 0;
+    line-height: 2;
+    border-radius: 0%;
+}
+.amortizationButton:hover{
+    background-color: black;
+    color: white;
+}
+
+.linktorate{
+    font-size: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+    border: 4px solid orange;
+}
+
+.linktorate:hover{
+    background-color: orange;
+}
+
+.input-icons i {
+    position: absolute;
+}
+
+.input-icons {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.icon {
+    padding: 10px;
+    min-width: 40px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+}
+
+#monthlyPayment{
+    font-family: "Acumin Pro Bold";
+    font-size: 4rem;
+    color: black;
+    line-height: 1.1;
+}
+
+.amotizationTitle{
+    font-family: "Acumin Pro Bold";
+    font-size: 4rem;
+    line-height: 1.1;
+    color: black;
+
+}
+
+.calculatorAcumin{
+    font-family: "Acumin Pro Bold";
+    color: black;
+}
+
+.calculatorCalibre {
+    font-family: "Calibre Regular";
+    font-size: 1.125em;
+    color: black;
+    line-height: 1.5;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.orderedList{
+    counter-reset: step-counter;
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+.calculatorAmortizationLink{
+    color: #3139f2;
+    cursor: pointer;
+}
+
+#amortizationDiv{
+    display: none;
+    margin-top: 20px;
+    border: 1px solid #cfcfd4;
+    background-color: white;
+}
+
+.grid{
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
+
+
+
+@font-face {
+    font-family: 'Acumin Pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Acumin Pro'), url('../fonts/acumin/Acumin-RPro.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Acumin Pro Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Acumin Pro Italic'), url('../fonts/acumin/Acumin-ItPro.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Acumin Pro Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Acumin Pro Bold'), url('../fonts/acumin/Acumin-BdPro.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Acumin Pro Bold Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Acumin Pro Bold Italic'), url('../fonts/acumin/Acumin-BdItPro.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Calibre Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Regular'), url('../fonts/calibre/CalibreRegular.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Calibre Regular Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Regular Italic'), url('../fonts/calibre/CalibreRegularItalic.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Calibre Thin';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Thin'), url('../fonts/calibre/CalibreThin.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Calibre Thin Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Thin Italic'), url('../fonts/calibre/CalibreThinItalic.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Calibre Light';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Light'), url('../fonts/calibre/CalibreLight.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Calibre Light Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Light Italic'), url('../fonts/calibre/CalibreLightItalic.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Calibre Medium';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Medium'), url('../fonts/calibre/CalibreMedium.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Calibre Medium Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Medium Italic'), url('../fonts/calibre/CalibreMediumItalic.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Calibre Semibold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Semibold'), url('../fonts/calibre/CalibreSemibold.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Calibre Semibold Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Semibold Italic'), url('../fonts/calibre/CalibreSemiboldItalic.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Calibre Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Bold'), url('../fonts/calibre/CalibreBold.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Calibre Bold Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Bold Italic'), url('../fonts/calibre/CalibreBoldItalic.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Calibre Black';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Black'), url('../fonts/calibre/CalibreBlack.woff') format('woff');
+}
+
+
+@font-face {
+    font-family: 'Calibre Black Italic';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Calibre Black Italic'), url('../fonts/calibre/CalibreBlackItalic.woff') format('woff');
+}

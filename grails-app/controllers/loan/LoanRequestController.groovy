@@ -57,6 +57,9 @@ class LoanRequestController {
 
     }
 
+    def calculator(){
+        render(view: '/loan/calculator')
+    }
 
     def cancel() {
         loanRequestService.cancel(Long.valueOf(params.loanRequest))

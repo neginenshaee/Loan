@@ -19,6 +19,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/loan/index">Loan</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/loan/calculator">Calculator</a>
+                                </li>
                                 <sec:ifAnyGranted roles="ROLE_ADMIN">
                                     <li class="nav-item">
                                         <a class="nav-link" href="/user/index">User</a>
