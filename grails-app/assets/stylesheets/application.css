@@ -712,7 +712,6 @@ footer p span{
     width: 100%;
     background: white;
     border: 1px solid #cfcfd4;
-    width: 100%;
     display: flex;
     flex-flow: row wrap;
 
@@ -735,7 +734,11 @@ footer p span{
 }
 
 .amortizationInput{
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    font-family: "Acumin Pro Bold";
+    border: 1px solid #a7a8af;
+    padding: .5rem .75rem;
+    font-size: 16px;
     display: block;
     width: 100%;
 }
@@ -788,6 +791,7 @@ footer p span{
     width: 100%;
     padding: 10px;
     text-align: center;
+
 }
 
 #monthlyPayment{
@@ -834,22 +838,48 @@ footer p span{
 }
 
 #amortizationDiv{
+    padding: 10px;
+    color: black;
     display: none;
     margin-top: 20px;
     border: 1px solid #cfcfd4;
     background-color: white;
 }
 
+.calculatorTotal{
+    padding-right: 150px;
+}
+
+.calculatorTotalNum{
+    padding-left: 150px;
+}
+
+.divtorate{
+    padding-top: 80px;
+}
+
 .grid{
     box-sizing: border-box;
-    display: flex;
-    flex-flow: row wrap;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-flow: row wrap;
+    width: 100%;
+}
+
+.divStartDate{
+    width: 50%;
+    flex-basis: auto;
+    display: inline-block;
 }
 
 
-
+.divEstimate{
+    width: 50%;
+    padding-left: 30px;
+    flex-basis: auto;
+    display: inline-block;
+}
 
 
 

@@ -28,21 +28,22 @@
                     <label  for="mortgageamount">
                         <span>Mortgage amount</span>
                     </label>
-                    <input type="text" id="mortgageamount" class="amortizationInput" placeholder="$" value="1000">
+%{--                    <i class="fa fa-dollar-sign fa-5x"></i>--}%
+                    <input type="text" id="mortgageamount" class="amortizationInput" placeholder="$" value="165000">
                 </div>
                 <div class="row">
                     <label  for="years">
                         <span>Mortgage term in years</span>
                     </label>
-                    <input type="text" id="years" class="amortizationInput" value="1">
+                    <input type="text" id="years" class="amortizationInput" value="30">
 
                 </div>
                 <div class="row">
-                    <span>Or</span>
+
                     <label  for="month">
-                        <span>Term in months</span>
+                        <span><span>Or<br></span>Term in months</span>
                     </label>
-                        <input type="text" id="month" class="amortizationInput" value="12">
+                        <input type="text" id="month" class="amortizationInput" value="360">
 
                 </div>
                 <div class="row">
@@ -50,7 +51,7 @@
                     <label  for="interest">
                         <span>Interest rate per year</span>
                     </label>
-                    <input type="text" id="interest" class="amortizationInput" placeholder="%" value="5">
+                    <input type="number" step="0.01" min="0" max="100" id="interest" class="amortizationInput" placeholder="%" value="4.5">
                     </div>
                     <div class="col-md-6">
                     <button class="btn amortizationButton" id="calculate">Calculate</button>
@@ -60,21 +61,22 @@
             </div>
 
             <div class="rightGrid">
-                <p>Monthly Payments</p>
+                <p class="calculatorCalibre">Monthly Payments</p>
                 <p id="monthlyPayment"></p>
-                <div>
-                    <span>Total Principal Paid</span>
-                    <span id="total" ></span>
+                <div class="calculatorCalibre">
+                    <span class="calculatorTotal">Total Principal Paid</span>
+                    <span id="total" class="calculatorTotalNum"></span>
                 </div>
                 <hr/>
-                <div>
-                    <span>Total Interest Paid</span>
-                    <span id="totalinterest"></span>
+                <div class="calculatorCalibre">
+                    <span class="calculatorTotal">Total Interest Paid</span>
+                    <span id="totalinterest" class="calculatorTotalNum"></span>
                 </div>
 
 
-
-                <a class="linktorate">Today's Rate</a>
+                <div class="divtorate">
+                    <a class="linktorate">Today's Rate</a>
+                </div>
                 <br>
                 <a>
                     <span id="calculatorAmortizationLink" class="calculatorAmortizationLink">Show amortization schedule</span>
@@ -86,14 +88,12 @@
 
     <div id="amortizationDiv">
         <div class="grid">
-            <div>
-                <div>
-                    <label for="startDate">Start Date</label>
-                    <input id="startDate" class="input-field" type="date">
-                </div>
+            <div class="divStartDate">
+                <label class="calculatorAcumin" for="startDate">Start Date</label>
+                <input id="startDate" class="amortizationInput" type="date">
             </div>
 
-            <div>
+            <div class="divEstimate">
                 <p class="calculatorAcumin">Estimated Payoff Date</p>
                 <p id="estimate" class="calculatorAcumin"></p>
             </div>
@@ -142,11 +142,24 @@
                 <li>See how much interest you have paid over the life of the mortgage, or during a particular year, though this may vary based on when the lender receives your payments.</li>
                 <li>Figure how much equity you have.</li>
             </ol>
+    </div>
+
+    <div>
+        <div>
+            <h3 class="calculatorAcumin">How do I calculate monthly mortgage payments?</h3>
+            <p class="calculatorCalibre">Here’s a formula to calculate your monthly payments manually: M= P[r(1+r)^n/((1+r)^n)-1)]</p>
+            <ul class="calculatorCalibre">
+                <li>M = the total monthly mortgage payment.</li>
+                <li>P = the principal loan amount.</li>
+                <li>r = your monthly interest rate. Lenders provide you an annual rate so you’ll need to divide that figure by 12 (the number of months in a year) to get the monthly rate. If your interest rate is 5 percent, your monthly rate would be 0.004167 (0.05/12=0.004167)</li>
+                <li>n = number of payments over the loan’s lifetime. Multiply the number of years in your loan term by 12 (the number of months in a year) to get the number of payments for your loan. For example, a 30-year fixed mortgage would have 360 payments (30x12=360)</li>
+            </ul>
 
 
 
 
 
+        </div>
     </div>
 </div>
 </body>
