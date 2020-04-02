@@ -57,6 +57,12 @@ class LoanRequestService {
         loanRequest.save()
     }
 
+    def reject(Long id){
+        LoanRequest loanRequest = LoanRequest.findById(id)
+        loanRequest.setStatus(Status.REJECTED)
+        loanRequest.save()
+    }
+
     LoanRequest bindValues(LoanRequestCommand c){
         LoanRequest loanRequest = new LoanRequest()
         loanRequest.setUser(springSecurityService.currentUser)
