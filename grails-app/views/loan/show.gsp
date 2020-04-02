@@ -23,18 +23,27 @@
             <div class="row">
                 <sec:ifAnyGranted roles="ROLE_USER">
                         <g:form params="${[loanRequest: this.loanRequest.id]}" controller="loanRequest" action="cancel">
-                            <g:if test="${this.loanRequest.status.name() == 'CANCELED'}">
+                            <g:if test="${this.loanRequest.status.name() == 'REQUESTED' || this.loanRequest.status.name() == 'APPROVED'}">
                                 <button class="btn btn-danger" type="submit" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Cancel</button>
                             </g:if>
                             <g:if test="${this.loanRequest.status.name() == 'APPROVED'}">
                                 <button class="btn btn-primary" type="submit" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Confirm</button>
                             </g:if>
-                            <g:link class="btn btn-primary" action="repayments" resource="${this.loanRequest}">Select repayment</g:link>
+                            <g:if test="${this.loanRequest.status.name() == 'CONFIRMED'}">
+                                <g:link class="btn btn-primary" action="repayments" resource="${this.loanRequest}">Select repayment</g:link>
+                            </g:if>
                         </g:form>
                 </sec:ifAnyGranted>
                 <sec:ifAnyGranted roles="ROLE_ADMIN">
                     <g:form params="${[loanRequest: this.loanRequest.id]}" controller="adminLoan" action="approve" method="PUT">
-                        <button type="submit" class="btn btn-primary" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Approve</button>
+                        <g:if test="${this.loanRequest.status.name() == 'REQUESTED'}">
+                            <button type="submit" class="btn btn-primary" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Approve</button>
+                        </g:if>
+                    </g:form>
+                    <g:form params="${[loanRequest: this.loanRequest.id]}" controller="adminLoan" action="reject" method="PUT">
+                        <g:if test="${this.loanRequest.status.name() == 'REQUESTED'}">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Reject</button>
+                        </g:if>
                     </g:form>
                 </sec:ifAnyGranted>
             </div>

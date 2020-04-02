@@ -63,7 +63,7 @@ class LoanRequestController {
 
     def cancel() {
         loanRequestService.cancel(Long.valueOf(params.loanRequest))
-        redirect(view: '/loan/index')
+        redirect(action: 'show', id: params.loanRequest)
     }
 
 

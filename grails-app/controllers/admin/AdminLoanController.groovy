@@ -15,6 +15,11 @@ class AdminLoanController {
 
     def approve(){
         loanRequestService.approve(Long.valueOf(params.loanRequest))
-        redirect(view: '/loan/index')
+        redirect(controller: 'loanRequest',  action: 'show', id: params.loanRequest)
+    }
+
+    def reject(){
+        loanRequestService.reject(Long.valueOf(params.loanRequest))
+        redirect(controller: 'loanRequest',  action: 'show', id: params.loanRequest)
     }
 }
