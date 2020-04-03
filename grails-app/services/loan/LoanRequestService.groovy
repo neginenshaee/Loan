@@ -13,6 +13,8 @@ class LoanRequestService {
 
     def springSecurityService
     def userService
+    def generalService
+    def sendEmailService
 
     def static get(id){
         LoanRequest.get(id)
@@ -63,12 +65,23 @@ class LoanRequestService {
         LoanRequest loanRequest = LoanRequest.findById(id)
         loanRequest.setStatus(Status.APPROVED)
         loanRequest.save()
+        sendEmailService.sendEmail(
+                loanRequest.getUser().getEmail(),
+                generalService.getMessage("loan.request.status.update", Status.APPROVED),
+                generalService.getMessage("loan.request.approved", loanRequest.amount,loanRequest.dateCreated)
+        )
     }
 
     def reject(Long id){
         LoanRequest loanRequest = LoanRequest.findById(id)
         loanRequest.setStatus(Status.REJECTED)
         loanRequest.save()
+        sendEmailService.sendEmail(
+                loanRequest.getUser().getEmail(),
+                generalService.getMessage("loan.request.status.update", Status.REJECTED),
+                generalService.getMessage("loan.request.rejected", loanRequest.amount,loanRequest.dateCreated)
+        )
+
     }
 
     LoanRequest bindValues(LoanRequestCommand c){
