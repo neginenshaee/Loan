@@ -112,6 +112,12 @@ class UserController {
         userService.update(user)
         render user
     }
+
+    def userloanrequest(Long id){
+        redirect(controller: 'adminLoan',  action: 'userrequests', id: id)
+    }
+
+
     protected void notFound() {
         request.withFormat {
             form multipartForm {

@@ -1,6 +1,7 @@
 package loan
 
 import auth.Role
+import auth.User
 import commands.LoanRequestCommand
 import enums.Status
 import grails.gorm.transactions.Transactional
@@ -11,6 +12,7 @@ import static org.springframework.http.HttpStatus.CREATED
 class LoanRequestService {
 
     def springSecurityService
+    def userService
 
     def static get(id){
         LoanRequest.get(id)
@@ -25,6 +27,12 @@ class LoanRequestService {
             loans = LoanRequest.findAll()
         }
         loans
+    }
+
+    def requestsOfUser(Long id){
+        User user = userService.get(id)
+        List<LoanRequest> requests = LoanRequest.findAllByUser(user)
+        requests
     }
 
     def static count(){

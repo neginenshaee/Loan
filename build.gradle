@@ -111,3 +111,6 @@ assets {
     minifyJs = true
     minifyCss = true
 }
+springBoot {
+    mainClassName = 'loan.Application'
+}

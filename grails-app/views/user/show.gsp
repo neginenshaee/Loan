@@ -10,7 +10,7 @@
         <div class="nav" role="navigation">
             <ul>
                 <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-%{--                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>--}%
+                <li><g:link class="list" resource="${this.user}" action="userloanrequest">Show Loan Request List</g:link></li>
             </ul>
         </div>
         <div id="show-user" class="content scaffold-show" role="main">
@@ -24,8 +24,8 @@
                 <fieldset class="buttons">
                     <g:link class="edit" action="edit" resource="${this.user}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
                     <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                    <input type="radio" name="radioGroup" class="radioGroup" value="true" onclick="changeStatus()">Enable
-                    <input type="radio" name="radioGroup" class="radioGroup" value="false" onclick="changeStatus()">Disable
+                    <input type="radio" name="radioGroup" class="radioGroup" value="true"  onclick="changeStatus()">Activate
+                    <input type="radio" name="radioGroup" class="radioGroup" value="false" onclick="changeStatus()">Deactivate
                     <input hidden name="hidid" value="${this.user.id}"/>
 
                 </fieldset>

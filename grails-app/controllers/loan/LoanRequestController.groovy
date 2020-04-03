@@ -9,6 +9,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND
 @Secured(['ROLE_USER','ROLE_ADMIN'])
 class LoanRequestController {
 
+    def repaymentService
     def loanRequestService
 
     def index(){
@@ -65,9 +66,6 @@ class LoanRequestController {
         loanRequestService.cancel(Long.valueOf(params.loanRequest))
         redirect(action: 'show', id: params.loanRequest)
     }
-
-
-    def repaymentService
 
     def repayments(Long id){
         def request = repaymentService.getRepaymentsByLoanRequest(loanRequestService.get(id))
