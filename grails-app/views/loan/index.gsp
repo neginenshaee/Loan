@@ -7,22 +7,41 @@
 </head>
 
 <body>
-    <a href="#list-loanRequest" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-    <div class="nav" role="navigation">
-        <ul>
-            <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-        </ul>
-    </div>
-    <div id="list-loanRequest" class="content table table-striped table-hover" role="main">
-        <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+<div class="container">
+            <g:link action="create">
+                <button class="custom-button primary" type="button"><g:message code="default.new.label" args="[entityName]"/></button>
+            </g:link>
+
+        <h1><g:message code="default.list.label" args="[entityName]" /></h1><hr>
+
         <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
         </g:if>
-        <f:table collection="${loans}" />
+
+        <table class="content-table">
+            <thead>
+            <tr>
+                <td>Amount</td>
+                <td>Interest</td>
+                <td>Status</td>
+                <td>Month</td>
+                <td>User</td>
+            </tr>
+            </thead>
+            <g:each in="${loans}" status="i" var="loan">
+                <tr>
+                    <td><a href="/loan/show/${loan.id}">${loan.amount}</a></td>
+                    <td>${loan.interest}</td>
+                    <td>${loan.status}</td>
+                    <td>${loan.months}</td>
+                    <td><a href="/user/show/${loan.user.id}">${loan.user}</a></td>
+                </tr>
+            </g:each>
+        </table>
 
         <div class="pagination">
             <g:paginate total="${loanRequestCount ?: 0}" />
         </div>
-    </div>
+</div>
 </body>
 </html>

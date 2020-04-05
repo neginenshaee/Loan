@@ -88,12 +88,11 @@ class LoanRequestService {
         LoanRequest loanRequest = new LoanRequest()
         loanRequest.setUser(springSecurityService.currentUser)
         loanRequest.setStatus(c.status)
-        loanRequest.setDeadline(c.deadline)
+        loanRequest.setInterest(c.interest)
         loanRequest.setAmount(c.amount)
         loanRequest.setDateCreated(c.dateCreated)
-        loanRequest.setActionDate(c.actionDate)
+        loanRequest.setMonths(c.months)
         loanRequest.setLastUpdated(c.lastUpdated)
-        loanRequest.setDescription(c.description)
         loanRequest
     }
 }

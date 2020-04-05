@@ -6,9 +6,8 @@ import grails.validation.Validateable
 
 class LoanRequestCommand implements Validateable {
     Long amount
-    Date actionDate = new Date()
-    Date deadline
-    String description
+    int months
+    double interest
     static belongsTo = [user: User]
     Status status = Status.REQUESTED
     Date dateCreated = new Date()
@@ -16,10 +15,9 @@ class LoanRequestCommand implements Validateable {
 
     static constraints = {
         amount nullable: false
-        deadline nullable: false, min: new Date()
-        description nullable: true, blank: true
+        months nullable: false
+        interest nullable: false
         status nullable: true
-        actionDate nullable: true
         belongsTo nullable: true
         dateCreated nullable: true
         lastUpdated nullable: true

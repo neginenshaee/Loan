@@ -6,7 +6,7 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class TokenService {
 
-    def mailService
+    def sendEmailService
     def generalService
     def grailsApplication
 
@@ -26,10 +26,9 @@ class TokenService {
         createVerificationToken(user,token)
         String url =  "/confirm/" + token
         String t ="http://localhost:" + grailsApplication.config."server.port" +"/user" + url
-        mailService.sendMail {
-            to user.getEmail()
-            subject "Registration Confirmation"
-            text (generalService.getMessage("user.registration.message")+"\n"+ t)
-        }
+        sendEmailService.sendEmail(
+                user.getEmail(),
+                "Registration Confirmation",
+                generalService.getMessage("user.registration.message")+"\n"+ t)
     }
 }

@@ -13,14 +13,14 @@ class AdminLoanController {
 
     def index() { }
 
-    def approve(){
-        loanRequestService.approve(Long.valueOf(params.loanRequest))
-        redirect(controller: 'loanRequest',  action: 'show', id: params.loanRequest)
+    def approve(Long id){
+        loanRequestService.approve(id)
+        redirect(controller: 'loanRequest',  action: 'show', id: id)
     }
 
-    def reject(){
-        loanRequestService.reject(Long.valueOf(params.loanRequest))
-        redirect(controller: 'loanRequest',  action: 'show', id: params.loanRequest)
+    def reject(Long id){
+        loanRequestService.reject(id)
+        redirect(controller: 'loanRequest',  action: 'show', id: id)
     }
 
     def userrequests(Long id){

@@ -89,6 +89,7 @@ class UserController {
     }
 
     def delete(Long id) {
+        println(id)
         if (id == null) {
             notFound()
             return

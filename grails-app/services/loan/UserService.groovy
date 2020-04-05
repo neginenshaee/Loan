@@ -53,6 +53,7 @@ class UserService {
         if(retrieved!=null) {
             user = retrieved.getUser()
             user.setStatus(UserStatus.CONFIRMED)
+            user.setEnabled(true)
             user.save()
             springSecurityService.reauthenticate(user.username,user.password)
         }

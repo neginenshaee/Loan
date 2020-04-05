@@ -6,20 +6,40 @@
         <title><g:message code="default.list.label" args="[entityName]" /></title>
     </head>
     <body>
-        <a href="#list-user" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <sec:ifAnyGranted roles="ROLE_ADMIN">
-                    <li><g:link class="create" controller="user" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>
-                </sec:ifAnyGranted>
-            </ul>
-        </div>
-        <div id="list-user" class="content table table-striped table-hover" role="main">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+        <div class="container">
+
+            <sec:ifAnyGranted roles="ROLE_ADMIN">
+                <g:link  controller="user" action="create">
+                    <button class="custom-button primary" type="button"><g:message code="default.new.label" args="[entityName]"/></button>
+                </g:link>
+            </sec:ifAnyGranted>
+
+            <h1><g:message code="default.list.label" args="[entityName]" /></h1><hr>
+
             <g:if test="${flash.message}">
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
-            <f:table collection="${users}" except="['id','password']" />
+
+            <table class="content-table">
+                <thead>
+                    <tr>
+                        <td>Username</td>
+                        <td>Firstname</td>
+                        <td>Lastname</td>
+                        <td>Email</td>
+                        <td>Status</td>
+                    </tr>
+                </thead>
+                <g:each in="${users}" status="i" var="user">
+                    <tr>
+                        <td><a href="/user/show/${user.id}">${user.username}</a></td>
+                        <td>${user.firstName}</td>
+                        <td>${user.lastName}</td>
+                        <td>${user.email}</td>
+                        <td>${user.status}</td>
+                    </tr>
+                </g:each>
+            </table>
 
             <div class="pagination">
                 <g:paginate total="${userCount ?: 0}" />

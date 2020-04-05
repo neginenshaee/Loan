@@ -62,9 +62,9 @@ class LoanRequestController {
         render(view: '/loan/calculator')
     }
 
-    def cancel() {
-        loanRequestService.cancel(Long.valueOf(params.loanRequest))
-        redirect(action: 'show', id: params.loanRequest)
+    def cancel(Long id) {
+        loanRequestService.cancel(id)
+        redirect(action: 'show', id: id)
     }
 
     def repayments(Long id){
