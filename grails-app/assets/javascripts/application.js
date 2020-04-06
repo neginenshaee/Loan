@@ -115,15 +115,15 @@ $('#month').keyup(function(){
 });
 
 $("#calculate").click(function() {
-    $("#total").text($('#mortgageamount').val());
-    //P[r(1+r)^n/((1+r)^n)-1)]
-    var p = $('#mortgageamount').val();
-    var r = $('#interest').val() / 1200;
-    var n = $('#month').val();
-    var monthlyPayment = p*[r*Math.pow((1+r),n)/((Math.pow((1+r),n))-1)]
-    $("#monthlyPayment").text(round(monthlyPayment,2));
-    var totalInterest = monthlyPayment * n - p;
-    $("#totalinterest").text(round(totalInterest,2));
+    // $("#total").text($('#mortgageamount').val());
+    // //P[r(1+r)^n/((1+r)^n)-1)]
+    // var p = $('#mortgageamount').val();
+    // var r = $('#interest').val() / 1200;
+    // var n = $('#month').val();
+    // var monthlyPayment = p*[r*Math.pow((1+r),n)/((Math.pow((1+r),n))-1)]
+    // $("#monthlyPayment").text(round(monthlyPayment,2));
+    // var totalInterest = monthlyPayment * n - p;
+    // $("#totalinterest").text(round(totalInterest,2));
     calculatePayOffs();
 });
 

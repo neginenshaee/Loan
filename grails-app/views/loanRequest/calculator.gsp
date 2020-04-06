@@ -3,6 +3,8 @@
 <head>
     <meta name="layout" content="main" />
     <title>amortization calculator</title>
+    <g:javascript library='jquery' />
+
 </head>
 
 <body>
@@ -21,21 +23,21 @@
             Use this calculator to see how those payments break down over your loan term.
         </p>
     </div>
-
+    <g:formRemote name="amortizationleft" update="updateMe" url="[controller: 'loanRequest', action:'calculate']">
     <div class="amortizationGrid">
-            <div class="lefGrid">
+
+    <div class="lefGrid">
                 <div class="row">
                     <label  for="mortgageamount">
                         <span>Mortgage amount</span>
                     </label>
-%{--                    <i class="fa fa-dollar-sign fa-5x"></i>--}%
-                    <input type="text" id="mortgageamount" class="amortizationInput" placeholder="$" value="165000">
+                    <input type="text" id="mortgageamount" name="mortgageamount" class="amortizationInput" placeholder="$" value="165000">
                 </div>
                 <div class="row">
                     <label  for="years">
                         <span>Mortgage term in years</span>
                     </label>
-                    <input type="text" id="years" class="amortizationInput" value="30">
+                    <input type="text" id="years" name="years" class="amortizationInput" value="30">
 
                 </div>
                 <div class="row">
@@ -43,7 +45,7 @@
                     <label  for="month">
                         <span><span>Or<br></span>Term in months</span>
                     </label>
-                        <input type="text" id="month" class="amortizationInput" value="360">
+                        <input type="text" name="month" id="month" class="amortizationInput" value="360">
 
                 </div>
                 <div class="row">
@@ -51,7 +53,7 @@
                     <label  for="interest">
                         <span>Interest rate per year</span>
                     </label>
-                    <input type="number" step="0.01" min="0" max="100" id="interest" class="amortizationInput" placeholder="%" value="4.5">
+                    <input type="number" name="interest" step="0.01" min="0" max="100" id="interest" class="amortizationInput" placeholder="%" value="4.5">
                     </div>
                     <div class="col-md-6">
                     <button class="btn amortizationButton" id="calculate">Calculate</button>
@@ -60,19 +62,11 @@
 
             </div>
 
-            <div class="rightGrid">
-                <p class="calculatorCalibre">Monthly Payments</p>
-                <p id="monthlyPayment"></p>
-                <div class="calculatorCalibre">
-                    <span class="calculatorTotal">Total Principal Paid</span>
-                    <span id="total" class="calculatorTotalNum"></span>
-                </div>
-                <hr/>
-                <div class="calculatorCalibre">
-                    <span class="calculatorTotal">Total Interest Paid</span>
-                    <span id="totalinterest" class="calculatorTotalNum"></span>
-                </div>
 
+            <div class="rightGrid">
+                <div id="updateMe">
+                    <g:render template="amortizationright"/>
+                </div>
 
                 <div class="divtorate">
                     <a class="linktorate">Today's Rate</a>
@@ -85,6 +79,7 @@
             </div>
 
     </div>
+    </g:formRemote>
 
     <div id="amortizationDiv">
         <div class="grid">

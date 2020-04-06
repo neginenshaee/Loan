@@ -33,13 +33,13 @@
         </sec:ifAnyGranted>
         <sec:ifAnyGranted roles="ROLE_ADMIN">
             <g:if test="${this.loanRequest.status.name() == 'REQUESTED'}">
-                <g:link params="${[id: this.loanRequest.id]}" controller="adminLoan" action="approve">
+                <g:link params="${[id: this.loanRequest.id]}" controller="adminLoanRequest" action="approve">
                     <button type="submit" class="custom-button submit" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Approve</button>
                 </g:link>
             </g:if>
 
             <g:if test="${this.loanRequest.status.name() == 'REQUESTED'}">
-                <g:link params="${[id: this.loanRequest.id]}" controller="adminLoan" action="reject">
+                <g:link params="${[id: this.loanRequest.id]}" controller="adminLoanRequest" action="reject">
                     <button type="submit" class="custom-button delete" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Reject</button>
                 </g:link>
             </g:if>

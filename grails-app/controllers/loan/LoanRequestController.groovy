@@ -14,15 +14,15 @@ class LoanRequestController {
 
     def index(){
         List<LoanRequest> loans = loanRequestService.list()
-        render(view: '/loan/index', model: [loans: loans])
+        render(view: '/loanRequest/index', model: [loans: loans])
     }
 
     def show(Long id) {
-        render(view: '/loan/show', model: [loanRequest: loanRequestService.get(id)])
+        render(view: '/loanRequest/show', model: [loanRequest: loanRequestService.get(id)])
     }
 
     def create() {
-        render(view: '/loan/request')
+        render(view: '/loanRequest/request')
     }
 
     def save(LoanRequestCommand command) {
@@ -35,7 +35,7 @@ class LoanRequestController {
             }
         }else{
             flash.message = (command.errors)
-            render (view: '/loan/request')
+            render (view: '/loanRequest/request')
         }
     }
 
@@ -59,7 +59,16 @@ class LoanRequestController {
     }
 
     def calculator(){
-        render(view: '/loan/calculator')
+        render(view: '/loanRequest/calculator')
+    }
+
+    def amortizationCalculatorService
+    def calculate(){
+        println params
+        def monthlyPayment = amortizationCalculatorService.calculateMonthlyShare(params.double('mortgageamount'), params.int('month'), params.double('interest'))
+        def totalInterest = amortizationCalculatorService.calculateTotalInterest(monthlyPayment, params.double('mortgageamount'), params.int('month') )
+        amortizationCalculatorService.calculateShadowPayment(params.double('mortgageamount'), params.int('month'), params.double('interest'))
+        render template: "amortizationright", model: [mortgageamount:params.double('mortgageamount'), monthlyPayment:monthlyPayment, totalInterest: totalInterest]
     }
 
     def cancel(Long id) {
@@ -69,7 +78,7 @@ class LoanRequestController {
 
     def repayments(Long id){
         def request = repaymentService.getRepaymentsByLoanRequest(loanRequestService.get(id))
-        render(view: '/loan/repayments', model: [request: request])
+        render(view: '/loanRequest/repayments', model: [request: request])
     }
 
     def select(){

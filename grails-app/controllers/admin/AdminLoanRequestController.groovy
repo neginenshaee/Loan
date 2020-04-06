@@ -1,13 +1,11 @@
 package admin
 
-import auth.User
-import enums.Status
-import grails.gorm.transactions.Transactional
+
 import grails.plugin.springsecurity.annotation.Secured
 import loan.LoanRequest
 
 @Secured('ROLE_ADMIN')
-class AdminLoanController {
+class AdminLoanRequestController {
 
     def loanRequestService
 
@@ -25,7 +23,7 @@ class AdminLoanController {
 
     def userrequests(Long id){
         List<LoanRequest> requests = loanRequestService.requestsOfUser(id)
-        render(view: '/loan/userrequests', model: [requests: requests])
+        render(view: '/loanRequest/userrequests', model: [requests: requests])
     }
 
 }

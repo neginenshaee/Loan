@@ -115,7 +115,7 @@ class UserController {
     }
 
     def userloanrequest(Long id){
-        redirect(controller: 'adminLoan',  action: 'userrequests', id: id)
+        redirect(controller: 'adminLoanRequest',  action: 'userrequests', id: id)
     }
 
 
