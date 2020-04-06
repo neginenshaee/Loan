@@ -103,9 +103,10 @@ function changeStatus(enteredVal) {
 /*===========================
         amortization
 =============================*/
-$(document).ready(function() {
-    $("#calculate").trigger('click');
-});
+// $(document).ready(function() {
+//     $("#calculate").trigger('click');
+// });
+
 $('#years').keyup(function(){
     $('#month').val($("#years").val()*12);
 });
@@ -125,6 +126,7 @@ $("#calculate").click(function() {
     // var totalInterest = monthlyPayment * n - p;
     // $("#totalinterest").text(round(totalInterest,2));
     calculatePayOffs();
+    $("#amortizationDiv").show(500);
 });
 
 $("#calculatorAmortizationLink").click(function () {

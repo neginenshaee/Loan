@@ -29,7 +29,7 @@ class LoanRequestController {
         if(command.validate()) {
             try {
                 loanRequestService.save(command)
-                redirect(view: '/loan/index')
+                redirect(view: '/loanRequest/index')
             } catch (ValidationException e) {
                 respond command.errors, view: 'create'
             }
@@ -68,7 +68,7 @@ class LoanRequestController {
         def monthlyPayment = amortizationCalculatorService.calculateMonthlyShare(params.double('mortgageamount'), params.int('month'), params.double('interest'))
         def totalInterest = amortizationCalculatorService.calculateTotalInterest(monthlyPayment, params.double('mortgageamount'), params.int('month') )
         amortizationCalculatorService.calculateShadowPayment(params.double('mortgageamount'), params.int('month'), params.double('interest'))
-        render template: "amortizationright", model: [mortgageamount:params.double('mortgageamount'), monthlyPayment:monthlyPayment, totalInterest: totalInterest]
+        render template: "amortizationcalc", model: [mortgageamount:params.double('mortgageamount'), monthlyPayment:monthlyPayment, totalInterest: totalInterest]
     }
 
     def cancel(Long id) {

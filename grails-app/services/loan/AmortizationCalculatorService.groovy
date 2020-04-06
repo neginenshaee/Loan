@@ -26,7 +26,7 @@ class AmortizationCalculatorService {
         loan.setAmount(balance)
         loan.setMonths(monthNum)
         loan.setMonthlyPayment(monthly)
-        loan.save()
+//        loan.save()
         for(int i=1; i<=monthNum; i++){
             ShadowPayment sp = new ShadowPayment()
             def minterest = balance * interestVal / 1200.00;
@@ -40,7 +40,7 @@ class AmortizationCalculatorService {
             }
             sp.setBalance(balance)
             sp.setLoan(loan)
-            sp.save()
+//            sp.save()
             println sp
         }
 //

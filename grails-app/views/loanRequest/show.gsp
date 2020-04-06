@@ -43,6 +43,12 @@
                     <button type="submit" class="custom-button delete" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Reject</button>
                 </g:link>
             </g:if>
+
+            <g:if test="${this.loanRequest.status.name() == 'CONFIRMED'}">
+                <g:link params="${[id: this.loanRequest.id]}" controller="loan" action="create">
+                    <button type="submit" class="custom-button submit">Create Loan</button>
+                </g:link>
+            </g:if>
         </sec:ifAnyGranted>
     </div>
 
@@ -51,7 +57,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <label>Mortgage Amount</label>
-                    <label type="text" class="custom-input" name="amount">${this.loanRequest.amount}</label>
+                    <label type="text" class="custom-input" name="amount"><g:formatNumber  number="${this.loanRequest.amount}" maxFractionDigits="0" type="currency" currencyCode="USD" /></label>
                 </div>
             </div>
 
@@ -72,7 +78,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <label>Interest rate per year</label>
-                    <label type="text" class="custom-input" name="interest">${this.loanRequest.interest}</label>
+                    <label type="text" class="custom-input" name="interest">${this.loanRequest.interest}%</label>
                 </div>
             </div>
 

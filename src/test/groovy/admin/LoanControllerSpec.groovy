@@ -3,7 +3,7 @@ package admin
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
-class AdminLoanControllerSpec extends Specification implements ControllerUnitTest<AdminLoanController> {
+class LoanControllerSpec extends Specification implements ControllerUnitTest<LoanController> {
 
     def setup() {
     }

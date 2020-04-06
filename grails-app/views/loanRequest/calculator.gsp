@@ -23,51 +23,16 @@
             Use this calculator to see how those payments break down over your loan term.
         </p>
     </div>
+
     <g:formRemote name="amortizationleft" update="updateMe" url="[controller: 'loanRequest', action:'calculate']">
-    <div class="amortizationGrid">
-
-    <div class="lefGrid">
-                <div class="row">
-                    <label  for="mortgageamount">
-                        <span>Mortgage amount</span>
-                    </label>
-                    <input type="text" id="mortgageamount" name="mortgageamount" class="amortizationInput" placeholder="$" value="165000">
-                </div>
-                <div class="row">
-                    <label  for="years">
-                        <span>Mortgage term in years</span>
-                    </label>
-                    <input type="text" id="years" name="years" class="amortizationInput" value="30">
-
-                </div>
-                <div class="row">
-
-                    <label  for="month">
-                        <span><span>Or<br></span>Term in months</span>
-                    </label>
-                        <input type="text" name="month" id="month" class="amortizationInput" value="360">
-
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                    <label  for="interest">
-                        <span>Interest rate per year</span>
-                    </label>
-                    <input type="number" name="interest" step="0.01" min="0" max="100" id="interest" class="amortizationInput" placeholder="%" value="4.5">
-                    </div>
-                    <div class="col-md-6">
-                    <button class="btn amortizationButton" id="calculate">Calculate</button>
-                    </div>
-                </div>
-
+        <div class="amortizationGrid">
+            <div class="lefGrid">
+                <g:render template="amortizationinput"/>
             </div>
-
-
             <div class="rightGrid">
                 <div id="updateMe">
-                    <g:render template="amortizationright"/>
+                    <g:render template="amortizationcalc"/>
                 </div>
-
                 <div class="divtorate">
                     <a class="linktorate">Today's Rate</a>
                 </div>
@@ -75,29 +40,12 @@
                 <a>
                     <span id="calculatorAmortizationLink" class="calculatorAmortizationLink">Show amortization schedule</span>
                 </a>
-
             </div>
-
-    </div>
+        </div>
     </g:formRemote>
 
     <div id="amortizationDiv">
-        <div class="grid">
-            <div class="divStartDate">
-                <label class="calculatorAcumin" for="startDate">Start Date</label>
-                <input id="startDate" class="amortizationInput" type="date">
-            </div>
-
-            <div class="divEstimate">
-                <p class="calculatorAcumin">Estimated Payoff Date</p>
-                <p id="estimate" class="calculatorAcumin"></p>
-            </div>
-        </div>
-
-        <div>
-            <p class="calculatorAcumin">Amortization Schedule</p>
-            <div id="here_table"></div>
-        </div>
+        <g:render template="amortizationschedule"/>
     </div>
 
     <div>
