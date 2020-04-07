@@ -5,7 +5,8 @@ enum Status {
     CONFIRMED('F'),
     APPROVED('A'),
     CANCELLED('C'),
-    REJECTED('J')
+    REJECTED('J'),
+    ENDED('E')
 
     private Status(String id) { this.id = id }
     final String id

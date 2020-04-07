@@ -31,6 +31,7 @@ class LoanController {
 
         loan.setMonthlyPayment(monthlyPatment)
         loanService.save(loan)
+        loanRequestService.end(params.long('id'))
         redirect(view: '/loan/index')
     }
 }
