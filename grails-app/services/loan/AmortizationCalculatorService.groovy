@@ -1,6 +1,7 @@
 package loan
 
 import grails.gorm.transactions.Transactional
+import groovy.time.TimeCategory
 
 @Transactional
 class AmortizationCalculatorService {
@@ -30,6 +31,11 @@ class AmortizationCalculatorService {
 //        loan.save()
         for(int i=1; i<=monthNum; i++){
             ShadowPayment sp = new ShadowPayment()
+            Date paymentDate
+            use(TimeCategory) {
+                paymentDate = new Date() + i.month
+            }
+            sp.setPaymentDate(paymentDate)
             def minterest = balance * interestVal / 1200.00;
             def principal = monthly - minterest;
             sp.setPrincipal(principal)

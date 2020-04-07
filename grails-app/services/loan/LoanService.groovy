@@ -7,6 +7,7 @@ import grails.gorm.transactions.Transactional
 class LoanService {
 
     def springSecurityService
+    def shadowPaymentService
 
     def list(){
         List<Loan> loans
@@ -20,6 +21,7 @@ class LoanService {
     }
 
     def save(Loan loan){
-        loan.save()
+        Loan savedLoan = loan.save()
+        shadowPaymentService.saveList(savedLoan)
     }
 }

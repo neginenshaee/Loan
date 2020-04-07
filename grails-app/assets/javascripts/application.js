@@ -106,6 +106,10 @@ function calculateAmortization(){
         data:{mortgageamount:$('input[name="mortgageamount"]').val(), month:$('input[name="month"]').val(), interest:$('input[name="interest"]').val()},
         success:function(data) {
             $('#updateCalculation').html(data);
+            if($("#calculatorAmortizationLink").text()==='Show amortization schedule') {
+                $("#calculatorAmortizationLink").trigger('click');
+            }
+            calculateSchedule();
         }
     });
 }
@@ -140,19 +144,11 @@ $('#month').keyup(function(){
     $('#years').val($("#month").val()/12);
 });
 
-$("#calculate").click(function() {
-    // calculatePayOffs();
-    // $("#amortizationDiv").show(500);
-    if($("#calculatorAmortizationLink").text()==='Show amortization schedule') {
-        $("#calculatorAmortizationLink").trigger('click');
-    }
-});
 
 $("#calculatorAmortizationLink").click(function () {
     if($("#calculatorAmortizationLink").text()==='Show amortization schedule'){
         $("#calculatorAmortizationLink").text('Hide amortization schedule');
         $("#amortizationDiv").show(500);
-        // calculatePayOffs();
     }else{
         $("#calculatorAmortizationLink").text('Show amortization schedule');
         $("#amortizationDiv").hide(500);
@@ -228,18 +224,18 @@ $("#calculatorAmortizationLink").click(function () {
 
 }*/
 
-function round(value, decimals) {
-    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
-}
+// function round(value, decimals) {
+//     return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+// }
 
-function addMonths(date, months) {
-    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var d = date.getDate();
-    date.setMonth(date.getMonth() + +months);
-    if (date.getDate() != d) {
-        date.setDate(0);
-    }
-
-    var month = date.getMonth()
-    return monthNames[month] + ' '+ date.getFullYear();
-}
+// function addMonths(date, months) {
+//     var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+//     var d = date.getDate();
+//     date.setMonth(date.getMonth() + +months);
+//     if (date.getDate() != d) {
+//         date.setDate(0);
+//     }
+//
+//     var month = date.getMonth()
+//     return monthNames[month] + ' '+ date.getFullYear();
+// }

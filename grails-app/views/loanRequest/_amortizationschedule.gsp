@@ -1,12 +1,14 @@
 <div class="grid">
     <div class="divStartDate">
         <label class="calculatorAcumin" for="startDate">Start Date</label>
-        <input id="startDate" class="amortizationInput" type="date">
+        <input id="startDate" class="amortizationInput" value="${new Date()}">
     </div>
 
     <div class="divEstimate">
         <p class="calculatorAcumin">Estimated Payoff Date</p>
-        <p id="estimate" class="calculatorAcumin"></p>
+        <g:if test="${shadowPayments!=null}">
+        <p id="estimate" class="calculatorAcumin"><g:formatDate date="${shadowPayments.last().paymentDate}" format="MMMM, dd, yyyy"/></p>
+        </g:if>
     </div>
 </div>
 
@@ -25,7 +27,7 @@
         </thead>
         <g:each in="${shadowPayments}" status="i" var="payment">
             <tr>
-                <td>${payment.paymentDate}</td>
+                <td><g:formatDate date="${payment.paymentDate}" format="MMM, yyyy"/></td>
                 <td><g:formatNumber  number="${payment.loan.monthlyPayment}" maxFractionDigits="2" type="currency" currencyCode="USD" /></td>
                 <td><g:formatNumber  number="${payment.principal}" maxFractionDigits="2" type="currency" currencyCode="USD" /></td>
                 <td><g:formatNumber  number="${payment.interest}" maxFractionDigits="2" />%</td>
