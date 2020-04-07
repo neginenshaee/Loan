@@ -9,6 +9,7 @@ class LoanController {
 
     def loanService
     def loanRequestService
+    def amortizationCalculatorService
 
     def index(){
         [loans: loanService.list()]
@@ -19,7 +20,6 @@ class LoanController {
         [id: id, amount: lr.amount, months: lr.months, interest: lr.interest]
     }
 
-    def amortizationCalculatorService
 
     def save(){
         Loan loan = new Loan()

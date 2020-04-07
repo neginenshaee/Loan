@@ -18,6 +18,7 @@ class AmortizationCalculatorService {
 
 
     def calculateShadowPayment(double balance, int monthNum, double interestVal){
+        List<ShadowPayment> shadowPaymentList = new ArrayList<>()
         def monthly = calculateMonthlyShare(balance,monthNum,interestVal)
         def totalInterest = 0.00;
 
@@ -41,9 +42,10 @@ class AmortizationCalculatorService {
             sp.setBalance(balance)
             sp.setLoan(loan)
 //            sp.save()
-            println sp
+            shadowPaymentList.add(sp)
         }
 //
 //        $('#here_table').append(table);
+        shadowPaymentList
     }
 }

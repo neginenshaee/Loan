@@ -59,16 +59,21 @@ class LoanRequestController {
     }
 
     def calculator(){
-        render(view: '/loanRequest/calculator')
+        render(view: '/loanRequest/calculator', model: [amount: 165000, months: 360, interest: 4.5])
     }
 
     def amortizationCalculatorService
     def calculate(){
-        println params
         def monthlyPayment = amortizationCalculatorService.calculateMonthlyShare(params.double('mortgageamount'), params.int('month'), params.double('interest'))
         def totalInterest = amortizationCalculatorService.calculateTotalInterest(monthlyPayment, params.double('mortgageamount'), params.int('month') )
-        amortizationCalculatorService.calculateShadowPayment(params.double('mortgageamount'), params.int('month'), params.double('interest'))
+
         render template: "amortizationcalc", model: [mortgageamount:params.double('mortgageamount'), monthlyPayment:monthlyPayment, totalInterest: totalInterest]
+
+    }
+
+    def calculatePayments(){
+        List<ShadowPayment> list = amortizationCalculatorService.calculateShadowPayment(params.double('mortgageamount'), params.int('month'), params.double('interest'))
+        render template: "amortizationschedule", model: [shadowPayments: list]
     }
 
     def cancel(Long id) {

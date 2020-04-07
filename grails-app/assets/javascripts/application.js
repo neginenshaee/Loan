@@ -98,6 +98,31 @@ function changeStatus(enteredVal) {
     });
 
 }
+function calculateAmortization(){
+    var URL="/loanRequest/calculate";
+    $.ajax({
+        url: URL,
+        type:"GET",
+        data:{mortgageamount:$('input[name="mortgageamount"]').val(), month:$('input[name="month"]').val(), interest:$('input[name="interest"]').val()},
+        success:function(data) {
+            $('#updateCalculation').html(data);
+        }
+    });
+}
+
+function calculateSchedule(){
+    var URL="/loanRequest/calculatePayments";
+    $.ajax({
+        url: URL,
+        type:"GET",
+        data:{mortgageamount:$('input[name="mortgageamount"]').val(), month:$('input[name="month"]').val(), interest:$('input[name="interest"]').val()},
+        success:function(data) {
+            console.log(data)
+            $('#updateSchedule').html(data);
+        }
+    });
+}
+
 
 
 /*===========================
@@ -116,17 +141,11 @@ $('#month').keyup(function(){
 });
 
 $("#calculate").click(function() {
-    // $("#total").text($('#mortgageamount').val());
-    // //P[r(1+r)^n/((1+r)^n)-1)]
-    // var p = $('#mortgageamount').val();
-    // var r = $('#interest').val() / 1200;
-    // var n = $('#month').val();
-    // var monthlyPayment = p*[r*Math.pow((1+r),n)/((Math.pow((1+r),n))-1)]
-    // $("#monthlyPayment").text(round(monthlyPayment,2));
-    // var totalInterest = monthlyPayment * n - p;
-    // $("#totalinterest").text(round(totalInterest,2));
-    calculatePayOffs();
-    $("#amortizationDiv").show(500);
+    // calculatePayOffs();
+    // $("#amortizationDiv").show(500);
+    if($("#calculatorAmortizationLink").text()==='Show amortization schedule') {
+        $("#calculatorAmortizationLink").trigger('click');
+    }
 });
 
 $("#calculatorAmortizationLink").click(function () {
@@ -142,7 +161,7 @@ $("#calculatorAmortizationLink").click(function () {
 
 
 
-function calculatePayOffs() {
+/*function calculatePayOffs() {
     var now = new Date();
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -207,7 +226,7 @@ function calculatePayOffs() {
 
     $('#here_table').append(table);
 
-}
+}*/
 
 function round(value, decimals) {
     return Number(Math.round(value+'e'+decimals)+'e-'+decimals);

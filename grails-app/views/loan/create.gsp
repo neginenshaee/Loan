@@ -16,9 +16,7 @@
         <g:form controller="loan" action="save" params="${[id: this.id]}" method="post">
         <div class="amortizationGrid">
             <div class="lefGrid">
-                <g:formRemote name="amortizationleft" update="updateMe" url="[controller: 'loanRequest', action:'calculate']">
-                    <g:render template="/loanRequest/amortizationinput"/>
-                </g:formRemote>
+                <g:render template="/loanRequest/amortizationinput"/>
 
                 <div class="row">
                     <div class="col-md-12">
@@ -28,12 +26,21 @@
 
             </div>
 
-            <div class="rightGrid" id="updateMe">
-                <g:render template="/loanRequest/amortizationcalc"/>
+            <div class="rightGrid" >
+                <div id="updateCalculation">
+                    <g:render template="/loanRequest/amortizationcalc"/>
+                </div>
+
+                <a onclick="calculateSchedule()">
+                    <span id="calculatorAmortizationLink" class="calculatorAmortizationLink">Show amortization schedule</span>
+                </a>
             </div>
         </div>
-        <div id="amortizationDiv">
-            <g:render template="/loanRequest/amortizationschedule"/>
+        <div id="amortizationDiv" >
+            <div id="updateSchedule">
+                <g:render template="/loanRequest/amortizationschedule"/>
+            </div>
+
         </div>
 </g:form>
     </div>

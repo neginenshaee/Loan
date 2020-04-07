@@ -27,6 +27,6 @@
         <input type="number" name="interest" step="0.01" min="0" max="100" id="interest" class="amortizationInput" placeholder="%" value="${interest}">
     </div>
     <div class="col-md-6">
-        <a style="color: white" class="btn amortizationButton" id="calculate">Calculate</a>
+        <a style="color: white" class="btn amortizationButton" onclick="calculateAmortization()" id="calculate">Calculate</a>
     </div>
 </div>
