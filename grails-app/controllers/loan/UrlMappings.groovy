@@ -17,11 +17,11 @@ class UrlMappings {
         "/user/confirm/$token"(controller: 'user', action: 'confirm')
         "/user/save"(controller: 'user', action: 'save')
         "/user/index"(controller: 'adminUser', action: 'index')
-        "/loan/index"(controller: 'loanRequest', action: 'index')
-        "/loan/show/$id"(controller: 'loanRequest', action: 'show')
-        "/loan/approve/$id"(controller: 'adminLoan', action: 'approve')
-        "/loan/cancel/$id"(controller: 'loanRequest', action: 'cancel')
-        "/loan/calculator"(controller: 'loanRequest', action: 'calculator')
+        "/loanRequest/index"(controller: 'loanRequest', action: 'index')
+        "/loanRequest/show/$id"(controller: 'loanRequest', action: 'show')
+        "/loanRequest/approve/$id"(controller: 'adminLoanRequest', action: 'approve')
+        "/loanRequest/cancel/$id"(controller: 'loanRequest', action: 'cancel')
+        "/loanRequest/calculator"(controller: 'loanRequest', action: 'calculator')
 //        "/user/create"(controller: 'user', action: 'save')
     }
 }

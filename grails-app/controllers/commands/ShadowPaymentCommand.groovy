@@ -3,21 +3,22 @@ package commands
 import auth.User
 import enums.Status
 import grails.validation.Validateable
+import loan.Loan
 
-class LoanRequestCommand implements Validateable {
-    Long amount
-    int months
+class ShadowPaymentCommand implements Validateable {
+    Date paymentDate
+    double principal
     double interest
-    static belongsTo = [user: User]
-    Status status = Status.REQUESTED
+    double balance
+    static belongsTo = [loan: Loan]
     Date dateCreated = new Date()
     Date lastUpdated = new Date()
 
     static constraints = {
-        amount nullable: false
-        months nullable: false
+        paymentDate nullable: false
+        principal nullable: false
         interest nullable: false
-        status nullable: false
+        balance nullable: false
         dateCreated nullable: true
         lastUpdated nullable: true
     }

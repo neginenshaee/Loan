@@ -5,7 +5,7 @@ import enums.UserStatus
 import grails.validation.Validateable
 
 class UserCommand implements Validateable {
-    int id
+    Long id
     String firstName
     String lastName
     String username
@@ -14,7 +14,7 @@ class UserCommand implements Validateable {
     String country
     String address
     UserStatus status = UserStatus.CREATED
-    boolean enabled = true
+    boolean enabled = false
     boolean accountExpired = false
     boolean accountLocked = false
     boolean passwordExpired = false

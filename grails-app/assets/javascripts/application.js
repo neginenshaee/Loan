@@ -82,12 +82,12 @@ $(function () {
 /*===========================
         AJAX
 =============================*/
-function changeStatus() {
+function changeStatus(enteredVal) {
     var URL="/user/onChange";
     $.ajax({
         url: URL,
         type: 'POST',
-        data:{ status: $('input[name="radioGroup"]:checked').val(), id: $('input[name="hidid"]').val()},
+        data:{ status: enteredVal, id: $('input[name="hidid"]').val()},
         success: function(data, textStatus, jqXHR) {
             alert('Done!')
         },
@@ -98,14 +98,44 @@ function changeStatus() {
     });
 
 }
+function calculateAmortization(){
+    var URL="/loanRequest/calculate";
+    $.ajax({
+        url: URL,
+        type:"GET",
+        data:{mortgageamount:$('input[name="mortgageamount"]').val(), month:$('input[name="month"]').val(), interest:$('input[name="interest"]').val()},
+        success:function(data) {
+            $('#updateCalculation').html(data);
+            if($("#calculatorAmortizationLink").text()==='Show amortization schedule') {
+                $("#calculatorAmortizationLink").trigger('click');
+            }
+            calculateSchedule();
+        }
+    });
+}
+
+function calculateSchedule(){
+    var URL="/loanRequest/calculatePayments";
+    $.ajax({
+        url: URL,
+        type:"GET",
+        data:{mortgageamount:$('input[name="mortgageamount"]').val(), month:$('input[name="month"]').val(), interest:$('input[name="interest"]').val()},
+        success:function(data) {
+            console.log(data)
+            $('#updateSchedule').html(data);
+        }
+    });
+}
+
 
 
 /*===========================
         amortization
 =============================*/
-$(document).ready(function() {
-    $("#calculate").trigger('click');
-});
+// $(document).ready(function() {
+//     $("#calculate").trigger('click');
+// });
+
 $('#years').keyup(function(){
     $('#month').val($("#years").val()*12);
 });
@@ -114,24 +144,11 @@ $('#month').keyup(function(){
     $('#years').val($("#month").val()/12);
 });
 
-$("#calculate").click(function() {
-    $("#total").text($('#mortgageamount').val());
-    //P[r(1+r)^n/((1+r)^n)-1)]
-    var p = $('#mortgageamount').val();
-    var r = $('#interest').val() / 1200;
-    var n = $('#month').val();
-    var monthlyPayment = p*[r*Math.pow((1+r),n)/((Math.pow((1+r),n))-1)]
-    $("#monthlyPayment").text(round(monthlyPayment,2));
-    var totalInterest = monthlyPayment * n - p;
-    $("#totalinterest").text(round(totalInterest,2));
-    calculatePayOffs();
-});
 
 $("#calculatorAmortizationLink").click(function () {
     if($("#calculatorAmortizationLink").text()==='Show amortization schedule'){
         $("#calculatorAmortizationLink").text('Hide amortization schedule');
         $("#amortizationDiv").show(500);
-        // calculatePayOffs();
     }else{
         $("#calculatorAmortizationLink").text('Show amortization schedule');
         $("#amortizationDiv").hide(500);
@@ -140,7 +157,7 @@ $("#calculatorAmortizationLink").click(function () {
 
 
 
-function calculatePayOffs() {
+/*function calculatePayOffs() {
     var now = new Date();
     var day = ("0" + now.getDate()).slice(-2);
     var month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -205,20 +222,20 @@ function calculatePayOffs() {
 
     $('#here_table').append(table);
 
-}
+}*/
 
-function round(value, decimals) {
-    return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
-}
+// function round(value, decimals) {
+//     return Number(Math.round(value+'e'+decimals)+'e-'+decimals);
+// }
 
-function addMonths(date, months) {
-    var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    var d = date.getDate();
-    date.setMonth(date.getMonth() + +months);
-    if (date.getDate() != d) {
-        date.setDate(0);
-    }
-
-    var month = date.getMonth()
-    return monthNames[month] + ' '+ date.getFullYear();
-}
+// function addMonths(date, months) {
+//     var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+//     var d = date.getDate();
+//     date.setMonth(date.getMonth() + +months);
+//     if (date.getDate() != d) {
+//         date.setDate(0);
+//     }
+//
+//     var month = date.getMonth()
+//     return monthNames[month] + ' '+ date.getFullYear();
+// }

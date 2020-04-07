@@ -72,12 +72,17 @@ class UserController {
         redirect(view: '/index')
     }
 
-    def update(User user) {
-        try {
-            userService.update(user)
-        } catch (ValidationException e) {
-            respond user.errors, view:'edit'
-            return
+    def update(UserCommand command) {
+        User user
+        println command.validate()
+        println command.errors
+        if(command.validate()) {
+            try {
+                user = userService.update(command)
+            } catch (ValidationException e) {
+                respond user.errors, view: 'edit'
+                return
+            }
         }
         request.withFormat {
             form multipartForm {
@@ -89,6 +94,7 @@ class UserController {
     }
 
     def delete(Long id) {
+        println(id)
         if (id == null) {
             notFound()
             return
@@ -112,6 +118,12 @@ class UserController {
         userService.update(user)
         render user
     }
+
+    def userloanrequest(Long id){
+        redirect(controller: 'adminLoanRequest',  action: 'userrequests', id: id)
+    }
+
+
     protected void notFound() {
         request.withFormat {
             form multipartForm {

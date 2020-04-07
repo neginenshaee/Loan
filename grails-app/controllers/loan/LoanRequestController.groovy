@@ -9,32 +9,33 @@ import static org.springframework.http.HttpStatus.NOT_FOUND
 @Secured(['ROLE_USER','ROLE_ADMIN'])
 class LoanRequestController {
 
+    def repaymentService
     def loanRequestService
 
     def index(){
         List<LoanRequest> loans = loanRequestService.list()
-        render(view: '/loan/index', model: [loans: loans])
+        render(view: '/loanRequest/index', model: [loans: loans])
     }
 
     def show(Long id) {
-        render(view: '/loan/show', model: [loanRequest: loanRequestService.get(id)])
+        render(view: '/loanRequest/show', model: [loanRequest: loanRequestService.get(id)])
     }
 
     def create() {
-        render(view: '/loan/request')
+        render(view: '/loanRequest/request')
     }
 
     def save(LoanRequestCommand command) {
         if(command.validate()) {
             try {
                 loanRequestService.save(command)
-                redirect(view: '/loan/index')
+                redirect(view: '/loanRequest/index')
             } catch (ValidationException e) {
                 respond command.errors, view: 'create'
             }
         }else{
             flash.message = (command.errors)
-            render (view: '/loan/request')
+            render (view: '/loanRequest/request')
         }
     }
 
@@ -58,20 +59,36 @@ class LoanRequestController {
     }
 
     def calculator(){
-        render(view: '/loan/calculator')
+        render(view: '/loanRequest/calculator', model: [amount: 165000, months: 360, interest: 4.5])
     }
 
-    def cancel() {
-        loanRequestService.cancel(Long.valueOf(params.loanRequest))
-        redirect(action: 'show', id: params.loanRequest)
+    def amortizationCalculatorService
+    def calculate(){
+        def monthlyPayment = amortizationCalculatorService.calculateMonthlyShare(params.double('mortgageamount'), params.int('month'), params.double('interest'))
+        def totalInterest = amortizationCalculatorService.calculateTotalInterest(monthlyPayment, params.double('mortgageamount'), params.int('month') )
+
+        render template: "amortizationcalc", model: [mortgageamount:params.double('mortgageamount'), monthlyPayment:monthlyPayment, totalInterest: totalInterest]
+
     }
 
+    def calculatePayments(){
+        List<ShadowPayment> list = amortizationCalculatorService.calculateShadowPayment(params.double('mortgageamount'), params.int('month'), params.double('interest'))
+        render template: "amortizationschedule", model: [shadowPayments: list]
+    }
 
-    def repaymentService
+    def cancel(Long id) {
+        loanRequestService.cancel(id)
+        redirect(action: 'show', id: id)
+    }
+
+    def confirm(Long id) {
+        loanRequestService.confirm(id)
+        redirect(action: 'show', id: id)
+    }
 
     def repayments(Long id){
         def request = repaymentService.getRepaymentsByLoanRequest(loanRequestService.get(id))
-        render(view: '/loan/repayments', model: [request: request])
+        render(view: '/loanRequest/repayments', model: [request: request])
     }
 
     def select(){

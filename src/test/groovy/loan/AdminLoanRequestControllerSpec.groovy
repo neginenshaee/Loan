@@ -1,10 +1,10 @@
 package loan
 
-import admin.AdminLoanController
+import admin.AdminLoanRequestController
 import grails.testing.web.controllers.ControllerUnitTest
 import spock.lang.Specification
 
-class AdminLoanControllerSpec extends Specification implements ControllerUnitTest<AdminLoanController> {
+class AdminLoanRequestControllerSpec extends Specification implements ControllerUnitTest<AdminLoanRequestController> {
 
     def setup() {
     }

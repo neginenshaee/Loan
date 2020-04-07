@@ -20,7 +20,7 @@ class User implements Serializable {
     String country
     String address
     UserStatus status
-    boolean enabled = true
+    boolean enabled = false
     boolean accountExpired
     boolean accountLocked
     boolean passwordExpired

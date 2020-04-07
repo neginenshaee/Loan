@@ -6,31 +6,107 @@
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
-        <a href="#show-user" class="skip" tabindex="-1"><g:message code="default.link.skip.label" default="Skip to content&hellip;"/></a>
-        <div class="nav" role="navigation">
-            <ul>
-                <li><g:link class="list" action="index"><g:message code="default.list.label" args="[entityName]" /></g:link></li>
-%{--                <li><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></li>--}%
-            </ul>
-        </div>
-        <div id="show-user" class="content scaffold-show" role="main">
-            <h1><g:message code="default.show.label" args="[entityName]" /></h1>
-            <g:if test="${flash.message}">
-            <div class="message" role="status">${flash.message}</div>
+    <sec:ifAnyGranted roles="ROLE_ADMIN">
+        <div class="actions">
+            <g:link action="index">
+                <button class="custom-button primary" type="button"><g:message code="default.list.label" args="[entityName]" /></button>
+            </g:link>
+
+            <g:link resource="${this.user}" action="userloanrequest">
+                <button class="custom-button primary" type="button">Show Loan Request List</button>
+            </g:link>
+
+            <g:link action="edit" resource="${this.user}">
+                <button class="custom-button edit" type="button"><g:message code="default.button.edit.label" default="Edit" /></button>
+            </g:link>
+
+            <g:link action="delete" resource="${this.user}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
+                <button class="custom-button delete" type="button"><g:message code="default.button.delete.label" default="Delete" /></button>
+            </g:link>
+        %{--        <input class="custom-button delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}"  />--}%
+            <g:if test="${this.user.enabled}">
+                <input type="button" name="activation" class="custom-button delete" value="Deactivate" onclick="changeStatus(false)">
             </g:if>
-            <f:display bean="user" except="password"/>
-
-            <g:form resource="${this.user}" method="DELETE">
-                <fieldset class="buttons">
-                    <g:link class="edit" action="edit" resource="${this.user}"><g:message code="default.button.edit.label" default="Edit" /></g:link>
-                    <input class="delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />
-                    <input type="radio" name="radioGroup" class="radioGroup" value="true" onclick="changeStatus()">Enable
-                    <input type="radio" name="radioGroup" class="radioGroup" value="false" onclick="changeStatus()">Disable
-                    <input hidden name="hidid" value="${this.user.id}"/>
-
-                </fieldset>
-            </g:form>
+            <g:else>
+                <input type="button" name="activation" class="custom-button submit" value="Activate"  onclick="changeStatus(true)">
+            </g:else>
+            <input hidden name="hidid" value="${this.user.id}"/>
         </div>
+    </sec:ifAnyGranted>
+
+
+    <div class="container">
+        <div class="show-content">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="inputWithIcon">
+                        <label>First name</label>
+                        <label class="custom-input">${this.user.firstName}</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="inputWithIcon">
+                        <label>Last name</label>
+                        <label class="custom-input">${this.user.lastName}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="inputWithIcon">
+                        <label>Username</label>
+                        <label class="custom-input">${this.user.username}</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="inputWithIcon">
+                        <label>Status</label>
+                        <label class="custom-input">${this.user.status}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="inputWithIcon">
+                        <label>Email</label>
+                        <label class="custom-input">${this.user.email}</label>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="inputWithIcon">
+                        <label>Activated</label>
+                        <label class="custom-input">
+                            <g:if test="${this.user.enabled}">
+                                True
+                            </g:if>
+                            <g:else>
+                                False
+                            </g:else>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="inputWithIcon">
+                        <label>Country</label>
+                        <label class="custom-input">${this.user.country}</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="inputWithIcon">
+                        <label>Address</label>
+                        <label class="custom-input" >${this.user.address}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <asset:javascript src="application.js"/>
     </body>
 

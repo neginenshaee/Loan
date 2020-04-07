@@ -376,6 +376,42 @@ ul.navbar-nav > li > a:focus{
 }
 
 
+ul li{
+    display: inline-block;
+    position: relative;
+    line-height: 21px;
+    text-align: right;
+}
+ul li a{
+    display: block;
+    text-decoration: none;
+}
+ul li a:hover{
+    color: #fff;
+    background: white;
+}
+
+ul li ul.dropdown{
+    background: #000000;
+    color: #fff;
+    display: none;
+    position: absolute;
+    z-index: 999;
+    left: 0;
+}
+
+ul li:hover ul.dropdown{
+    display: block; /* Display the dropdown */
+}
+ul li ul.dropdown li{
+    display: block;
+}
+
+a > i {
+    color: white;
+}
+
+
 
 /*===========================
         FOOTER
@@ -395,12 +431,9 @@ footer p span{
 }
 
 
-
-
-
-
-
-
+/*===========================
+        Login
+=============================*/
 .login100-form {
     transform: translate(30%, -30%);
     position: relative;
@@ -681,29 +714,181 @@ footer p span{
     box-shadow: 5px 5px 10px 1px;
 }
 
-.custom-input{
-    border-radius: 20px;
-    padding: 20px;
-    margin-top: 10px;
 
+/*===========================
+        Pages
+=============================*/
+.show-content{
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-.custom-input:hover,
-.custom-input:focus{
-    /*border-color: red;*/
+.actions{
+    background-color: #efefef;
+    overflow: hidden;
+    padding: 0.3em;
+    padding-left: 50px;
+    -moz-box-shadow: 0 0 3px 1px #aaaaaa;
+    -webkit-box-shadow: 0 0 3px 1px #aaaaaa;
+    box-shadow: 0 0 3px 1px #aaaaaa;
+    margin: 0.1em 0 0 0;
+    border: none;
+}
 
-    box-shadow: 2px 6px 5px 1px;
+.actions a{
+    text-decoration: none;
 }
 
 /*===========================
-        BACKGROUND
+        TABLE
 =============================*/
-.custom-background{
+.content-table{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-radius: 5px 5px 0 0;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
 
-    background-image: url('../assets/images/simple-background.jpg');
+.content-table thead tr{
+    background-color: #40798C;
+    color: #FFFFFF;
+    text-align: left;
+    font-weight: bold;
+}
+
+.content-table th,
+.content-table td{
+    padding: 12px 15px;
+}
+
+.content-table tbody tr{
+    border-bottom: 1px solid #dddddd;
+}
+
+.content-table tbody tr:nth-of-type(even){
+    background-color: #FFFFFF;
+}
+
+.content-table tbody tr:last-of-type{
+    border-bottom: 2px solid #40798C;
+}
+
+/*===========================
+        Button
+=============================*/
+.custom-button{
+    border: 1px solid #6a7385;
+    background: none;
+    background-color: #8EA8C3;
+    color: #161B33;
+    padding: 5px 10px;
+    font-size: 17px;
+    font-family: "Raleway";
+    cursor: pointer;
+    margin: 10px;
+    transition: .5s;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    text-transform: uppercase;
+    border-radius: 5px;
+}
+
+.custom-button:hover{
+    border: 1px solid #042F58;
+    color: #FFFFFF;
+    transition: .5s;
+}
+
+.primary:hover{
+    background-color: #1E3740;
+}
+
+.submit:hover{
+    background-color: #0B7E4D;
+}
+
+.edit:hover{
+    background-color: #BA992E;
+}
+
+.delete:hover{
+    background-color: #AE314B;
+}
+
+.cancel:hover{
+    background-color: #585B63;
 }
 
 
+/*===========================
+        Inputs
+=============================*/
+.inputWithIcon input ,
+.inputWithIcon textarea{
+    padding-left: 40px;
+}
+
+.inputWithIcon{
+    position: relative;
+}
+
+.inputWithIcon i{
+    position: absolute;
+    left: 0;
+    top:16px;
+    padding:9px 16px;
+    color: #aaa;
+}
+
+.inputWithIcon input:focus + i{
+    color: dodgerblue;
+}
+
+
+.custom-input{
+    width: 100%;
+    border: 2px solid #aaa;
+    border-radius: 6px;
+    margin: 8px 0;
+    padding: 8px;
+    outline: none;
+    box-sizing: border-box;
+    transition: .3s;
+
+}
+
+.custom-input:focus{
+    box-shadow: 0 0 8px 0 dodgerblue;
+    border: 2px solid dodgerblue;
+}
+
+.custom-input:hover{
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+/*===========================
+        divider
+=============================*/
+.wrapper-whole{
+    width: 80%;
+    height: 70%;
+    top: 25%;
+    left:130px;
+    position: absolute;
+    color: #fff;
+}
+
+.wrapper-left{
+    width: 50%;
+    float: left;
+}
+
+.wrapper-right{
+    width: 50%;
+    float: right;
+}
 
 /*===========================
         amortization

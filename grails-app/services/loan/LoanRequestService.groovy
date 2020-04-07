@@ -1,6 +1,7 @@
 package loan
 
 import auth.Role
+import auth.User
 import commands.LoanRequestCommand
 import enums.Status
 import grails.gorm.transactions.Transactional
@@ -11,6 +12,9 @@ import static org.springframework.http.HttpStatus.CREATED
 class LoanRequestService {
 
     def springSecurityService
+    def userService
+    def generalService
+    def sendEmailService
 
     def static get(id){
         LoanRequest.get(id)
@@ -25,6 +29,12 @@ class LoanRequestService {
             loans = LoanRequest.findAll()
         }
         loans
+    }
+
+    def requestsOfUser(Long id){
+        User user = userService.get(id)
+        List<LoanRequest> requests = LoanRequest.findAllByUser(user)
+        requests
     }
 
     def static count(){
@@ -48,31 +58,52 @@ class LoanRequestService {
         LoanRequest loanRequest = LoanRequest.findById(id)
         loanRequest.setStatus(Status.CANCELLED)
         loanRequest.save()
-        println loanRequest
+    }
+
+    def confirm(Long id){
+        LoanRequest loanRequest = LoanRequest.findById(id)
+        loanRequest.setStatus(Status.CONFIRMED)
+        loanRequest.save()
+    }
+
+    def end(Long id){
+        LoanRequest loanRequest = LoanRequest.findById(id)
+        loanRequest.setStatus(Status.ENDED)
+        loanRequest.save()
     }
 
     def approve(Long id){
         LoanRequest loanRequest = LoanRequest.findById(id)
         loanRequest.setStatus(Status.APPROVED)
         loanRequest.save()
+        sendEmailService.sendEmail(
+                loanRequest.getUser().getEmail(),
+                generalService.getMessage("loan.request.status.update", Status.APPROVED),
+                generalService.getMessage("loan.request.approved", loanRequest.amount,loanRequest.dateCreated)
+        )
     }
 
     def reject(Long id){
         LoanRequest loanRequest = LoanRequest.findById(id)
         loanRequest.setStatus(Status.REJECTED)
         loanRequest.save()
+        sendEmailService.sendEmail(
+                loanRequest.getUser().getEmail(),
+                generalService.getMessage("loan.request.status.update", Status.REJECTED),
+                generalService.getMessage("loan.request.rejected", loanRequest.amount,loanRequest.dateCreated)
+        )
+
     }
 
     LoanRequest bindValues(LoanRequestCommand c){
         LoanRequest loanRequest = new LoanRequest()
         loanRequest.setUser(springSecurityService.currentUser)
         loanRequest.setStatus(c.status)
-        loanRequest.setDeadline(c.deadline)
+        loanRequest.setInterest(c.interest)
         loanRequest.setAmount(c.amount)
         loanRequest.setDateCreated(c.dateCreated)
-        loanRequest.setActionDate(c.actionDate)
+        loanRequest.setMonths(c.months)
         loanRequest.setLastUpdated(c.lastUpdated)
-        loanRequest.setDescription(c.description)
         loanRequest
     }
 }
