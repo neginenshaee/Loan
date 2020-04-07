@@ -22,6 +22,6 @@ class LoanService {
 
     def save(Loan loan){
         Loan savedLoan = loan.save()
-        shadowPaymentService.saveList(savedLoan)
+        shadowPaymentService.saveShadowPayments(savedLoan)
     }
 }

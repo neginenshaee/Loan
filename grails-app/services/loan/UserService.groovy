@@ -32,7 +32,7 @@ class UserService {
     }
 
     User save(UserCommand command){
-        User user = bindValues(command)
+        User user = bindValues(new User(), command)
         User savedUser = user.save()
         def userRole = Role.findOrSaveWhere(authority: 'ROLE_USER')
         if (!savedUser.authorities.contains(userRole)) {
@@ -42,7 +42,8 @@ class UserService {
         savedUser
     }
 
-    User update(User user){
+    User update(UserCommand command){
+        User user = bindValues(get(command.id),command)
         user.save()
         user
     }
@@ -78,8 +79,7 @@ class UserService {
         springSecurityService.currentUser
     }
 
-    User bindValues(UserCommand u){
-        User user = new User()
+    User bindValues(User user, UserCommand u){
         user.setFirstName(u.firstName)
         user.setLastName(u.lastName)
         user.setUsername(u.username)

@@ -30,22 +30,24 @@
                 <g:render template="amortizationinput"/>
             </div>
             <div class="rightGrid">
-                <div id="updateMe">
-                    <g:render template="amortizationcalc"/>
+                <div id="updateCalculation">
+                    <g:render template="/loanRequest/amortizationcalc"/>
                 </div>
                 <div class="divtorate">
                     <a class="linktorate">Today's Rate</a>
                 </div>
                 <br>
-                <a>
+                <a onclick="calculateSchedule()">
                     <span id="calculatorAmortizationLink" class="calculatorAmortizationLink">Show amortization schedule</span>
                 </a>
             </div>
         </div>
     </g:formRemote>
 
-    <div id="amortizationDiv">
-        <g:render template="amortizationschedule"/>
+    <div id="amortizationDiv" >
+        <div id="updateSchedule">
+            <g:render template="/loanRequest/amortizationschedule"/>
+        </div>
     </div>
 
     <div>

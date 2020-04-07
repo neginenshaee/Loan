@@ -13,6 +13,5 @@ class Loan {
         months()
         interest()
         monthlyPayment()
-        loanRequest nullable: true
     }
 }

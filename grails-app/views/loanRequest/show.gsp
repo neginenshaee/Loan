@@ -27,9 +27,9 @@
                     <button class="custom-button submit" type="submit" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Confirm</button>
                 </g:link>
             </g:if>
-            <g:if test="${this.loanRequest.status.name() == 'CONFIRMED'}">
-                <g:link class="custom-button submit" action="repayments" resource="${this.loanRequest}">Select repayment</g:link>
-            </g:if>
+%{--            <g:if test="${this.loanRequest.status.name() == 'CONFIRMED'}">--}%
+%{--                <g:link class="custom-button submit" action="repayments" resource="${this.loanRequest}">Select repayment</g:link>--}%
+%{--            </g:if>--}%
         </sec:ifAnyGranted>
         <sec:ifAnyGranted roles="ROLE_ADMIN">
             <g:if test="${this.loanRequest.status.name() == 'REQUESTED'}">

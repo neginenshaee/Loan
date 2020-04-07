@@ -72,12 +72,17 @@ class UserController {
         redirect(view: '/index')
     }
 
-    def update(User user) {
-        try {
-            userService.update(user)
-        } catch (ValidationException e) {
-            respond user.errors, view:'edit'
-            return
+    def update(UserCommand command) {
+        User user
+        println command.validate()
+        println command.errors
+        if(command.validate()) {
+            try {
+                user = userService.update(command)
+            } catch (ValidationException e) {
+                respond user.errors, view: 'edit'
+                return
+            }
         }
         request.withFormat {
             form multipartForm {

@@ -40,7 +40,6 @@
             <div id="updateSchedule">
                 <g:render template="/loanRequest/amortizationschedule"/>
             </div>
-
         </div>
 </g:form>
     </div>

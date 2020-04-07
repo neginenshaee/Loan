@@ -58,7 +58,12 @@ class LoanRequestService {
         LoanRequest loanRequest = LoanRequest.findById(id)
         loanRequest.setStatus(Status.CANCELLED)
         loanRequest.save()
-        println loanRequest
+    }
+
+    def confirm(Long id){
+        LoanRequest loanRequest = LoanRequest.findById(id)
+        loanRequest.setStatus(Status.CONFIRMED)
+        loanRequest.save()
     }
 
     def approve(Long id){

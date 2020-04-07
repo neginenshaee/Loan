@@ -5,7 +5,7 @@ import enums.UserStatus
 import grails.validation.Validateable
 
 class UserCommand implements Validateable {
-    int id
+    Long id
     String firstName
     String lastName
     String username

@@ -81,6 +81,11 @@ class LoanRequestController {
         redirect(action: 'show', id: id)
     }
 
+    def confirm(Long id) {
+        loanRequestService.confirm(id)
+        redirect(action: 'show', id: id)
+    }
+
     def repayments(Long id){
         def request = repaymentService.getRepaymentsByLoanRequest(loanRequestService.get(id))
         render(view: '/loanRequest/repayments', model: [request: request])

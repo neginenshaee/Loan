@@ -6,7 +6,7 @@ import groovy.time.TimeCategory
 @Transactional
 class ShadowPaymentService {
 
-    def saveList(Loan loan){
+    def saveShadowPayments(Loan loan){
         def monthly = loan.monthlyPayment
         def interestVal = loan.interest
         def balance = loan.amount
