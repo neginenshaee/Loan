@@ -30,4 +30,8 @@ class ShadowPaymentService {
             sp.save()
         }
     }
+
+//    def findAllBy(){
+//        ShadowPayment.findAllByLoan
+//    }
 }
