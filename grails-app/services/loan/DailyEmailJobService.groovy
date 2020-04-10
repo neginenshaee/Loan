@@ -39,6 +39,9 @@ class DailyEmailJobService {
     @Scheduled(fixedDelay = 10000L)
     def abc(){
 //        shadowPaymentService.getEmailsUsingNativeQuery()
+//        shadowPaymentService.getEmailsUsingHQL()
+        shadowPaymentService.getEmailsUsingCriteria()
+//        shadowPaymentService.getEmailsUsingView()
     }
 
 }
