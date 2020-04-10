@@ -73,9 +73,14 @@ class UserController {
     }
 
     def update(UserCommand command) {
-        User user
-        println command.validate()
-        println command.errors
+        User user = userService.get(params.long('id'))
+        command.firstName = params.firstName
+        command.lastName = params.lastName
+        command.country = params.country
+        command.address = params.address
+        command.username = user.getUsername()
+        command.password = user.getPassword()
+        command.email = user.getEmail()
         if(command.validate()) {
             try {
                 user = userService.update(command)
