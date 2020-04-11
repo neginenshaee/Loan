@@ -2,16 +2,12 @@
 <html>
 <head>
     <meta name="layout" content="main" />
-    <g:set var="entityName" value="${message(code: 'loanRequest.label', default: 'Loan')}" />
+    <g:set var="entityName" value="${message(code: 'loan.label', default: 'Loan')}" />
     <title><g:message code="default.show.label" args="[entityName]" /></title>
 </head>
 
 <body>
     <div class="container">
-        <g:link action="create">
-            <button class="custom-button primary" type="button"><g:message code="default.new.label" args="[entityName]"/></button>
-        </g:link>
-
         <h1><g:message code="default.list.label" args="[entityName]" /></h1><hr>
 
         <g:if test="${flash.message}">

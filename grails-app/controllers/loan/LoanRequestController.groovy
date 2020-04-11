@@ -34,8 +34,9 @@ class LoanRequestController {
                 respond command.errors, view: 'create'
             }
         }else{
+//            render command.errors, view: '/loanRequest/request', [params:params]
             flash.message = (command.errors)
-            render (view: '/loanRequest/request')
+            render (view: '/loanRequest/request', model:[params:params])
         }
     }
 

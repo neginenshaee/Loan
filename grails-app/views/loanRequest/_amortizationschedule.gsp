@@ -30,7 +30,7 @@
                 <td><g:formatDate date="${payment.paymentDate}" format="MMM, yyyy"/></td>
                 <td><g:formatNumber  number="${payment.loan.monthlyPayment}" maxFractionDigits="2" type="currency" currencyCode="USD" /></td>
                 <td><g:formatNumber  number="${payment.principal}" maxFractionDigits="2" type="currency" currencyCode="USD" /></td>
-                <td><g:formatNumber  number="${payment.interest}" maxFractionDigits="2" />%</td>
+                <td><g:formatNumber  number="${payment.interest}" maxFractionDigits="2" type="currency" currencyCode="USD"/></td>
                 <td>Total Interest</td>
                 <td><g:formatNumber  number="${payment.balance}" maxFractionDigits="2" type="currency" currencyCode="USD" /></td>
             </tr>

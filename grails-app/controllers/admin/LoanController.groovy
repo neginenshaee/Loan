@@ -3,16 +3,22 @@ package admin
 import grails.plugin.springsecurity.annotation.Secured
 import loan.Loan
 import loan.LoanRequest
+import loan.ShadowPayment
 
-@Secured('ROLE_ADMIN')
+@Secured(['ROLE_ADMIN','ROLE_USER'])
 class LoanController {
 
     def loanService
     def loanRequestService
     def amortizationCalculatorService
+    def shadowPaymentService
 
     def index(){
         [loans: loanService.list()]
+    }
+
+    def show(Long id) {
+        render(view: '/loan/show', model: [loan: loanService.get(id), shadowPayments: shadowPaymentService.getByLoan(loanService.get(id))])
     }
 
     def create(Long id) {

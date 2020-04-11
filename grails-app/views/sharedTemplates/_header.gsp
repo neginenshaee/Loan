@@ -22,8 +22,8 @@
                                 <sec:ifAnyGranted roles="ROLE_ADMIN">
                                     <li class="nav-item"><a class="nav-link" href="/user/index">User</a></li>
 %{--                                    <li class="nav-item"><a class="nav-link" href="/repayment/index">Repayment</a></li>--}%
-                                    <li class="nav-item"><a class="nav-link" href="/loan/index">Loan</a></li>
                                 </sec:ifAnyGranted>
+                                <li class="nav-item"><a class="nav-link" href="/loan/index">Loan</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/user/password">Change Password</a></li>
                                 <li class="nav-item"><a class="nav-link" href="/user/edit">Edit info</a></li>
                                 <li class="nav-item">

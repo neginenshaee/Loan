@@ -36,12 +36,12 @@ class DailyEmailJobService {
 
     }
 
-    @Scheduled(fixedDelay = 10000L)
-    def abc(){
+//    @Scheduled(fixedDelay = 10000L)
+//    def abc(){
 //        shadowPaymentService.getEmailsUsingNativeQuery()
 //        shadowPaymentService.getEmailsUsingHQL()
-        shadowPaymentService.getEmailsUsingCriteria()
+//        shadowPaymentService.getEmailsUsingCriteria()
 //        shadowPaymentService.getEmailsUsingView()
-    }
+//    }
 
 }
