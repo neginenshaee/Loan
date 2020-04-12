@@ -1,8 +1,8 @@
 <div class="row">
-    <label  for="mortgageamount">
+    <label  for="amount">
         <span>Mortgage amount</span>
     </label>
-    <input type="text" id="mortgageamount" name="mortgageamount" class="amortizationInput" placeholder="$" value="${amount}">
+    <input type="text" id="amount" name="amount" class="amortizationInput" placeholder="$" value="${amount}">
 </div>
 <div class="row">
     <label  for="years">
@@ -13,10 +13,10 @@
 </div>
 <div class="row">
 
-    <label  for="month">
+    <label  for="months">
         <span><span>Or<br></span>Term in months</span>
     </label>
-    <input type="text" name="month" id="month" class="amortizationInput" value="${months}">
+    <input type="text" name="months" id="months" class="amortizationInput" value="${months}">
 
 </div>
 <div class="row">

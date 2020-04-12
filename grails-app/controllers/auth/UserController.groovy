@@ -24,25 +24,24 @@ class UserController {
     }
 
     def save(UserCommand command) {
-        User user
         if(command.validate()) {
             try {
-                user = userService.save(command)
-            } catch (ValidationException e) {
-                respond command.errors, view: 'create'
-                return
-            }
-
-            request.withFormat {
-                form multipartForm {
-                    flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
-                    redirect user
+                User user = userService.save(command)
+                request.withFormat {
+                    form multipartForm {
+                        flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
+                        redirect user
+                    }
+                    '*' { respond user, [status: CREATED] }
                 }
-                '*' { respond user, [status: CREATED] }
+            } catch (ValidationException e) {
+                render (command.errors, view: 'create', model: [params: params])
+                return
             }
         }else{
             flash.message = command.errors
-            respond command.errors, view: 'create'
+            render (view: 'create', model: [params: params])
+            return
         }
     }
 
@@ -73,14 +72,8 @@ class UserController {
     }
 
     def update(UserCommand command) {
-        User user = userService.get(params.long('id'))
-        command.setFirstName(params.firstName)
-        command.setLastName(params.lastName)
-        command.setCountry(params.country)
-        command.setAddress(params.address)
-        command.setUsername(user.getUsername())
-        command.setPassword(user.getPassword())
-        command.setEmail(user.getEmail())
+        User user
+
         if(command.validate()) {
             try {
                 user = userService.update(command)
@@ -89,13 +82,18 @@ class UserController {
                 return
             }
         }
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user])
-                redirect user
-            }
-            '*'{ respond user, [status: OK] }
-        }
+//        }else{
+//            flash.message = command.errors
+//            render (view: 'edit', model: [params: params])
+//            return
+//        }
+//        request.withFormat {
+//            form multipartForm {
+//                flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user])
+//                redirect user
+//            }
+//            '*'{ respond user, [status: OK] }
+//        }
     }
 
     def delete(Long id) {

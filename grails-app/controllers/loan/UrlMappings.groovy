@@ -15,7 +15,7 @@ class UrlMappings {
         "/user/password"(controller: 'user', action: 'password')
         "/user/edit"(controller: 'user', action: 'edit')
         "/user/confirm/$token"(controller: 'user', action: 'confirm')
-        "/user/save"(controller: 'user', action: 'save')
+//        "/user/save"(controller: 'user', action: 'save')
         "/user/index"(controller: 'adminUser', action: 'index')
         "/loanRequest/index"(controller: 'loanRequest', action: 'index')
         "/loanRequest/show/$id"(controller: 'loanRequest', action: 'show')

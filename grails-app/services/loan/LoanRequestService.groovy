@@ -20,7 +20,18 @@ class LoanRequestService {
         LoanRequest.get(id)
     }
 
-    def list(){
+    def list(params){
+        List<LoanRequest> loans
+        def authorities = springSecurityService.currentUser.authorities
+        if(authorities.contains(Role.findByAuthority("ROLE_USER"))) {
+            loans = LoanRequest.findAllByUser(springSecurityService.currentUser,[max: params.max, offset: params.offset])
+        }else{
+            loans = LoanRequest.findAll([max: params.max, offset: params.offset])
+        }
+        loans
+    }
+
+    def count(){
         List<LoanRequest> loans
         def authorities = springSecurityService.currentUser.authorities
         if(authorities.contains(Role.findByAuthority("ROLE_USER"))) {
@@ -28,17 +39,13 @@ class LoanRequestService {
         }else{
             loans = LoanRequest.findAll()
         }
-        loans
+        loans.size()
     }
 
     def requestsOfUser(Long id){
         User user = userService.get(id)
         List<LoanRequest> requests = LoanRequest.findAllByUser(user)
         requests
-    }
-
-    def static count(){
-        LoanRequest.count()
     }
 
     def static delete(id){

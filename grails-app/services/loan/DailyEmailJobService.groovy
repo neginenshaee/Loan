@@ -16,7 +16,7 @@ class DailyEmailJobService {
     def generalService
 
 
-    @Scheduled(cron = "0 30 8 1/1 * ?")
+    @Scheduled(cron = "0 8 21 1/1 * ?")
     void sendNotifications() {
         List<Object[]> result = shadowPaymentService.getEmailsUsingNativeQuery();
         for(Object[] r: result){
@@ -24,7 +24,7 @@ class DailyEmailJobService {
             //r[1] = loan.monthly_payment
             //r[2] = payment_date
             //r[3] = balance
-            print r[0] + '\t' + r[1] +'\t'+ r[2]
+//            print r[0] + '\t' + r[1] +'\t'+ r[2]
             sendEmailService.sendEmail(
                     r[0],
                     generalService.getMessage("payment.notification.subject"),

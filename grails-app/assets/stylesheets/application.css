@@ -73,6 +73,14 @@ section{
     margin-left: -100px;
 }
 
+/*===========================
+        Messages
+=============================*/
+.message_error{
+    color: red;
+    font-family: Raleway;
+    font-size: small;
+}
 
 /*===========================
         HOME

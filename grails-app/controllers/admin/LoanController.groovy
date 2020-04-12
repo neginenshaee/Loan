@@ -30,10 +30,10 @@ class LoanController {
     def save(){
         Loan loan = new Loan()
         loan.setLoanRequest(loanRequestService.get(params.id))
-        loan.setAmount(params.double('mortgageamount'))
-        loan.setMonths(params.int('month'))
+        loan.setAmount(params.double('amount'))
+        loan.setMonths(params.int('months'))
         loan.setInterest(params.double('interest'))
-        double monthlyPatment = amortizationCalculatorService.calculateMonthlyShare(params.double('mortgageamount'),params.int('month'),params.double('interest'))
+        double monthlyPatment = amortizationCalculatorService.calculateMonthlyShare(params.double('amount'),params.int('months'),params.double('interest'))
 
         loan.setMonthlyPayment(monthlyPatment)
         loanService.save(loan)

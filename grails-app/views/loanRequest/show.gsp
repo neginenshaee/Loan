@@ -17,24 +17,25 @@
         </g:link>
 
         <sec:ifAnyGranted roles="ROLE_USER">
-            <g:if test="${this.loanRequest.status.name() == 'REQUESTED' || this.loanRequest.status.name() == 'APPROVED'}">
-                <g:link resource="${this.loanRequest}" action="cancel">
-                    <button class="custom-button delete" type="submit" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Cancel</button>
-                </g:link>
-            </g:if>
             <g:if test="${this.loanRequest.status.name() == 'APPROVED'}">
+                <button type="button" class="custom-button submit" data-toggle="modal" data-target="#confirmationModal">Confirm</button>
                 <g:link resource="${this.loanRequest}" action="confirm">
-                    <button class="custom-button submit" type="submit" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Confirm</button>
+                    <g:render template="/sharedTemplates/confirmationpopup"/>
                 </g:link>
             </g:if>
-%{--            <g:if test="${this.loanRequest.status.name() == 'CONFIRMED'}">--}%
-%{--                <g:link class="custom-button submit" action="repayments" resource="${this.loanRequest}">Select repayment</g:link>--}%
-%{--            </g:if>--}%
+
+            <g:if test="${this.loanRequest.status.name() == 'REQUESTED' || this.loanRequest.status.name() == 'APPROVED'}">
+                <button type="button" class="custom-button delete" data-toggle="modal" data-target="#confirmationModal">Cancel</button>
+                <g:link resource="${this.loanRequest}" action="cancel">
+                    <g:render template="/sharedTemplates/confirmationpopup"/>
+                </g:link>
+            </g:if>
         </sec:ifAnyGranted>
         <sec:ifAnyGranted roles="ROLE_ADMIN">
             <g:if test="${this.loanRequest.status.name() == 'REQUESTED'}">
+                <button type="button" class="custom-button submit" data-toggle="modal" data-target="#confirmationModal">Approve</button>
                 <g:link params="${[id: this.loanRequest.id]}" controller="adminLoanRequest" action="approve">
-                    <button type="submit" class="custom-button submit" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" >Approve</button>
+                    <g:render template="/sharedTemplates/confirmationpopup"/>
                 </g:link>
             </g:if>
 

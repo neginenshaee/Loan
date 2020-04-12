@@ -7,7 +7,10 @@
     <asset:stylesheet src="bootstrap.css" rel="stylesheet"/>
 </head>
 <body>
+
 <g:form resource="${this.user}" controller="user" action="update" method="put">
+    ${flash.message}
+    ${this.user.address}
     <div class="container">
         <div class="row">
             <div class="col-md-6">
@@ -15,6 +18,11 @@
                     <input type="text" class="custom-input" name="firstName" placeholder="First Name" value="${this.user.firstName}">
                     <i class="fa fa-id-badge fa-lg fa-fw" aria-hidden="true"></i>
                 </div>
+%{--                <div class="message_error">--}%
+%{--                    <g:if test="${flash.message}">--}%
+%{--                        <g:renderErrors bean="${flash.message}" as="list" field="firstName"/>--}%
+%{--                    </g:if>--}%
+%{--                </div>--}%
             </div>
             <div class="col-md-6">
                 <div class="inputWithIcon">

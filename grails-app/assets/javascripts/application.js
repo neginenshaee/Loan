@@ -103,7 +103,7 @@ function calculateAmortization(){
     $.ajax({
         url: URL,
         type:"GET",
-        data:{mortgageamount:$('input[name="mortgageamount"]').val(), month:$('input[name="month"]').val(), interest:$('input[name="interest"]').val()},
+        data:{amount:$('input[name="amount"]').val(), months:$('input[name="months"]').val(), interest:$('input[name="interest"]').val()},
         success:function(data) {
             $('#updateCalculation').html(data);
             if($("#calculatorAmortizationLink").text()==='Show amortization schedule') {
@@ -119,7 +119,7 @@ function calculateSchedule(){
     $.ajax({
         url: URL,
         type:"GET",
-        data:{mortgageamount:$('input[name="mortgageamount"]').val(), month:$('input[name="month"]').val(), interest:$('input[name="interest"]').val()},
+        data:{amount:$('input[name="amount"]').val(), months:$('input[name="months"]').val(), interest:$('input[name="interest"]').val()},
         success:function(data) {
             console.log(data)
             $('#updateSchedule').html(data);
@@ -137,11 +137,11 @@ function calculateSchedule(){
 // });
 
 $('#years').keyup(function(){
-    $('#month').val($("#years").val()*12);
+    $('#months').val($("#years").val()*12);
 });
 
-$('#month').keyup(function(){
-    $('#years').val($("#month").val()/12);
+$('#months').keyup(function(){
+    $('#years').val($("#months").val()/12);
 });
 
 
