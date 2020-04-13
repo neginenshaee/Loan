@@ -79,6 +79,34 @@ class UserService {
         user.save()
     }
 
+    def resetPassword(String email){
+        User user = User.findByEmail(email)
+        if(user!=null) {
+            tokenService.sendResetPasswordEmail(user)
+        }else{
+            return null
+        }
+    }
+
+    def checkResetToken(token){
+        VerificationToken retrieved = tokenService.retrieveVerificationToken(token)
+        if(retrieved!=null) {
+            return retrieved.getUser()
+        }
+        return null
+    }
+
+
+    def reset(Long id, String password){
+        User user = get(id)
+        if(user!=null) {
+            user.setPassword(password)
+            user.save()
+            springSecurityService.reauthenticate(user.username,user.password)
+        }
+        user
+    }
+
     def getCurrentUser(){
         springSecurityService.currentUser
     }

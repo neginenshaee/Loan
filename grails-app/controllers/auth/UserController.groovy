@@ -95,8 +95,6 @@ class UserController {
                 return
             }
         }else{
-            println 'errors: '+command.errors
-            println 'params: ' + params
             flash.message = command.errors
             render (view: 'edit', model: [params: params])
             return
@@ -132,6 +130,39 @@ class UserController {
 
     def userloanrequest(Long id){
         redirect(controller: 'adminLoanRequest',  action: 'userrequests', id: id)
+    }
+
+    def forgetpassword(){}
+
+    def sendresetpassword(){
+        println params.email
+        def result = userService.resetPassword(params.email)
+        if(result!=null){
+            respond('check your email')
+            return
+        }else{
+            respond('not found')
+            return
+        }
+    }
+
+    def resetpassword(String token){
+        User user = userService.checkResetToken(token)
+        if(user !=null){
+            params.id = user.id
+            render(view: 'resetpassword', model:[params: params])
+        }else{
+            render(view: '/login/auth')
+        }
+
+    }
+
+    def reset(){
+        User user = userService.reset(params.long('id'),params.password)
+        if(user==null){
+            flash.message = "Not Recognized"
+        }
+        redirect(action: 'show', id: user.id)
     }
 
 
