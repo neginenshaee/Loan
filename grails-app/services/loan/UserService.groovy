@@ -43,7 +43,11 @@ class UserService {
     }
 
     User update(UserCommand command){
-        User user = bindValues(get(command.id),command)
+        User user = get(command.id)
+        user.setFirstName(command.getFirstName())
+        user.setLastName(command.getLastName())
+        user.setCountry(command.getCountry())
+        user.setAddress(command.getAddress())
         user.save()
         user
     }

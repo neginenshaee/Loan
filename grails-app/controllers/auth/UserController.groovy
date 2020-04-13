@@ -54,11 +54,18 @@ class UserController {
     }
 
     def edit(Long id) {
+        User user
         if(id == null) {
-            render(view: '/user/edit', model: [user: userService.getCurrentUser()])
+            user = userService.getCurrentUser()
         }else{
-            render(view: '/user/edit', model: [user: userService.get(id)])
+            user = userService.get(id)
         }
+        params.id = user.getId()
+        params.firstName = user.getFirstName()
+        params.lastName = user.getLastName()
+        params.address = user.getAddress()
+        params.country = user.getCountry()
+        render(view: '/user/edit', model: [params: params])
     }
 
     def password(Long id) {
@@ -73,27 +80,28 @@ class UserController {
 
     def update(UserCommand command) {
         User user
-
-        if(command.validate()) {
+        if(command.validate(["firstName", "lastName","country", "address"])) {
             try {
                 user = userService.update(command)
+                request.withFormat {
+                    form multipartForm {
+                        flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user])
+                        redirect user
+                    }
+                '*'{ respond user, [status: OK] }
+        }
             } catch (ValidationException e) {
                 respond command.errors, view: 'edit'
                 return
             }
+        }else{
+            println 'errors: '+command.errors
+            println 'params: ' + params
+            flash.message = command.errors
+            render (view: 'edit', model: [params: params])
+            return
         }
-//        }else{
-//            flash.message = command.errors
-//            render (view: 'edit', model: [params: params])
-//            return
-//        }
-//        request.withFormat {
-//            form multipartForm {
-//                flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user])
-//                redirect user
-//            }
-//            '*'{ respond user, [status: OK] }
-//        }
+
     }
 
     def delete(Long id) {

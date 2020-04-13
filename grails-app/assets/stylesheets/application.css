@@ -850,7 +850,8 @@ footer p span{
     color: #aaa;
 }
 
-.inputWithIcon input:focus + i{
+.inputWithIcon input:focus + i,
+.inputWithIcon textarea:focus + i{
     color: dodgerblue;
 }
 
