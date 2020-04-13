@@ -12,9 +12,10 @@ class LoanRequestController {
     def repaymentService
     def loanRequestService
 
-    def index(){
-        List<LoanRequest> loans = loanRequestService.list()
-        render(view: '/loanRequest/index', model: [loans: loans])
+    def index(Integer max){
+        params.max = Math.min(max ?: 5, 100)
+        List<LoanRequest> loans = loanRequestService.list(params)
+        render(view: '/loanRequest/index', model: [loans: loans, loanRequestCount: loanRequestService.count()])
     }
 
     def show(Long id) {
@@ -22,10 +23,13 @@ class LoanRequestController {
     }
 
     def create() {
-        render(view: '/loanRequest/request')
+        render(view: '/loanRequest/request', model: [amount: 165000, months: 360, interest: 4.5])
+
     }
 
     def save(LoanRequestCommand command) {
+        println params
+        println command.interest
         if(command.validate()) {
             try {
                 loanRequestService.save(command)
@@ -34,8 +38,9 @@ class LoanRequestController {
                 respond command.errors, view: 'create'
             }
         }else{
+//            render command.errors, view: '/loanRequest/request', [params:params]
             flash.message = (command.errors)
-            render (view: '/loanRequest/request')
+            render (view: '/loanRequest/request', model:[params:params])
         }
     }
 
@@ -64,15 +69,15 @@ class LoanRequestController {
 
     def amortizationCalculatorService
     def calculate(){
-        def monthlyPayment = amortizationCalculatorService.calculateMonthlyShare(params.double('mortgageamount'), params.int('month'), params.double('interest'))
-        def totalInterest = amortizationCalculatorService.calculateTotalInterest(monthlyPayment, params.double('mortgageamount'), params.int('month') )
+        def monthlyPayment = amortizationCalculatorService.calculateMonthlyShare(params.double('amount'), params.int('months'), params.double('interest'))
+        def totalInterest = amortizationCalculatorService.calculateTotalInterest(monthlyPayment, params.double('amount'), params.int('months') )
 
-        render template: "amortizationcalc", model: [mortgageamount:params.double('mortgageamount'), monthlyPayment:monthlyPayment, totalInterest: totalInterest]
+        render template: "amortizationcalc", model: [amount:params.double('amount'), monthlyPayment:monthlyPayment, totalInterest: totalInterest]
 
     }
 
     def calculatePayments(){
-        List<ShadowPayment> list = amortizationCalculatorService.calculateShadowPayment(params.double('mortgageamount'), params.int('month'), params.double('interest'))
+        List<ShadowPayment> list = amortizationCalculatorService.calculateShadowPayment(params.double('amount'), params.int('months'), params.double('interest'))
         render template: "amortizationschedule", model: [shadowPayments: list]
     }
 

@@ -43,7 +43,11 @@ class UserService {
     }
 
     User update(UserCommand command){
-        User user = bindValues(get(command.id),command)
+        User user = get(command.id)
+        user.setFirstName(command.getFirstName())
+        user.setLastName(command.getLastName())
+        user.setCountry(command.getCountry())
+        user.setAddress(command.getAddress())
         user.save()
         user
     }
@@ -73,6 +77,34 @@ class UserService {
         }
         println user.getPassword()
         user.save()
+    }
+
+    def resetPassword(String email){
+        User user = User.findByEmail(email)
+        if(user!=null) {
+            tokenService.sendResetPasswordEmail(user)
+        }else{
+            return null
+        }
+    }
+
+    def checkResetToken(token){
+        VerificationToken retrieved = tokenService.retrieveVerificationToken(token)
+        if(retrieved!=null) {
+            return retrieved.getUser()
+        }
+        return null
+    }
+
+
+    def reset(Long id, String password){
+        User user = get(id)
+        if(user!=null) {
+            user.setPassword(password)
+            user.save()
+            springSecurityService.reauthenticate(user.username,user.password)
+        }
+        user
     }
 
     def getCurrentUser(){

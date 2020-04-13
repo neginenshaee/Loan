@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat
 class ShadowPaymentService {
 
     def dataSource
+    def sessionFactory
 
     def saveShadowPayments(Loan loan){
         def monthly = loan.monthlyPayment
@@ -38,6 +39,10 @@ class ShadowPaymentService {
         }
     }
 
+    def getByLoan(Loan loan){
+        ShadowPayment.findAllByLoan(loan)
+    }
+
     def findAllBy(){
         ShadowPayment.withCriteria {
             createAlias('Loan', 'l', CriteriaSpecification.LEFT_JOIN)
@@ -45,8 +50,6 @@ class ShadowPaymentService {
         }
 
     }
-
-    def sessionFactory
 
     def getEmailsUsingNativeQuery(){
         Date twoDaysAfter
@@ -112,12 +115,12 @@ class ShadowPaymentService {
         final java.sql.Date tw = java.sql.Date.valueOf(twoDays);
         final java.sql.Date th = java.sql.Date.valueOf(threeDays);
 
-        List<Object[]> result = ShadowPayment.createCriteria().list(){
-            createAlias("ShadowPayment.loan", "loan", Criteria.LEFT_JOIN);
-            createAlias("loan.loanRequest", "loanRequest", Criteria.LEFT_JOIN);
-            createAlias("loanRequest.user", "user", Criteria.LEFT_JOIN);
-            between('ShadowPayment.payment_date',tw ,th)
-        }
+//        List<Object[]> result = ShadowPayment.createCriteria().list(){
+//            createAlias("ShadowPayment.loan", "loan", Criteria.LEFT_JOIN);
+//            createAlias("loan.loanRequest", "loanRequest", Criteria.LEFT_JOIN);
+//            createAlias("loanRequest.user", "user", Criteria.LEFT_JOIN);
+//            between('ShadowPayment.payment_date',tw ,th)
+//        }
 
         println result
         result

@@ -29,11 +29,7 @@
                     <i class="fa fa-lock" aria-hidden="true"></i>
                 </span>
             </div>
-%{--            <p id="remember_me_holder">--}%
-%{--                <input type="checkbox" class="chk" name="${rememberMeParameter ?: 'remember-me'}" id="remember_me" <g:if test='${hasCookie}'>checked="checked"</g:if>/>--}%
-%{--                <label for="remember_me"><g:message code='springSecurity.login.remember.me.label'/></label>--}%
-%{--            </p>--}%
-            <g:link >forgot password</g:link>
+            <g:link controller="user" action="forgetpassword">forgot password</g:link>
             <div class="container-login100-form-btn">
                 <button class="login100-form-btn" id="submit" value="${message(code: 'springSecurity.login.button')}">
                     Login

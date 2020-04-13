@@ -40,7 +40,7 @@
         </table>
 
         <div class="pagination">
-            <g:paginate total="${loanRequestCount ?: 0}" />
+            <g:paginate action="index" max="5" total="${loanRequestCount ?: 0}" />
         </div>
     </div>
 </body>

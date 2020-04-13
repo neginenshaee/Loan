@@ -56,5 +56,6 @@ class UserCommand implements Validateable {
         passwordExpired nullable: true
         dateCreated nullable: true
         lastUpdated nullable: true
+        id nullable:  true
     }
 }

@@ -24,25 +24,24 @@ class UserController {
     }
 
     def save(UserCommand command) {
-        User user
         if(command.validate()) {
             try {
-                user = userService.save(command)
-            } catch (ValidationException e) {
-                respond command.errors, view: 'create'
-                return
-            }
-
-            request.withFormat {
-                form multipartForm {
-                    flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
-                    redirect user
+                User user = userService.save(command)
+                request.withFormat {
+                    form multipartForm {
+                        flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
+                        redirect user
+                    }
+                    '*' { respond user, [status: CREATED] }
                 }
-                '*' { respond user, [status: CREATED] }
+            } catch (ValidationException e) {
+                render (command.errors, view: 'create', model: [params: params])
+                return
             }
         }else{
             flash.message = command.errors
-            respond command.errors, view: 'create'
+            render (view: 'create', model: [params: params])
+            return
         }
     }
 
@@ -55,11 +54,18 @@ class UserController {
     }
 
     def edit(Long id) {
+        User user
         if(id == null) {
-            render(view: '/user/edit', model: [user: userService.getCurrentUser()])
+            user = userService.getCurrentUser()
         }else{
-            render(view: '/user/edit', model: [user: userService.get(id)])
+            user = userService.get(id)
         }
+        params.id = user.getId()
+        params.firstName = user.getFirstName()
+        params.lastName = user.getLastName()
+        params.address = user.getAddress()
+        params.country = user.getCountry()
+        render(view: '/user/edit', model: [params: params])
     }
 
     def password(Long id) {
@@ -73,29 +79,27 @@ class UserController {
     }
 
     def update(UserCommand command) {
-        User user = userService.get(params.long('id'))
-        command.firstName = params.firstName
-        command.lastName = params.lastName
-        command.country = params.country
-        command.address = params.address
-        command.username = user.getUsername()
-        command.password = user.getPassword()
-        command.email = user.getEmail()
-        if(command.validate()) {
+        User user
+        if(command.validate(["firstName", "lastName","country", "address"])) {
             try {
                 user = userService.update(command)
+                request.withFormat {
+                    form multipartForm {
+                        flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user])
+                        redirect user
+                    }
+                '*'{ respond user, [status: OK] }
+        }
             } catch (ValidationException e) {
-                respond user.errors, view: 'edit'
+                respond command.errors, view: 'edit'
                 return
             }
+        }else{
+            flash.message = command.errors
+            render (view: 'edit', model: [params: params])
+            return
         }
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user])
-                redirect user
-            }
-            '*'{ respond user, [status: OK] }
-        }
+
     }
 
     def delete(Long id) {
@@ -126,6 +130,39 @@ class UserController {
 
     def userloanrequest(Long id){
         redirect(controller: 'adminLoanRequest',  action: 'userrequests', id: id)
+    }
+
+    def forgetpassword(){}
+
+    def sendresetpassword(){
+        println params.email
+        def result = userService.resetPassword(params.email)
+        if(result!=null){
+            respond('check your email')
+            return
+        }else{
+            respond('not found')
+            return
+        }
+    }
+
+    def resetpassword(String token){
+        User user = userService.checkResetToken(token)
+        if(user !=null){
+            params.id = user.id
+            render(view: 'resetpassword', model:[params: params])
+        }else{
+            render(view: '/login/auth')
+        }
+
+    }
+
+    def reset(){
+        User user = userService.reset(params.long('id'),params.password)
+        if(user==null){
+            flash.message = "Not Recognized"
+        }
+        redirect(action: 'show', id: user.id)
     }
 
 
