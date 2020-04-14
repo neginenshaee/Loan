@@ -28,8 +28,6 @@ class LoanRequestController {
     }
 
     def save(LoanRequestCommand command) {
-        println params
-        println command.interest
         if(command.validate()) {
             try {
                 loanRequestService.save(command)
@@ -38,9 +36,8 @@ class LoanRequestController {
                 respond command.errors, view: 'create'
             }
         }else{
-//            render command.errors, view: '/loanRequest/request', [params:params]
-            flash.message = (command.errors)
-            render (view: '/loanRequest/request', model:[params:params])
+            flash.message = command.errors
+            render (view: '/loanRequest/request', model: [amount: params.long('amount') ?: 165000, months: params.int('months') ?:360, interest: params.double('interest') ?: 4.5])
         }
     }
 
@@ -68,11 +65,17 @@ class LoanRequestController {
     }
 
     def amortizationCalculatorService
-    def calculate(){
-        def monthlyPayment = amortizationCalculatorService.calculateMonthlyShare(params.double('amount'), params.int('months'), params.double('interest'))
-        def totalInterest = amortizationCalculatorService.calculateTotalInterest(monthlyPayment, params.double('amount'), params.int('months') )
+    def calculate(LoanRequestCommand command){
+        if(command.validate(["amount"])) {
+            def monthlyPayment = amortizationCalculatorService.calculateMonthlyShare(params.double('amount'), params.int('months'), params.double('interest'))
+            def totalInterest = amortizationCalculatorService.calculateTotalInterest(monthlyPayment, params.double('amount'), params.int('months'))
+            render template: "amortizationcalc", model: [amount:params.double('amount'), monthlyPayment:monthlyPayment, totalInterest: totalInterest]
+        }else{
+            flash.message = command.errors
+            render (view: '/loanRequest/request', model:[params:params])
+//            render(view: '/loanRequest/calculator', model: [amount: 165000, months: 360, interest: 4.5])
+        }
 
-        render template: "amortizationcalc", model: [amount:params.double('amount'), monthlyPayment:monthlyPayment, totalInterest: totalInterest]
 
     }
 
