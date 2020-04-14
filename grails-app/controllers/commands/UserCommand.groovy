@@ -21,6 +21,11 @@ class UserCommand implements Validateable {
     Date dateCreated = new Date()
     Date lastUpdated = new Date()
 
+    String repeatPassword
+    String oldPassword
+    static transients = ['repeatPassword', 'oldPassword']
+
+
     static constraints = {
         firstName nullable: false, blank: false
         lastName nullable: false, blank: false
@@ -35,7 +40,17 @@ class UserCommand implements Validateable {
                 }
             }
         }
+
+        oldPassword nullable: false, blank: false
         password nullable: false, blank: false
+//        , validator: {password, obj ->
+//            def password2 = obj.repeatPassword
+//            password2 == password ? true : ['userCommand.password.invalid.matchingpasswords']
+//        }
+        repeatPassword nullable: false, blank: false, validator: {repeatPassword, obj ->
+            def password2 = obj.password
+            password2 == repeatPassword ? true : ['userCommand.password.invalid.matchingpasswords']
+        }
         email nullable: false, blank: false, validator: { val, obj ->
             if (obj.id) {
                 if (User.countByEmailAndIdNotEqual(val,obj.id)) {
