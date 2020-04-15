@@ -1,5 +1,6 @@
 package admin
 
+import commands.LoanCommand
 import grails.plugin.springsecurity.annotation.Secured
 import loan.Loan
 import loan.LoanRequest
@@ -10,7 +11,7 @@ class LoanController {
 
     def loanService
     def loanRequestService
-    def amortizationCalculatorService
+
     def shadowPaymentService
 
     def index(){
@@ -27,17 +28,15 @@ class LoanController {
     }
 
 
-    def save(){
-        Loan loan = new Loan()
-        loan.setLoanRequest(loanRequestService.get(params.id))
-        loan.setAmount(params.double('amount'))
-        loan.setMonths(params.int('months'))
-        loan.setInterest(params.double('interest'))
-        double monthlyPatment = amortizationCalculatorService.calculateMonthlyShare(params.double('amount'),params.int('months'),params.double('interest'))
+    def save(LoanCommand command){
+        if(command.validate(["amount","months","interest"])) {
+            loanService.save(command)
+            loanRequestService.end(command.id)
+            redirect(view: '/loan/index')
+        }else {
+            flash.message = command.errors
+            render(view: '/loan/create', model: [amount: command.amount ?: 165000, months: command.months ?: 360, interest: command.interest ?: 4.5])
+        }
 
-        loan.setMonthlyPayment(monthlyPatment)
-        loanService.save(loan)
-        loanRequestService.end(params.long('id'))
-        redirect(view: '/loan/index')
     }
 }

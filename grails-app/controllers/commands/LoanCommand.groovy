@@ -6,6 +6,7 @@ import grails.validation.Validateable
 import loan.LoanRequest
 
 class LoanCommand implements Validateable {
+    Long id
     Double amount
     int months
     Double interest
@@ -21,5 +22,6 @@ class LoanCommand implements Validateable {
         monthlyPayment nullable: false
         dateCreated nullable: true
         lastUpdated nullable: true
+        id nullable: true
     }
 }

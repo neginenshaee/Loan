@@ -1,6 +1,7 @@
 package loan
 
 import auth.Role
+import commands.LoanCommand
 import grails.gorm.transactions.Transactional
 
 @Transactional
@@ -8,6 +9,8 @@ class LoanService {
 
     def springSecurityService
     def shadowPaymentService
+    def amortizationCalculatorService
+    def loanRequestService
     def sessionFactory
 
     def list(){
@@ -33,7 +36,16 @@ class LoanService {
         Loan.get(id)
     }
 
-    def save(Loan loan){
+    def save(LoanCommand command){
+        Loan loan = new Loan()
+        loan.setLoanRequest(loanRequestService.get(command.id))
+        loan.setAmount(command.amount)
+        loan.setMonths(command.months)
+        loan.setInterest(command.interest)
+        double monthlyPatment = amortizationCalculatorService.calculateMonthlyShare(command.amount, command.months, command.interest)
+
+        loan.setMonthlyPayment(monthlyPatment)
+
         Loan savedLoan = loan.save()
         shadowPaymentService.saveShadowPayments(savedLoan)
     }
