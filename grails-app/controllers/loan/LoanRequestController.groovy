@@ -80,8 +80,8 @@ class LoanRequestController {
     }
 
     def calculatePayments(){
-        List<ShadowPayment> list = amortizationCalculatorService.calculateShadowPayment(params.double('amount'), params.int('months'), params.double('interest'))
-        render template: "amortizationschedule", model: [shadowPayments: list]
+        List<ShadowPayment> list = amortizationCalculatorService.calculateShadowPayment(params.double('amount'), params.int('months'), params.double('interest'), params.startDate)
+        render template: "amortizationschedule", model: [shadowPayments: list, startDate: params.date('startDate', 'MM/dd/YYYY')]
     }
 
     def cancel(Long id) {

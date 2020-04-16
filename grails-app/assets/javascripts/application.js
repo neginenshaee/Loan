@@ -116,12 +116,18 @@ function calculateAmortization(){
 
 function calculateSchedule(){
     var URL="/loanRequest/calculatePayments";
+    if($('input[name="startDate"]').val()== ""){
+        var now = new Date();
+        var day = ("0" + now.getDate()).slice(-2);
+        var month = ("0" + (now.getMonth() + 1)).slice(-2);
+        var today =  now.getFullYear()+"-" + (month) + "-" + (day);
+        $('#startDate').val(today);
+    }
     $.ajax({
         url: URL,
         type:"GET",
-        data:{amount:$('input[name="amount"]').val(), months:$('input[name="months"]').val(), interest:$('input[name="interest"]').val()},
+        data:{amount:$('input[name="amount"]').val(), months:$('input[name="months"]').val(), interest:$('input[name="interest"]').val(), startDate:$('input[name="startDate"]').val()},
         success:function(data) {
-            console.log(data)
             $('#updateSchedule').html(data);
         }
     });
