@@ -65,17 +65,9 @@ class UserService {
         user
     }
 
-    def updatePassword(String old, String newpass, String confirm){
-
+    def updatePassword(UserCommand command){
         User user = springSecurityService.currentUser
-//        println springSecurityService.encodePassword(old)
-//        if (springSecurityService.passwordEncoder.isPasswordValid(user.getPassword(),old,null)){
-        if(newpass==confirm){
-            println 'the same!'
-            user.setPassword(newpass)
-//            }
-        }
-        println user.getPassword()
+        user.setPassword(command.password)
         user.save()
     }
 

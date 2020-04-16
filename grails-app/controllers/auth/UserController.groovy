@@ -69,13 +69,26 @@ class UserController {
     }
 
     def password(Long id) {
-        User user = userService.get(id)
-        render(view: '/user/password', model: [user: user])
+        User user
+        if(id == null){
+            user = userService.getCurrentUser()
+        }else {
+            user = userService.get(id)
+        }
+        params.id = user.getId()
+        render(view: '/user/password', model: [params: params])
     }
 
-    def changePassword() {
-        userService.updatePassword(params?.old, params?.new, params?.re)
-        redirect(view: '/index')
+    def changePassword(UserCommand command) {
+        if (command.validate(["oldPassword","password","repeatPassword"])) {
+            userService.updatePassword(command)
+        }else{
+            flash.message = command.errors
+            render (view: 'password', model: [params: params])
+            return
+        }
+//        redirect(action: 'show', id: command.id)
+        redirect(controller: "logout")
     }
 
     def update(UserCommand command) {

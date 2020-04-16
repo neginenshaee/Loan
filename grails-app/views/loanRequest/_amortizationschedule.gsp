@@ -1,7 +1,7 @@
 <div class="grid">
     <div class="divStartDate">
         <label class="calculatorAcumin" for="startDate">Start Date</label>
-        <input id="startDate" class="amortizationInput" value="${new Date()}">
+        <input id="startDate" type="date" name="startDate" class="amortizationInput" onchange="calculateSchedule()" value="${params.startDate}"/>
     </div>
 
     <div class="divEstimate">
@@ -25,15 +25,18 @@
             <td>Balance</td>
         </tr>
         </thead>
+        <g:set var="totalInterest" value="${0}" /><br/>
         <g:each in="${shadowPayments}" status="i" var="payment">
             <tr>
                 <td><g:formatDate date="${payment.paymentDate}" format="MMM, yyyy"/></td>
                 <td><g:formatNumber  number="${payment.loan.monthlyPayment}" maxFractionDigits="2" type="currency" currencyCode="USD" /></td>
                 <td><g:formatNumber  number="${payment.principal}" maxFractionDigits="2" type="currency" currencyCode="USD" /></td>
                 <td><g:formatNumber  number="${payment.interest}" maxFractionDigits="2" type="currency" currencyCode="USD"/></td>
-                <td>Total Interest</td>
+                <g:set var="totalInterest" value="${totalInterest + payment.interest}" />
+                <td><g:formatNumber  number="${totalInterest}" maxFractionDigits="2" type="currency" currencyCode="USD"/></td>
                 <td><g:formatNumber  number="${payment.balance}" maxFractionDigits="2" type="currency" currencyCode="USD" /></td>
             </tr>
+
         </g:each>
     </table>
 </div>

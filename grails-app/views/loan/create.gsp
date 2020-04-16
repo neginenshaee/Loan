@@ -7,11 +7,6 @@
 </head>
 
 <body>
-
-    <g:if test="${flash.message}">
-        <div class="message" role="status">${flash.message}</div>
-    </g:if>
-
     <div class="container">
         <g:form controller="loan" action="save" params="${[id: this.id]}" method="post">
         <div class="amortizationGrid">
