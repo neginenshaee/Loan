@@ -9,11 +9,8 @@
 <div class="limiter">
     <div class="container-login100">
         <div class="wrap-login100">
-        <g:if test='${flash.message}'>
-            <div class="login_message">${flash.message}</div>
-        </g:if>
-
         <form action="${postUrl ?: '/login/authenticate'}" method="POST" id="loginForm" class="login100-form validate-form" autocomplete="off">
+
             <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
                 <input class="input100" type="text" name="${usernameParameter ?: 'username'}" id="username" autocapitalize="none" placeholder="Username">
                 <span class="focus-input100"></span>
@@ -29,15 +26,18 @@
                     <i class="fa fa-lock" aria-hidden="true"></i>
                 </span>
             </div>
-            <g:link controller="user" action="forgetpassword">forgot password</g:link>
+            <g:link controller="user" action="forgetpassword">forgot password?</g:link>
             <div class="container-login100-form-btn">
                 <button class="login100-form-btn" id="submit" value="${message(code: 'springSecurity.login.button')}">
                     Login
                 </button>
             </div>
-
         </form>
+        <g:if test='${flash.message}'>
+            ${flash.message}
+        </g:if>
         </div>
+
     </div>
 </div>
 <asset:javascript src="application.js"/>
