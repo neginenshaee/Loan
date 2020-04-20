@@ -8,8 +8,29 @@
 </head>
 <body>
 
-<g:form params="${[id: params.id]}" controller="user" action="update" method="put">
+<g:form params="${[id: params.id]}" controller="user" action="update" method="put" enctype="multipart/form-data">
     <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <img height="110px" width="110px" src="${createLink(action: 'getImage', controller: 'user', id: params.id)}"/>
+            </div>
+            <div class="col-md-10">
+
+                <div class="inputWithIcon">
+                    <input class="custom-input" name="userImage" type="file" />
+                    <i class="fa fa-user fa-lg fa-fw" aria-hidden="true"></i>
+                </div>
+                <div class="message_error">
+                    <g:if test="${flash.message}">
+                        <g:renderErrors bean="${flash.message}" as="list" field="image"/>
+                    </g:if>
+                </div>
+            </div>
+        </div>
+
+
+
+
         <div class="row">
             <div class="col-md-6">
                 <div class="inputWithIcon">

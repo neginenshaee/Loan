@@ -44,10 +44,13 @@ class UserService {
 
     User update(UserCommand command){
         User user = get(command.id)
-        user.setFirstName(command.getFirstName())
-        user.setLastName(command.getLastName())
-        user.setCountry(command.getCountry())
-        user.setAddress(command.getAddress())
+        user.setFirstName(command.firstName)
+        user.setLastName(command.lastName)
+        user.setCountry(command.country)
+        user.setAddress(command.address)
+        if(command.image.size()>0) {
+            user.setImage(command.image)
+        }
         user.save()
         user
     }

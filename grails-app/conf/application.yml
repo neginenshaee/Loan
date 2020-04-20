@@ -163,3 +163,11 @@ environments:
 #                defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
 server:
     port: 5060
+
+grails:
+    controllers:
+        upload:
+            maxFileSize: 26214400
+            maxRequestSize: 26214400
+
+

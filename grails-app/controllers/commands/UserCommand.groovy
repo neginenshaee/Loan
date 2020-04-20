@@ -23,6 +23,11 @@ class UserCommand implements Validateable {
 
     String repeatPassword
     String oldPassword
+
+    byte[] image;
+    String imageName;
+    String imageContentType;
+
     static transients = ['repeatPassword', 'oldPassword']
 
 
@@ -72,5 +77,8 @@ class UserCommand implements Validateable {
         dateCreated nullable: true
         lastUpdated nullable: true
         id nullable:  true
+        image nullable: true, blank: true, maxSize: 1024 * 1024 * 1
+        imageName nullable: true, blank: true;
+        imageContentType nullable: true, blank: true;
     }
 }

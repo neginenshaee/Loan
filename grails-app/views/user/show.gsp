@@ -38,7 +38,10 @@
     <div class="container">
         <div class="show-content">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-1">
+                <img height="80" width="80" src="${createLink(action: 'getImage', controller: 'user', id: params.id)}"/>
+                </div>
+                <div class="col-md-5">
                     <div class="inputWithIcon">
                         <label>First name</label>
                         <label class="custom-input">${this.user.firstName}</label>
