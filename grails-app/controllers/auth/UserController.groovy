@@ -3,6 +3,7 @@ package auth
 import commands.UserCommand
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
+import loan.LoanRequest
 import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import static org.springframework.http.HttpStatus.*

@@ -12,4 +12,13 @@ class AdminUserController {
         List<User> users = userService.list()
         render(view: '/user/index', model: [users: users])
     }
+
+    def search(int max){
+        params.max = Math.min(max ?: 10, 100)
+        def users = userService.search(params)
+        render(view: '/user/index', model: [params: params, users: users, userCount: users.totalCount])
+        return
+    }
+
 }
+

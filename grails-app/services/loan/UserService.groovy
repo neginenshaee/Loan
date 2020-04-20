@@ -124,4 +124,22 @@ class UserService {
         user
     }
 
+    def search(params){
+        def result = User.createCriteria().list(max: params.max, offset: params.offset){
+            projections {
+                count()
+            }
+            like('username', '%' + params.searchusername + '%')
+            like('firstName', '%' + params.searchfirst + '%')
+            like('lastName', '%' + params.searchlast + '%')
+            like('email', '%' + params.searchemail + '%')
+            if(params.searchstatus!='') {
+                eq('status', UserStatus.valueOf(params.searchstatus))
+            }
+            order("username", "asc")
+        }
+
+        result
+    }
+
 }
