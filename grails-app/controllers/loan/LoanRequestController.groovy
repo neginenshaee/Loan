@@ -12,10 +12,9 @@ class LoanRequestController {
     def repaymentService
     def loanRequestService
 
-    def index(Integer max){
-        params.max = Math.min(max ?: 5, 100)
-        List<LoanRequest> loans = loanRequestService.list(params)
-        render(view: '/loanRequest/index', model: [loans: loans, loanRequestCount: loanRequestService.count()])
+    def index(){
+        List<LoanRequest> loanRequests = loanRequestService.list(params)
+        render(view: '/loanRequest/index', model: [loans: loanRequests])
     }
 
     def show(Long id) {
@@ -43,6 +42,13 @@ class LoanRequestController {
 
     def edit(Long id) {
         respond loanRequestService.get(id)
+    }
+
+    def search(int max){
+        params.max = Math.min(max ?: 50, 100)
+        def loanRequests = loanRequestService.search(params)
+        render(view: '/loanRequest/index', model: [params: params, loans: loanRequests, loanRequestCount: loanRequests.totalCount])
+        return
     }
 
     def update(LoanRequest loanRequest) {

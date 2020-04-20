@@ -14,7 +14,7 @@ class AdminUserController {
     }
 
     def search(int max){
-        params.max = Math.min(max ?: 10, 100)
+        params.max = Math.min(max ?: 50, 100)
         def users = userService.search(params)
         render(view: '/user/index', model: [params: params, users: users, userCount: users.totalCount])
         return
