@@ -73,9 +73,9 @@ class LoanRequestController {
     def amortizationCalculatorService
     def calculate(LoanRequestCommand command){
         if(command.validate(["amount"])) {
-            def monthlyPayment = amortizationCalculatorService.calculateMonthlyShare(params.double('amount'), params.int('months'), params.double('interest'))
-            def totalInterest = amortizationCalculatorService.calculateTotalInterest(monthlyPayment, params.double('amount'), params.int('months'))
-            render template: "amortizationcalc", model: [amount:params.double('amount'), monthlyPayment:monthlyPayment, totalInterest: totalInterest]
+            def monthlyPayment = amortizationCalculatorService.calculateMonthlyShare(params.long('amount'), params.int('months'), params.double('interest'))
+            def totalInterest = amortizationCalculatorService.calculateTotalInterest(monthlyPayment, params.long('amount'), params.int('months'))
+            render template: "amortizationcalc", model: [amount:params.long('amount'), monthlyPayment:monthlyPayment, totalInterest: totalInterest]
         }else{
             flash.message = command.errors
             render (view: '/loanRequest/request', model:[params:params])
@@ -86,7 +86,7 @@ class LoanRequestController {
     }
 
     def calculatePayments(){
-        List<ShadowPayment> list = amortizationCalculatorService.calculateShadowPayment(params.double('amount'), params.int('months'), params.double('interest'), params.startDate)
+        List<ShadowPayment> list = amortizationCalculatorService.calculateShadowPayment(params.long('amount'), params.int('months'), params.double('interest'), params.startDate)
         render template: "amortizationschedule", model: [shadowPayments: list, startDate: params.date('startDate', 'MM/dd/YYYY')]
     }
 

@@ -2,7 +2,9 @@ package loan
 
 import auth.Role
 import commands.LoanCommand
+import enums.Status
 import grails.gorm.transactions.Transactional
+import org.hibernate.criterion.CriteriaSpecification
 
 @Transactional
 class LoanService {
@@ -48,5 +50,27 @@ class LoanService {
 
         Loan savedLoan = loan.save()
         shadowPaymentService.saveShadowPayments(savedLoan)
+    }
+
+    def search(params){
+        def result = Loan.createCriteria().list(max: params.max, offset: params.offset){
+//            createAlias('loanRequest', 'lr', CriteriaSpecification.LEFT_JOIN)
+//            createAlias('user', 'u', CriteriaSpecification.LEFT_JOIN)
+            if(params.long('searchamount')>=0) {
+                ge('amount', params.long('searchamount'))
+            }
+            if(params.double('searchinterest')>=0) {
+                le('interest', params.double('searchinterest'))
+            }
+            if(params.int('searchmonths')>=0) {
+                le('months', params.int('searchmonths'))
+            }
+//            like('u.username',params.searchusername)
+            if(params.double('searchmonthlypayments')>=0) {
+                ge('monthlyPayment', params.double('searchmonthlypayments'))
+            }
+            order("amount", "asc")
+        }
+        result
     }
 }

@@ -1,7 +1,7 @@
 package loan
 
 class Loan {
-    Double amount
+    Long amount
     int months
     Double interest
     Double monthlyPayment

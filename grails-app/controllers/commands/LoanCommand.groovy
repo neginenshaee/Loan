@@ -7,7 +7,7 @@ import loan.LoanRequest
 
 class LoanCommand implements Validateable {
     Long id
-    Double amount
+    Long amount
     int months
     Double interest
     Double monthlyPayment

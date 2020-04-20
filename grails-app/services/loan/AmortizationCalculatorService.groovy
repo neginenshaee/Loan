@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat
 @Transactional
 class AmortizationCalculatorService {
 
-    def calculateMonthlyShare(double mortgageAmount, int months, double interest){
+    def calculateMonthlyShare(Long mortgageAmount, int months, double interest){
         interest = interest / 1200
         def monthlyPayment = mortgageAmount*[interest*Math.pow((1+interest),months)/((Math.pow((1+interest),months))-1)]
         monthlyPayment
@@ -20,7 +20,7 @@ class AmortizationCalculatorService {
     }
 
 
-    def calculateShadowPayment(double balance, int monthNum, double interestVal, String startDate){
+    def calculateShadowPayment(Long balance, int monthNum, double interestVal, String startDate){
         List<ShadowPayment> shadowPaymentList = new ArrayList<>()
         def monthly = calculateMonthlyShare(balance,monthNum,interestVal)
         def totalInterest = 0.00;
