@@ -39,7 +39,7 @@ class UserService {
         User user = get(id)
         if(user == null) {
             log.warn(generalService.getMessage("log.user.not.found.message", id))
-            throw new UserNotFoundException(String.valueOf(id), generalService.getMessage("user.not.found.message"));
+            throw new UserNotFoundException(String.valueOf(id), generalService.getMessage("user.not.found.message"))
         }else {
             user.delete()
         }
@@ -87,7 +87,10 @@ class UserService {
             user.setStatus(UserStatus.CONFIRMED)
             user.setEnabled(true)
             user.save()
+            log.info(generalService.getMessage('user.verified.message',user,token))
             springSecurityService.reauthenticate(user.username,user.password)
+        }else{
+            log.warn(generalService.getMessage("token.not.found.message", token))
         }
         user
     }

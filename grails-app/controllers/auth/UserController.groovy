@@ -19,14 +19,19 @@ class UserController {
     }
 
     def show(Long id) {
+        User user = findUser(id)
+        respond user
+    }
+
+    private User findUser(long id) {
         User user = userService.get(id)
-        if(user == null) {
-            log.warn(message(code: 'user.not.found.message'))
-            flash.message = (message(code: 'user.not.found.message',status: NOT_FOUND))
-        }else {
+        if (user == null) {
+            log.info(message(code: 'user.not.found.message'))
+            flash.message = (message(code: 'user.not.found.message', status: NOT_FOUND))
+        } else {
             log.info(user.toString())
         }
-        respond user
+        user
     }
 
     def create() {
@@ -36,7 +41,7 @@ class UserController {
     def save(UserCommand command) {
         if(command.validate(['firstName','lastName','username','password','email','country','address'])) {
             User user = userService.save(command)
-            log.warn(message(code: 'user.save.success.message'))
+            log.info(message(code: 'user.save.success.message'))
             flash.message = (message(code: 'user.save.success.message', status: OK))
             redirect user
         }else{
@@ -48,11 +53,16 @@ class UserController {
     }
 
     def confirm(String token){
-        User u = userService.confirmUser(token)
-        if(u==null){
-            flash.message = "Not Recognized"
+        User user = userService.confirmUser(token)
+        if(user == null){
+            log.info(message(code: 'token.not.found.message'))
+            flash.message = (message(code: 'token.not.found.message', status: NOT_FOUND))
+            render(view: '/login/auth')
+        }else {
+            log.info(message(code: 'user.confirm.message'))
+            flash.message = (message(code: 'user.confirm.message', status: OK))
+            redirect(action: 'show', id: user.id)
         }
-        redirect(action: 'show', id: u.id)
     }
 
     def edit(Long id) {
