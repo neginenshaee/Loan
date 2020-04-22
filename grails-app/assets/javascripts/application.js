@@ -83,13 +83,13 @@ $(function () {
         AJAX
 =============================*/
 function changeStatus(enteredVal) {
-    var URL="/user/onChange";
+    var URL="/user/activation";
     $.ajax({
         url: URL,
         type: 'POST',
         data:{ status: enteredVal, id: $('input[name="hidid"]').val()},
         success: function(data, textStatus, jqXHR) {
-            alert('Done!')
+            alert(data)
         },
         error: function(data,  textStatus,  errorThrown) {
             alert ("Error occurred : " + textStatus);

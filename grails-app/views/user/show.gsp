@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}" />
+        <g:set var="entityName" value="${message(code: 'user.label')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
     </head>
     <body>
@@ -20,10 +20,11 @@
                 <button class="custom-button edit" type="button"><g:message code="default.button.edit.label" default="Edit" /></button>
             </g:link>
 
-            <g:link action="delete" resource="${this.user}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');">
-                <button class="custom-button delete" type="button"><g:message code="default.button.delete.label" default="Delete" /></button>
+            <button type="button" class="custom-button delete" data-toggle="modal" data-target="#confirmationModal">Delete</button>
+            <g:link controller="adminUser" action="delete" resource="${this.user}">
+                <g:render template="/sharedTemplates/confirmationpopup"/>
             </g:link>
-        %{--        <input class="custom-button delete" type="submit" value="${message(code: 'default.button.delete.label', default: 'Delete')}"  />--}%
+
             <g:if test="${this.user.enabled}">
                 <input type="button" name="activation" class="custom-button delete" value="Deactivate" onclick="changeStatus(false)">
             </g:if>

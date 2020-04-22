@@ -133,30 +133,10 @@ class UserController {
     }
 
 
-    def delete(Long id) {
-        println(id)
-        if (id == null) {
-            notFound()
-            return
-        }
-
-        userService.delete(id)
-
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.deleted.message', args: [message(code: 'user.label', default: 'User'), id])
-                redirect action:"index", method:"GET"
-            }
-            '*'{ render status: NO_CONTENT }
-        }
-    }
-
-    def onChange(Long id){
-        boolean status = Boolean.parseBoolean(params.status);
-        User user = userService.get(Long.valueOf(params.id))
-        user.setEnabled(status)
-        userService.update(user)
-        render user
+    def activation(UserCommand command){
+        command.enabled = Boolean.parseBoolean(params.status);
+        User user = userService.updateActivation(command)
+        user
     }
 
     def userloanrequest(Long id){

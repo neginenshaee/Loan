@@ -6,20 +6,28 @@ import auth.UserRole
 import commands.UserCommand
 import enums.Status
 import enums.UserStatus
+import exceptions.UserNotFoundException
 import grails.gorm.transactions.Transactional
+import groovy.util.logging.Slf4j
 
+@Slf4j
 @Transactional
 class UserService {
     def springSecurityService
     def tokenService
+    def generalService
 
 
     static User get(Long id){
         User.get(id)
     }
 
-    def list(){
-        List<User> users = User.findAll()
+    def list(params){
+        def users = User.createCriteria().list(max: params.max, offset: params.offset) {
+            projections {
+                count()
+            }
+        }
         users
     }
 
@@ -27,8 +35,14 @@ class UserService {
         User.count()
     }
 
-    def static delete(id){
-        User.get(id).delete()
+    def delete(id){
+        User user = get(id)
+        if(user == null) {
+            log.warn(generalService.getMessage("log.user.not.found.message", id))
+            throw new UserNotFoundException(String.valueOf(id), generalService.getMessage("user.not.found.message"));
+        }else {
+            user.delete()
+        }
     }
 
     User save(UserCommand command){
@@ -51,6 +65,13 @@ class UserService {
         if(command.image.size()>0) {
             user.setImage(command.image)
         }
+        user.save()
+        user
+    }
+
+    def updateActivation(UserCommand command){
+        User user = get(command.id)
+        user.setEnabled(command.enabled)
         user.save()
         user
     }

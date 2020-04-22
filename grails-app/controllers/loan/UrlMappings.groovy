@@ -14,6 +14,7 @@ class UrlMappings {
         "404"(view:'/notFound')
         "/user/password"(controller: 'user', action: 'password')
         "/user/edit"(controller: 'user', action: 'edit')
+        "/user/delete/$id"(controller: 'adminUser', action: 'delete')
         "/user/confirm/$token"(controller: 'user', action: 'confirm')
         "/user/resetpassword/$token"(controller: 'user', action: 'resetpassword')
         "/user/index"(controller: 'adminUser', action: 'index')
