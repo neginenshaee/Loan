@@ -34,4 +34,9 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
     }
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
 }
-root(ERROR, ['STDOUT'])
+//root(ERROR, ['STDOUT'])
+//root(TRACE, ['STDOUT'])
+//root(TRACE, ['STDOUT'])
+//root(INFO, ['STDOUT'])
+root(WARN, ['STDOUT'])
+logger("interceptors.LogInterceptor", INFO, ['STDOUT'], false)
