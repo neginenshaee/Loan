@@ -26,21 +26,13 @@ class UserController {
     }
 
     def save(UserCommand command) {
-        if(command.validate()) {
-            try {
-                User user = userService.save(command)
-                request.withFormat {
-                    form multipartForm {
-                        flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), user.id])
-                        redirect user
-                    }
-                    '*' { respond user, [status: CREATED] }
-                }
-            } catch (ValidationException e) {
-                render (command.errors, view: 'create', model: [params: params])
-                return
-            }
+        if(command.validate(['firstName','lastName','username','password','email','country','address'])) {
+            User user = userService.save(command)
+            log.warn(message(code: 'user.save.success.message'))
+            flash.message = (message(code: 'user.save.success.message', status: OK))
+            redirect user
         }else{
+            log.info(command.errors.toString())
             flash.message = command.errors
             render (view: 'create', model: [params: params])
             return
@@ -89,7 +81,6 @@ class UserController {
             render (view: 'password', model: [params: params])
             return
         }
-//        redirect(action: 'show', id: command.id)
         redirect(controller: "logout")
     }
 
@@ -179,14 +170,4 @@ class UserController {
         redirect(action: 'show', id: user.id)
     }
 
-
-    protected void notFound() {
-        request.withFormat {
-            form multipartForm {
-                flash.message = message(code: 'default.not.found.message', args: [message(code: 'user.label', default: 'User'), params.id])
-                redirect action: "index", method: "GET"
-            }
-            '*'{ render status: NOT_FOUND }
-        }
-    }
 }

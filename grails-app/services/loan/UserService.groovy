@@ -48,11 +48,14 @@ class UserService {
     User save(UserCommand command){
         User user = bindValues(new User(), command)
         User savedUser = user.save()
+        log.info(generalService.getMessage('user.created.message',savedUser.getId()))
         def userRole = Role.findOrSaveWhere(authority: 'ROLE_USER')
         if (!savedUser.authorities.contains(userRole)) {
             UserRole.create(savedUser, userRole, true)
+            log.info(generalService.getMessage('role.assigned.message', userRole.toString(),savedUser.toString()))
         }
         tokenService.sendVerificationEmail(savedUser)
+        log.info(generalService.getMessage('verification.sent.message', userRole.toString(),savedUser.toString()))
         savedUser
     }
 

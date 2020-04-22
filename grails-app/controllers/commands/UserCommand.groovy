@@ -48,10 +48,7 @@ class UserCommand implements Validateable {
 
         oldPassword nullable: false, blank: false
         password nullable: false, blank: false
-//        , validator: {password, obj ->
-//            def password2 = obj.repeatPassword
-//            password2 == password ? true : ['userCommand.password.invalid.matchingpasswords']
-//        }
+
         repeatPassword nullable: false, blank: false, validator: {repeatPassword, obj ->
             def password2 = obj.password
             password2 == repeatPassword ? true : ['userCommand.password.invalid.matchingpasswords']
@@ -77,7 +74,7 @@ class UserCommand implements Validateable {
         dateCreated nullable: true
         lastUpdated nullable: true
         id nullable:  true
-        image nullable: true, blank: true, maxSize: 1024 * 1024 * 1
+        image nullable: true, maxSize: 1024 * 1024 * 1
         imageName nullable: true, blank: true;
         imageContentType nullable: true, blank: true;
     }
