@@ -1,3 +1,4 @@
+<%@ page import="enums.Status" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -20,14 +21,17 @@
                 <div class="message" role="status">${flash.message}</div>
             </g:if>
 
+            <g:form action="search" controller="adminUser">
+                <button type="submit" class="search-submit"><i class="fa fa-search fa-lg"></i></button>
+
             <table class="content-table">
                 <thead>
                     <tr>
-                        <td>Username</td>
-                        <td>Firstname</td>
-                        <td>Lastname</td>
-                        <td>Email</td>
-                        <td>Status</td>
+                        <td>Username<br><input name="searchusername" value="${params.searchusername}"></td>
+                        <td>Firstname<br><input name="searchfirst" value="${params.searchfirst}"></td>
+                        <td>Lastname<br><input name="searchlast" value="${params.searchlast}"></td>
+                        <td>Email<br><input name="searchemail" value="${params.searchemail}"></td>
+                        <td>Status<br><g:select name="searchstatus" noSelection="${['':'Select One']}" from="${enums.UserStatus.values()}" value="${params.searchstatus}"/></td>
                     </tr>
                 </thead>
                 <g:each in="${users}" status="i" var="user">
@@ -42,8 +46,9 @@
             </table>
 
             <div class="pagination">
-                <g:paginate total="${userCount ?: 0}" />
+                <g:paginate params="${params}" total="${userCount ?: 0}" />
             </div>
+            </g:form>
         </div>
     </body>
 </html>

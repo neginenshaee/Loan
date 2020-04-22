@@ -20,6 +20,12 @@ class User implements Serializable {
     String country
     String address
     UserStatus status
+
+    byte[] image;
+    String imageName;
+    String imageContentType;
+
+
     boolean enabled = false
     boolean accountExpired
     boolean accountLocked
@@ -44,6 +50,11 @@ class User implements Serializable {
         password nullable: false, blank: false, password: false
         country nullable: true
         address nullable: true
+
+        image nullable: true, blank: true, maxSize: 1024 * 1024 * 1; //20MB
+        imageName nullable: true, blank: true;
+        imageContentType nullable: true, blank: true;
+
     }
 
 }

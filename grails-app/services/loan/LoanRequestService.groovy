@@ -4,6 +4,7 @@ import auth.Role
 import auth.User
 import commands.LoanRequestCommand
 import enums.Status
+import enums.UserStatus
 import grails.gorm.transactions.Transactional
 
 import static org.springframework.http.HttpStatus.CREATED
@@ -100,6 +101,25 @@ class LoanRequestService {
                 generalService.getMessage("loan.request.rejected", loanRequest.amount,loanRequest.dateCreated)
         )
 
+    }
+
+    def search(params){
+        def result = LoanRequest.createCriteria().list(max: params.max, offset: params.offset){
+            if(params.long('searchamount')>=0) {
+                ge('amount', params.long('searchamount'))
+            }
+            if(params.double('searchinterest')>=0) {
+                le('interest', params.double('searchinterest'))
+            }
+            if(params.int('searchmonths')>=0) {
+                le('months', params.int('searchmonths'))
+            }
+            if(params.searchstatus!='') {
+                eq('status', Status.valueOf(params.searchstatus))
+            }
+            order("amount", "asc")
+        }
+        result
     }
 
     LoanRequest bindValues(LoanRequestCommand c){

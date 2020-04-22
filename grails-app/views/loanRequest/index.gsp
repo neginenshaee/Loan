@@ -17,14 +17,16 @@
         <g:if test="${flash.message}">
             <div class="message" role="status">${flash.message}</div>
         </g:if>
+<g:form action="search" controller="loanRequest">
+    <button type="submit" class="search-submit"><i class="fa fa-search fa-lg"></i></button>
 
         <table class="content-table">
             <thead>
             <tr>
-                <td>Amount</td>
-                <td>Interest</td>
-                <td>Status</td>
-                <td>Month</td>
+                <td>Amount<br><input name="searchamount" placeholder="Greater than" value="${params.searchamount}"></td>
+                <td>Interest<br><input name="searchinterest" placeholder="Less than" value="${params.searchinterest}"></td>
+                <td>Status<br><g:select name="searchstatus" noSelection="${['':'Select One']}" from="${enums.Status.values()}" value="${params.searchstatus}"/></td>
+                <td>Month<br><input name="searchmonths" placeholder="Less than" value="${params.searchmonths}"></td>
                 <td>User</td>
             </tr>
             </thead>
@@ -40,8 +42,9 @@
         </table>
 
         <div class="pagination">
-            <g:paginate action="index" max="5" total="${loanRequestCount ?: 0}" />
+            <g:paginate params="${params}" total="${loanRequestCount ?: 0}" />
         </div>
+</g:form>
     </div>
 </body>
 </html>

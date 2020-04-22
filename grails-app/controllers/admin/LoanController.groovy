@@ -39,4 +39,11 @@ class LoanController {
         }
 
     }
+
+    def search(int max){
+        params.max = Math.min(max ?: 50, 100)
+        def loans = loanService.search(params)
+        render(view: '/loan/index', model: [params: params, loans: loans, loansCount: loans.totalCount])
+        return
+    }
 }

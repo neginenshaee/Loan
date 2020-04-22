@@ -9,6 +9,15 @@
 <g:form controller="user" params="${[id: params.id]}" action="reset" method="post">
     <div class="container">
         <div class="row">
+            <div class="col-md-8">
+                <h1>Change password</h1>
+                <p>Please note that when changing your password, we ask you to set yourself a secure password
+                that contains both uppercase and lowercase letters as well as numbers.
+                This is for your own safety.</p>
+            </div>
+        </div>
+
+        <div class="row">
             <div class="col-md-6">
                 <div class="inputWithIcon">
                     <input type="password" class="custom-input" aria-describedby="passwordHelp" name="password" placeholder="Password">
@@ -39,7 +48,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <button type="submit" class="custom-button submit">Submit</button>
+                <button type="submit" class="custom-button edit">change</button>
             </div>
         </div>
     </div>
