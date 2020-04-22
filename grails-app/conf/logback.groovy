@@ -37,6 +37,6 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
 //root(ERROR, ['STDOUT'])
 //root(TRACE, ['STDOUT'])
 //root(TRACE, ['STDOUT'])
-//root(INFO, ['STDOUT'])
-root(WARN, ['STDOUT'])
+root(INFO, ['STDOUT'])
+//root(WARN, ['STDOUT'])
 logger("interceptors.LogInterceptor", INFO, ['STDOUT'], false)

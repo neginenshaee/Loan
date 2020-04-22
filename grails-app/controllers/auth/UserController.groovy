@@ -1,6 +1,7 @@
 package auth
 
 import commands.UserCommand
+import exceptions.UserNotFoundException
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 import loan.LoanRequest
@@ -18,7 +19,14 @@ class UserController {
     }
 
     def show(Long id) {
-        respond userService.get(id)
+        User user = userService.get(id)
+        if(user == null) {
+            log.warn(message(code: 'user.not.found.message'))
+            flash.message = (message(code: 'user.not.found.message',status: NOT_FOUND))
+        }else {
+            log.info(user.toString())
+        }
+        respond user
     }
 
     def create() {
