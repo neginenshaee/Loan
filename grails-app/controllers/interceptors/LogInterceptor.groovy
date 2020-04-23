@@ -13,7 +13,7 @@ class LogInterceptor {
     }
 
     boolean after() {
-        log.info("OUTCOMING REQUEST: ${params.toString()}")
+        log.info("OUTGOING RESPONSE: ${params.toString()}")
         true
     }
 

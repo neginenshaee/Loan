@@ -5,12 +5,13 @@ import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 
 import static org.springframework.http.HttpStatus.NOT_FOUND
+import static org.springframework.http.HttpStatus.OK
 
 @Secured(['ROLE_USER','ROLE_ADMIN'])
 class LoanRequestController {
 
-    def repaymentService
     def loanRequestService
+    def amortizationCalculatorService
 
     def index(){
         List<LoanRequest> loanRequests = loanRequestService.list(params)
@@ -23,25 +24,27 @@ class LoanRequestController {
 
     def create() {
         render(view: '/loanRequest/request', model: [amount: 165000, months: 360, interest: 4.5])
-
-    }
-
-    def save(LoanRequestCommand command) {
-        if(command.validate()) {
-            try {
-                loanRequestService.save(command)
-                redirect(view: '/loanRequest/index')
-            } catch (ValidationException e) {
-                respond command.errors, view: 'create'
-            }
-        }else{
-            flash.message = command.errors
-            render (view: '/loanRequest/request', model: [amount: params.long('amount') ?: 165000, months: params.int('months') ?:360, interest: params.double('interest') ?: 4.5])
-        }
     }
 
     def edit(Long id) {
         respond loanRequestService.get(id)
+    }
+
+    def calculator(){
+        render(view: '/loanRequest/calculator', model: [amount: 165000, months: 360, interest: 4.5])
+    }
+
+    def save(LoanRequestCommand command) {
+        if(command.validate()) {
+            LoanRequest loanRequest = loanRequestService.save(command)
+            log.info(message(code: 'loanRequest.save.success.message'))
+            flash.message = (message(code: 'loanRequest.save.success.message', status: OK))
+            redirect loanRequest
+        }else{
+            log.info(command.errors.toString())
+            flash.message = command.errors
+            render (view: '/loanRequest/request', model: [amount: params.long('amount') ?: 165000, months: params.int('months') ?:360, interest: params.double('interest') ?: 4.5])
+        }
     }
 
     def search(int max){
@@ -51,26 +54,6 @@ class LoanRequestController {
         return
     }
 
-    def update(LoanRequest loanRequest) {
-        if (loanRequest == null) {
-            notFound()
-            return
-        }
-
-        try {
-            loanRequestService.save(loanRequest)
-        } catch (ValidationException e) {
-            respond loanRequest.errors, view:'edit'
-            return
-        }
-
-    }
-
-    def calculator(){
-        render(view: '/loanRequest/calculator', model: [amount: 165000, months: 360, interest: 4.5])
-    }
-
-    def amortizationCalculatorService
     def calculate(LoanRequestCommand command){
         if(command.validate(["amount"])) {
             def monthlyPayment = amortizationCalculatorService.calculateMonthlyShare(params.long('amount'), params.int('months'), params.double('interest'))
@@ -79,10 +62,7 @@ class LoanRequestController {
         }else{
             flash.message = command.errors
             render (view: '/loanRequest/request', model:[params:params])
-//            render(view: '/loanRequest/calculator', model: [amount: 165000, months: 360, interest: 4.5])
         }
-
-
     }
 
     def calculatePayments(){
@@ -98,18 +78,6 @@ class LoanRequestController {
     def confirm(Long id) {
         loanRequestService.confirm(id)
         redirect(action: 'show', id: id)
-    }
-
-    def repayments(Long id){
-        def request = repaymentService.getRepaymentsByLoanRequest(loanRequestService.get(id))
-        render(view: '/loanRequest/repayments', model: [request: request])
-    }
-
-    def select(){
-        def id = params.id
-        println 'repayment: ' + id
-        println 'loan: ' + params.loan
-        redirect view: '/loan/index'
     }
 
 }
