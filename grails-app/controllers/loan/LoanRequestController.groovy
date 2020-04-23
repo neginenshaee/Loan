@@ -2,9 +2,7 @@ package loan
 
 import commands.LoanRequestCommand
 import exceptions.LoanRequestNotFoundException
-import exceptions.UserNotFoundException
 import grails.plugin.springsecurity.annotation.Secured
-import grails.validation.ValidationException
 
 import static org.springframework.http.HttpStatus.NOT_FOUND
 import static org.springframework.http.HttpStatus.OK
@@ -78,12 +76,12 @@ class LoanRequestController {
     def search(int max){
         params.max = Math.min(max ?: 50, 100)
         def loanRequests = loanRequestService.search(params)
-        log.info('List: ' , loanRequests.toString())
         if (Objects.isNull(loanRequests) || !loanRequests.iterator().hasNext()) {
             log.info(message(code:'loanRequest.list.empty'))
             flash.message=(message(code:'loanRequest.list.empty',status:NOT_FOUND))
             render(view: '/loanRequest/index', model: [params: params, loans: loanRequests])
         }else {
+            log.info("List: ${loanRequests.toString()}")
             render(view: '/loanRequest/index', model: [params: params, loans: loanRequests, loanRequestCount: loanRequests.totalCount])
         }
         return

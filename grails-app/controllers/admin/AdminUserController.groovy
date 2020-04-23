@@ -32,12 +32,12 @@ class AdminUserController {
     def search(int max){
         params.max = Math.min(max ?: 50, 100)
         def users = userService.search(params)
-        log.info(users.toString())
         if (Objects.isNull(users) || !users.iterator().hasNext()) {
             log.info(message(code:'user.list.empty'))
             flash.message=(message(code:'user.list.empty',status:NOT_FOUND))
             render(view: '/user/index', model: [params: params, users: users])
         }else {
+            log.info("List: ${users.toString()}")
             render(view: '/user/index', model: [params: params, users: users, userCount: users.totalCount])
         }
         return
