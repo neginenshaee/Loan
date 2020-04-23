@@ -1,6 +1,8 @@
 package loan
 
 import commands.LoanRequestCommand
+import exceptions.LoanRequestNotFoundException
+import exceptions.UserNotFoundException
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
 
@@ -47,10 +49,43 @@ class LoanRequestController {
         }
     }
 
+    def cancel(Long id) {
+        try {
+            loanRequestService.cancel(id)
+            log.info (message(code: 'loanRequest.cancel.successful', args: id,status: OK))
+            flash.message = (message(code: 'loanRequest.cancel.successful', args: id,status: OK))
+            redirect(action: 'show', id: id)
+        }catch (LoanRequestNotFoundException e) {
+            log.warn(message(code: "loanRequest.not.found.message", id))
+            flash.message = (message(code: "loanRequest.not.found.message",status: NOT_FOUND))
+            redirect action:"index"
+        }
+    }
+
+    def confirm(Long id) {
+        try {
+            loanRequestService.confirm(id)
+            log.info (message(code: 'loanRequest.confirm.successful', args: id,status: OK))
+            flash.message = (message(code: 'loanRequest.confirm.successful', args: id,status: OK))
+            redirect(action: 'show', id: id)
+        }catch (LoanRequestNotFoundException e) {
+            log.warn(message(code: "loanRequest.not.found.message", id))
+            flash.message = (message(code: "loanRequest.not.found.message",status: NOT_FOUND))
+            redirect action:"index"
+        }
+    }
+
     def search(int max){
         params.max = Math.min(max ?: 50, 100)
         def loanRequests = loanRequestService.search(params)
-        render(view: '/loanRequest/index', model: [params: params, loans: loanRequests, loanRequestCount: loanRequests.totalCount])
+        log.info('List: ' , loanRequests.toString())
+        if (Objects.isNull(loanRequests) || !loanRequests.iterator().hasNext()) {
+            log.info(message(code:'loanRequest.list.empty'))
+            flash.message=(message(code:'loanRequest.list.empty',status:NOT_FOUND))
+            render(view: '/loanRequest/index', model: [params: params, loans: loanRequests])
+        }else {
+            render(view: '/loanRequest/index', model: [params: params, loans: loanRequests, loanRequestCount: loanRequests.totalCount])
+        }
         return
     }
 
@@ -68,16 +103,6 @@ class LoanRequestController {
     def calculatePayments(){
         List<ShadowPayment> list = amortizationCalculatorService.calculateShadowPayment(params.long('amount'), params.int('months'), params.double('interest'), params.startDate)
         render template: "amortizationschedule", model: [shadowPayments: list, startDate: params.date('startDate', 'MM/dd/YYYY')]
-    }
-
-    def cancel(Long id) {
-        loanRequestService.cancel(id)
-        redirect(action: 'show', id: id)
-    }
-
-    def confirm(Long id) {
-        loanRequestService.confirm(id)
-        redirect(action: 'show', id: id)
     }
 
 }

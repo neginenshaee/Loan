@@ -5,6 +5,8 @@ import auth.User
 import commands.LoanRequestCommand
 import enums.Status
 import enums.UserStatus
+import exceptions.LoanRequestNotFoundException
+import exceptions.UserNotFoundException
 import grails.gorm.transactions.Transactional
 
 import static org.springframework.http.HttpStatus.CREATED
@@ -63,15 +65,23 @@ class LoanRequestService {
     }
 
     def cancel(Long id){
-        LoanRequest loanRequest = LoanRequest.findById(id)
-        loanRequest.setStatus(Status.CANCELLED)
-        loanRequest.save()
+        LoanRequest loanRequest = LoanRequest.get(id)
+        if(loanRequest != null) {
+            loanRequest.setStatus(Status.CANCELLED)
+            loanRequest.save()
+        }else {
+            throw new LoanRequestNotFoundException(String.valueOf(id), generalService.getMessage("loanRequest.not.found.message",id))
+        }
     }
 
     def confirm(Long id){
-        LoanRequest loanRequest = LoanRequest.findById(id)
-        loanRequest.setStatus(Status.CONFIRMED)
-        loanRequest.save()
+        LoanRequest loanRequest = LoanRequest.get(id)
+        if(loanRequest != null) {
+            loanRequest.setStatus(Status.CONFIRMED)
+            loanRequest.save()
+        }else {
+            throw new LoanRequestNotFoundException(String.valueOf(id), generalService.getMessage("loanRequest.not.found.message",id))
+        }
     }
 
     def end(Long id){
