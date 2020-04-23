@@ -23,7 +23,7 @@ class AdminLoanRequestController {
 
     def userrequests(Long id){
         List<LoanRequest> requests = loanRequestService.requestsOfUser(id)
-        render(view: '/loanRequest/userrequests', model: [requests: requests])
+        render(view: '/adminLoanRequest/userrequests', model: [requests: requests])
     }
 
 }

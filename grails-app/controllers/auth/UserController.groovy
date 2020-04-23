@@ -1,11 +1,8 @@
 package auth
 
 import commands.UserCommand
-import exceptions.UserNotFoundException
 import grails.plugin.springsecurity.annotation.Secured
 import grails.validation.ValidationException
-import loan.LoanRequest
-import org.springframework.web.multipart.commons.CommonsMultipartFile
 
 import static org.springframework.http.HttpStatus.*
 
@@ -25,11 +22,11 @@ class UserController {
 
     private User findUser(long id) {
         User user = userService.get(id)
-        if (user == null) {
+        if (user != null) {
+            log.info(user.toString())
+        } else {
             log.info(message(code: 'user.not.found.message'))
             flash.message = (message(code: 'user.not.found.message', status: NOT_FOUND))
-        } else {
-            log.info(user.toString())
         }
         user
     }
@@ -54,24 +51,19 @@ class UserController {
 
     def confirm(String token){
         User user = userService.confirmUser(token)
-        if(user == null){
-            log.info(message(code: 'token.not.found.message'))
-            flash.message = (message(code: 'token.not.found.message', status: NOT_FOUND))
-            render(view: '/login/auth')
-        }else {
+        if(user != null){
             log.info(message(code: 'user.confirm.message'))
             flash.message = (message(code: 'user.confirm.message', status: OK))
             redirect(action: 'show', id: user.id)
+        }else {
+            log.info(message(code: 'token.not.found.message'))
+            flash.message = (message(code: 'token.not.found.message', status: NOT_FOUND))
+            render(view: '/login/auth')
         }
     }
 
     def edit(Long id) {
-        User user
-        if(id == null) {
-            user = userService.getCurrentUser()
-        }else{
-            user = userService.get(id)
-        }
+        User user = userService.get(id)
         params.id = user.getId()
         params.firstName = user.getFirstName()
         params.lastName = user.getLastName()
@@ -81,12 +73,7 @@ class UserController {
     }
 
     def password(Long id) {
-        User user
-        if(id == null){
-            user = userService.getCurrentUser()
-        }else {
-            user = userService.get(id)
-        }
+        User user = userService.get(id)
         params.id = user.getId()
         render(view: '/user/password', model: [params: params])
     }
@@ -94,37 +81,31 @@ class UserController {
     def changePassword(UserCommand command) {
         if (command.validate(["oldPassword","password","repeatPassword"])) {
             userService.updatePassword(command)
+            log.info(message(code: 'user.update.success.message'))
+            flash.message = (message(code: 'user.update.success.message', status: OK))
+            redirect(controller: "logout")
         }else{
             flash.message = command.errors
             render (view: 'password', model: [params: params])
             return
         }
-        redirect(controller: "logout")
+
     }
 
     def update(UserCommand command) {
         User user
         if(command.validate(["firstName", "lastName","country", "address","image"])) {
-            try {
-                command.image = request.getFile('userImage').getBytes()
-                user = userService.update(command)
-                request.withFormat {
-                    form multipartForm {
-                        flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user])
-                        redirect user
-                    }
-                '*'{ respond user, [status: OK] }
-        }
-            } catch (ValidationException e) {
-                respond command.errors, view: 'edit'
-                return
-            }
+            command.image = request.getFile('userImage').getBytes()
+            user = userService.update(command)
+            log.info(message(code: 'user.update.success.message'))
+            flash.message = (message(code: 'user.update.success.message', status: OK))
+            redirect user
         }else{
+            log.info(command.errors.toString())
             flash.message = command.errors
             render (view: 'edit', model: [params: params])
             return
         }
-
     }
 
     def getImage(Long id) {
@@ -148,20 +129,18 @@ class UserController {
         user
     }
 
-    def userloanrequest(Long id){
-        redirect(controller: 'adminLoanRequest',  action: 'userrequests', id: id)
-    }
-
     def forgetpassword(){}
 
     def sendresetpassword(){
         def result = userService.resetPassword(params.email)
         if(result!=null){
-            flash.message = message(code: 'userController.resetpassword.found')
+            log.info message(code: 'userController.resetpassword.found')
+            flash.message = message(code: 'userController.resetpassword.found', status: OK)
             render(view: '/login/auth')
             return
         }else{
-            flash.message = message(code:'userController.resetpassword.notfound')
+            log.info message(code: 'userController.resetpassword.notfound')
+            flash.message = message(code:'userController.resetpassword.notfound', status: NOT_FOUND)
             render(view: 'forgetpassword',status: NOT_FOUND)
             return
         }
@@ -169,10 +148,11 @@ class UserController {
 
     def resetpassword(String token){
         User user = userService.checkResetToken(token)
-        if(user !=null){
+        if(user != null){
             params.id = user.id
             render(view: 'resetpassword', model:[params: params])
         }else{
+            log.info message(code:'userController.invalidtoken')
             flash.message = message(code:'userController.invalidtoken',status: NOT_FOUND)
             render(view: '/login/auth')
         }
@@ -182,6 +162,7 @@ class UserController {
     def reset(){
         User user = userService.reset(params.long('id'),params.password)
         if(user==null){
+            log.info  message(code:'userController.invalidtoken')
             flash.message = message(code:'userController.invalidtoken',status: NOT_FOUND)
             render(view: '/login/auth')
         }

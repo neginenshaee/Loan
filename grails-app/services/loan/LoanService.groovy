@@ -14,6 +14,7 @@ class LoanService {
     def amortizationCalculatorService
     def loanRequestService
     def sessionFactory
+    def generalService
 
     def list(){
         List<Loan> loans
@@ -45,11 +46,12 @@ class LoanService {
         loan.setMonths(command.months)
         loan.setInterest(command.interest)
         double monthlyPatment = amortizationCalculatorService.calculateMonthlyShare(command.amount, command.months, command.interest)
-
         loan.setMonthlyPayment(monthlyPatment)
-
         Loan savedLoan = loan.save()
+        log.info(generalService.getMessage('loan.created.message',savedLoan.getId()))
         shadowPaymentService.saveShadowPayments(savedLoan)
+        log.info(generalService.getMessage('loan.shadowPayments.created.message',savedLoan.getId()))
+        savedLoan
     }
 
     def search(params){
