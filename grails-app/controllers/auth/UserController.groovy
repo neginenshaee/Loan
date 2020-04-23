@@ -66,12 +66,8 @@ class UserController {
     }
 
     def edit(Long id) {
-        User user
-        if(id == null) {
-            user = userService.getCurrentUser()
-        }else{
-            user = userService.get(id)
-        }
+        User user = userService.get(id)
+
         params.id = user.getId()
         params.firstName = user.getFirstName()
         params.lastName = user.getLastName()
@@ -81,12 +77,7 @@ class UserController {
     }
 
     def password(Long id) {
-        User user
-        if(id == null){
-            user = userService.getCurrentUser()
-        }else {
-            user = userService.get(id)
-        }
+        User user = userService.get(id)
         params.id = user.getId()
         render(view: '/user/password', model: [params: params])
     }

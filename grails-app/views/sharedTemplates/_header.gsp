@@ -13,6 +13,7 @@
                         <ul class="nav navbar-nav pull-right">
 
                             <sec:ifLoggedIn>
+                                <g:set var="userid" value="${sec.loggedInUserInfo(field:'id')}" />
                                 <li class="nav-item">
                                     <a class="nav-link" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a>
                                 </li>
@@ -24,8 +25,9 @@
 %{--                                    <li class="nav-item"><a class="nav-link" href="/repayment/index">Repayment</a></li>--}%
                                 </sec:ifAnyGranted>
                                 <li class="nav-item"><a class="nav-link" href="/loan/index">Loan</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/user/password">Change Password</a></li>
-                                <li class="nav-item"><a class="nav-link" href="/user/edit">Edit info</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/user/password/${userid}">Change Password</a></li>
+                                <li class="nav-item"><a class="nav-link" href="/user/edit/${userid}">Edit info</a></li>
+
                                 <li class="nav-item">
                                     <a><sec:username /> <i class="fa fa-angle-down fa-lg"></i></a>
 
