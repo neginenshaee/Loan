@@ -12,7 +12,7 @@
                 <button class="custom-button primary" type="button"><g:message code="default.list.label" args="[entityName]" /></button>
             </g:link>
 
-            <g:link resource="${this.user}" action="userloanrequest">
+            <g:link params="${[id: this.user.id]}" action="userrequests" controller="adminLoanRequest">
                 <button class="custom-button primary" type="button">Show Loan Request List</button>
             </g:link>
 
