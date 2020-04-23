@@ -1,7 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Loan</title>
+    <g:set var="entityName" value="${message(code: 'loan.label', default: 'Loan')}" />
+    <title>Create</title>
     <meta name="layout" content="main"/>
     <asset:stylesheet src="bootstrap.css" rel="stylesheet"/>
 </head>

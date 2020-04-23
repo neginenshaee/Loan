@@ -134,11 +134,13 @@ class UserController {
     def sendresetpassword(){
         def result = userService.resetPassword(params.email)
         if(result!=null){
-            flash.message = message(code: 'userController.resetpassword.found')
+            log.info message(code: 'userController.resetpassword.found')
+            flash.message = message(code: 'userController.resetpassword.found', status: OK)
             render(view: '/login/auth')
             return
         }else{
-            flash.message = message(code:'userController.resetpassword.notfound')
+            log.info message(code: 'userController.resetpassword.notfound')
+            flash.message = message(code:'userController.resetpassword.notfound', status: NOT_FOUND)
             render(view: 'forgetpassword',status: NOT_FOUND)
             return
         }
@@ -146,10 +148,11 @@ class UserController {
 
     def resetpassword(String token){
         User user = userService.checkResetToken(token)
-        if(user !=null){
+        if(user != null){
             params.id = user.id
             render(view: 'resetpassword', model:[params: params])
         }else{
+            log.info message(code:'userController.invalidtoken')
             flash.message = message(code:'userController.invalidtoken',status: NOT_FOUND)
             render(view: '/login/auth')
         }
@@ -159,6 +162,7 @@ class UserController {
     def reset(){
         User user = userService.reset(params.long('id'),params.password)
         if(user==null){
+            log.info  message(code:'userController.invalidtoken')
             flash.message = message(code:'userController.invalidtoken',status: NOT_FOUND)
             render(view: '/login/auth')
         }

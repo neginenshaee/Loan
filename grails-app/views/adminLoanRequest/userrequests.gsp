@@ -2,8 +2,8 @@
 <html>
 <head>
     <meta name="layout" content="main" />
-    <g:set var="entityName" value="${message(code: 'user.label', default: 'User\'s Loan requests')}" />
-    <title></title>
+    <g:set var="entityName" value="${message(code: 'loanRequest.label')}" />
+    <title>User's Loan Request</title>
 </head>
 
 <body>
