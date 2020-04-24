@@ -10,15 +10,18 @@ class TokenService {
     def generalService
     def grailsApplication
 
+    static final int EXPIRATION = 60 * 24;
+
     private def createVerificationToken(User user, String token) {
         VerificationToken newUserToken = new VerificationToken()
         newUserToken.setUser(user)
         newUserToken.setToken(token)
+        newUserToken.setExpirationDate(VerificationTokenExpiration.getExpiry(EXPIRATION))
         newUserToken.save();
     }
 
     def retrieveVerificationToken(String token){
-        VerificationToken.findByToken(token)
+        def equals = VerificationToken.findByTokenAndExpirationDateGreaterThanEquals(token, new Date())
     }
 
     def sendVerificationEmail(User user){
