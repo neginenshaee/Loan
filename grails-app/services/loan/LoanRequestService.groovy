@@ -85,32 +85,45 @@ class LoanRequestService {
     }
 
     def end(Long id){
-        LoanRequest loanRequest = LoanRequest.findById(id)
-        loanRequest.setStatus(Status.ENDED)
-        loanRequest.save()
+        LoanRequest loanRequest = LoanRequest.get(id)
+        if(loanRequest != null) {
+            loanRequest.setStatus(Status.ENDED)
+            loanRequest.save()
+        }else {
+            throw new LoanRequestNotFoundException(String.valueOf(id), generalService.getMessage("loanRequest.not.found.message",id))
+        }
     }
 
     def approve(Long id){
-        LoanRequest loanRequest = LoanRequest.findById(id)
-        loanRequest.setStatus(Status.APPROVED)
-        loanRequest.save()
-        sendEmailService.sendEmail(
-                loanRequest.getUser().getEmail(),
-                generalService.getMessage("loan.request.status.update", Status.APPROVED),
-                generalService.getMessage("loan.request.approved", loanRequest.amount,loanRequest.dateCreated)
-        )
+        LoanRequest loanRequest = LoanRequest.get(id)
+        if(loanRequest != null) {
+            loanRequest.setStatus(Status.APPROVED)
+            loanRequest.save()
+            sendEmailService.sendEmail(
+                    loanRequest.getUser().getEmail(),
+                    generalService.getMessage("loan.request.status.update", Status.APPROVED),
+                    generalService.getMessage("loan.request.approved", loanRequest.amount,loanRequest.dateCreated)
+            )
+            log.info(generalService.getMessage("loanRequest.email.sent.message"))
+        } else {
+            throw new LoanRequestNotFoundException(String.valueOf(id), generalService.getMessage("loanRequest.not.found.message",id))
+        }
     }
 
     def reject(Long id){
-        LoanRequest loanRequest = LoanRequest.findById(id)
-        loanRequest.setStatus(Status.REJECTED)
-        loanRequest.save()
-        sendEmailService.sendEmail(
-                loanRequest.getUser().getEmail(),
-                generalService.getMessage("loan.request.status.update", Status.REJECTED),
-                generalService.getMessage("loan.request.rejected", loanRequest.amount,loanRequest.dateCreated)
-        )
-
+        LoanRequest loanRequest = LoanRequest.get(id)
+        if(loanRequest != null) {
+            loanRequest.setStatus(Status.REJECTED)
+            loanRequest.save()
+            sendEmailService.sendEmail(
+                    loanRequest.getUser().getEmail(),
+                    generalService.getMessage("loan.request.status.update", Status.REJECTED),
+                    generalService.getMessage("loan.request.rejected", loanRequest.amount,loanRequest.dateCreated)
+            )
+            log.info(generalService.getMessage("loanRequest.email.sent.message"))
+        } else {
+            throw new LoanRequestNotFoundException(String.valueOf(id), generalService.getMessage("loanRequest.not.found.message",id))
+        }
     }
 
     def search(params){
