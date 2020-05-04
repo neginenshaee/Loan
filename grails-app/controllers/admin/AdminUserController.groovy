@@ -51,8 +51,9 @@ class AdminUserController {
         } catch (UserNotFoundException e) {
             log.warn(message(code: 'user.not.found.message'))
             flash.message = (message(code: 'user.not.found.message',status: NOT_FOUND))
+        }finally {
+            redirect action: "index"
         }
-        redirect action:"index"
     }
 
 }

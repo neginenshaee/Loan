@@ -56,8 +56,8 @@ class UserController {
             flash.message = (message(code: 'user.confirm.message', status: OK))
             redirect(action: 'show', id: user.id)
         }else {
-            log.info(message(code: 'token.not.found.message'))
-            flash.message = (message(code: 'token.not.found.message', status: NOT_FOUND))
+            log.info(message(code: 'token.not.found.message',args: token))
+            flash.message = (message(code: 'token.not.found.message',args: token, status: NOT_FOUND))
             render(view: '/login/auth')
         }
     }

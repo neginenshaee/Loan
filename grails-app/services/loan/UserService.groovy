@@ -89,8 +89,6 @@ class UserService {
             user.save()
             log.info(generalService.getMessage('user.verified.message',user,token))
             springSecurityService.reauthenticate(user.username,user.password)
-        }else{
-            log.warn(generalService.getMessage("token.not.found.message", token))
         }
         user
     }
